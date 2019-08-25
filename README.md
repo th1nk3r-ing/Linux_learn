@@ -6,6 +6,6 @@
 
 ### 1. [Linux 基础知识](./Linux基础知识.md)  
 ### 2. [gcc 使用](./gcc使用.md)
-### 3. [makefile 学习](./Makefile_learn.md)
+### 3. [makefile 学习](./MakeFile_learn.md)
 ### 4. [gdb 使用](./gdb使用.md)
 ### 5. [ubuntu 设置](./ubuntu-settings.md)
