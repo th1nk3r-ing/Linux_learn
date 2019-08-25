@@ -1,0 +1,12 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+
+#设置 linux 使用静态 IP
+iface lo inet loopback
+auto ens33
+iface ens33 inet static
+address 192.168.21.130
+netmask 255.255.255/0
+gateway 192.168.21.255
+dns-nameservers 127.0.1.1
+#好像上面的方法并没有什么卵用....
