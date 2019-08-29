@@ -114,10 +114,11 @@
     - 注意 var 和 : 之间不能有空格;
 - 目标变量:
     - 某个目标设置局部变量，这种变量被称为“Target-specifc Variable”，它可以和“全局变量”同名，因为它的作用范围只在这条规则以及连带规则中，所以其值也只在作用范围内有效。而不会影响规则链以外的全局变量的值。
-    - `prog : CFLAGS = -g`
+        - `prog : C_Flags = -g` : 对 prog 目标添加 `-g` 调试选项;
+        - `../calc_base/cpu_calc.o : C_Flags += -O2` : 在编译时, 对 `cpu_calc.o` 单独进行 `-O2` 优化.
 - 模式变量:
     - 模式变量的好处就是，我们可以给定一种“模式”，可以把变量定义在符合这种模式的所有目标上。
-        - 如: `%test.o : CFLAGS += -O2`,  针对 `*test.o` 文件专门进行 `-O2` 优化;
+        - 如: `%test.o : C_Flags += -O2`,  针对所有 `*test.o` 文件专门进行 `-O2` 优化;
 - 自动化变量:
     - `$@` : 表示规则中的目标文件集。在模式规则中，如果有多个目标，那么， $@ 就是匹配于目标中模式定义的集合。
     - `$% `: 仅当目标是函数库文件中，表示规则中的目标成员名。
@@ -184,7 +185,7 @@ endif
 objects = foo.o bar.o
 all: $(objects)
 $(objects): %.o: %.c
-$(CC) -c $(CFLAGS) $< -o $@
+$(CC) -c $(C_Flags) $< -o $@
 ```
 上面的例子中，
 - 指明了我们的目标从 $object 中获取， %.o 表明要所有以 .o 结尾的目标，也就是 foo.o bar.o ，也就是变量 $object 集合的模式，
@@ -194,7 +195,7 @@ $(CC) -c $(CFLAGS) $< -o $@
 ```makefile 
 files = foo.elc bar.o lose.o
 $(filter %.o,$(files)): %.o: %.c
-$(CC) -c $(CFLAGS) $< -o $@
+$(CC) -c $(C_Flags) $< -o $@
 $(filter %.elc,$(files)): %.elc: %.el
 emacs -f batch-byte-compile $<
 ```
