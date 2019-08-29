@@ -1,9 +1,12 @@
 # <font color=#0099ff> **Makefile learn** </font> 
 
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
+
 > `@think3r` 2019-08-13 22:31:16    
 > 参考链接: 
 > 1. [跟我一起学 Makefile](https://github.com/seisman/how-to-write-makefile.git)
 > 2. [GNU make中文手册.pdf](http://xhbdahai.cublog.cn)
+> 3. [makefile中的模式规则](https://www.cnblogs.com/wzheng/p/3544902.html)
 
 ## <font color=#009A000> 0x00 基础</font> 
 - 编译和链接:
@@ -93,7 +96,13 @@
 - make 支持三个通配符： `*` ， `?` 和 `~` 。
     - 波浪号（~ ）字符在文件名中也有比较特殊的用途。如果是 ~/test ，这就表示当前用户的 $HOME 目录下的 test 目录。而 ~hchen/test 则表示用户 hchen 的宿主目录下的 test 目录。（这些都是 Unix 下的小知识了， make 也支持）
     - 通配符代替了你一系列的文件，如 *.c 表示所有后缀为 c 的文件。\
-
+- 模式:
+    - 在模式规则中，目标名中需要包含有模式字符 `%` （一个），包含有模式字符 `%` 的目标被用来匹配一个文件名，“%”可以匹配任何非空字符串。
+    - 规则的依赖文件中同样可以使用 `%`，依赖文件中模式字符“%”的取值情况由目标中的 `%` 来决定。例如：对于模式规则 `%.o : %.c`，它表示的含义是：所有的 .o 文件依赖于对应的 .c 文件。
+    - 要注意的是：模式字符 `%` 的匹配和替换发生在规则中所有变量和函数引用**展开之后**，变量和函数的展开一般发生在 make 读取 Makefile。
+    - 在模式规则中，目标文件是一个带有模式字符 `%` 的文件，使用模式来匹配目标文件。文件名中的模式字符 `%` 可以匹配任何非空字符串，除模式字符以外的部分要求一致。例如：
+        - `%.c` 匹配所有以 “.c” 结尾的文件（匹配的文件名长度最少为 3 个字母）,
+        - `s%.c` 匹配所有第一个字母为 “s”，而且必须以 “.c” 结尾的文件，文件名长度最小为 5 个字符（模式字符 `%` 至少匹配一个字符）。
 - Makefile 中 `:= ?= += =` 的区别
     - `=` 是最基本的赋值, 变量的值是整个 makefil e中 **最后** 被指定的值。
     - `:=` 是覆盖之前的值, 直接赋值，赋予当前位置的值。
@@ -108,7 +117,7 @@
     - `prog : CFLAGS = -g`
 - 模式变量:
     - 模式变量的好处就是，我们可以给定一种“模式”，可以把变量定义在符合这种模式的所有目标上。
-    - `%.o : CFLAGS1 += -O2`
+        - 如: `%test.o : CFLAGS += -O2`,  针对 `*test.o` 文件专门进行 `-O2` 优化;
 - 自动化变量:
     - `$@` : 表示规则中的目标文件集。在模式规则中，如果有多个目标，那么， $@ 就是匹配于目标中模式定义的集合。
     - `$% `: 仅当目标是函数库文件中，表示规则中的目标成员名。
@@ -170,41 +179,37 @@ endif
 
 ### <font color=#FF4500> 静态模式 demo </font> 
 
-- 
-    ```makefile 
-    #静态模式
-    objects = foo.o bar.o
-    all: $(objects)
-    $(objects): %.o: %.c
-    $(CC) -c $(CFLAGS) $< -o $@
-    ```
-- 上面的例子中，
-    - 指明了我们的目标从 $object 中获取， %.o 表明要所有以 .o 结尾的目标，也就是 foo.o bar.o ，也就是变量 $object 集合的模式，
-    - 而依赖模式 %.c 则取模式 %.o 的 % ，也就是 foo bar，并为其加下 .c 的后缀，于是，我们的依赖目标就是 foo.c bar.c 。
-    - 而命令中的 $< 和 $@ 则是自动化变量， `$<` 表示第一个依赖文件， `$@` 表示目标集（也就是“foo.o bar.o”）。
--  
-    ```makefile 
-    files = foo.elc bar.o lose.o
-    $(filter %.o,$(files)): %.o: %.c
-    $(CC) -c $(CFLAGS) $< -o $@
-    $(filter %.elc,$(files)): %.elc: %.el
-    emacs -f batch-byte-compile $<
-    ```
+```makefile 
+#静态模式
+objects = foo.o bar.o
+all: $(objects)
+$(objects): %.o: %.c
+$(CC) -c $(CFLAGS) $< -o $@
+```
+上面的例子中，
+- 指明了我们的目标从 $object 中获取， %.o 表明要所有以 .o 结尾的目标，也就是 foo.o bar.o ，也就是变量 $object 集合的模式，
+- 而依赖模式 %.c 则取模式 %.o 的 % ，也就是 foo bar，并为其加下 .c 的后缀，于是，我们的依赖目标就是 foo.c bar.c 。
+- 而命令中的 $< 和 $@ 则是自动化变量， `$<` 表示第一个依赖文件， `$@` 表示目标集（也就是“foo.o bar.o”）。
 
-## <font color=#009A000> 技巧 </font> 
+```makefile 
+files = foo.elc bar.o lose.o
+$(filter %.o,$(files)): %.o: %.c
+$(CC) -c $(CFLAGS) $< -o $@
+$(filter %.elc,$(files)): %.elc: %.el
+emacs -f batch-byte-compile $<
+```
+
+## <font color=#009A000> 技巧总结 </font> 
 
 - 你希望第二条命令得在 cd 之后的基础上运行，那么你就不能把这两条命令写在两行上，而应该把这两条命令写在一行上，用分号分隔。
-
 - 通常， make 会把其要执行的命令行在命令执行前输出到屏幕上。当我们用 `@` 字符在命令行前，那么，这个命令将不被 make 显示出来，
     - `echo` 使用 `-e` 可以打印出带颜色的输出;
-
 - 而在 rm 命令前面加了一个小减号 `-` 的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。但 make 仍会报错:
     ```sh 
     -mkdir test
     mkdir: 无法创建目录 "test": 文件已存在; make: [clean] 错误 1 (忽略)
     ``` 
-- clean 的规则不要放在文件的开头，不然，这就会变成 make 的默认目标，相信谁也不愿意这样。不成文的规矩是——“clean 从来都是放在文件的最后”
-
+- clean 的规则不要放在文件的开头，不然，这就会变成 make 的默认目标，相信谁也不愿意这样。不成文的规矩是——“clean 从来都是放在文件的最后”.
 - 反斜杠（`\` ）是换行符的意思。这样比较便于 makefle 的阅读。
     - 如果命令太长，你可以使用反斜杠（\ ）作为换行符。 make 对一行上有多少个字符没有限制。
 - 一般来说， make 会以 UNIX 的标准 Shell，也就是 /bin/sh 来执行命令。
