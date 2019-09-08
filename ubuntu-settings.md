@@ -110,9 +110,13 @@ sudo apt install python #安装 python
 git clone https://github.com/wting/autojump.git #拷贝源码
 cd autojump && ./install.py #进入目录并安装
 ```
-    
-## <font color=#009A000> **ubuntu 系统备份** </font> 
 
+### <font color=#FF4500> 杂项软件 </font> 
+
+- 代码规模统计: `cloc`
+- 视频编解码: `ffmpeg`
+
+## <font color=#009A000> **ubuntu 系统备份** </font> 
 
 - 分区与安装挂在目录的选择;
 - 一些相关设置的操作步骤;
