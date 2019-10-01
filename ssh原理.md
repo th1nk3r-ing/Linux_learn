@@ -1,4 +1,4 @@
-# <font color=#0099ff> **ssh** </font> 
+# <font color=#0099ff> **ssh** </font>
 
 > `@think3r` 2019-09-19 00:13:06
 > 1. [SSH 基本用法 - zhihu](https://zhuanlan.zhihu.com/p/21999778)
@@ -8,24 +8,24 @@
 > 5. [rsa公钥和私钥到底哪个才是用来加密，哪个用来解密？](https://www.cnblogs.com/007sx/p/10987906.html)
 > 6. [SSH加密原理、RSA非对称加密算法学习与理解](https://www.cnblogs.com/Alenliu/p/5040062.html)
 
---- 
+---
 
-## <font color=#009A000> 0x00 base </font> 
+## <font color=#009A000> 0x00 base </font>
 
-### <font color=#FF4500> SSH 是什么 ? </font> 
+### <font color=#FF4500> SSH 是什么 ? </font>
 
 SSH 是一种协议标准，其目的是实现安全远程登录以及其它安全网络服务。
 
 - SSH 仅仅是一协议标准，其具体的实现有很多，既有开源实现的 OpenSSH，也有商业实现方案。使用范围最广泛的当然是开源实现 OpenSSH。
 - PS: 微软已在 windows 上对 OpenSSh 进行了支持, 项目开源在了 github. 详情, 自己搜索.
   
-### <font color=#FF4500> 为什么需要 SSH？ </font> 
+### <font color=#FF4500> 为什么需要 SSH？ </font>
 
 SSH 和 telnet、ftp 等协议主要的区别在于安全性。
 
 - ssh 和 `telnet` 等的情况不同，这其密码传输是加密的，因此它不会被偷看到我们的数据连接的人截取。
 
-### <font color=#FF4500> 基础使用 </font> 
+### <font color=#FF4500> 基础使用 </font>
 
 在 Linux 系统上 SSH 是非常常用的工具，通过 SSH Client 我们可以连接到运行了 SSH Server 的远程机器上。SSH Client 的基本使用方法是: `ssh user@remote -p port`
 
@@ -40,9 +40,9 @@ SSH 和 telnet、ftp 等协议主要的区别在于安全性。
 
 ---
 
-## <font color=#009A000> 0x01 原理 </font> 
+## <font color=#009A000> 0x01 原理 </font>
 
-### <font color=#FF4500> 加密分类 </font> 
+### <font color=#FF4500> 加密分类 </font>
 
 加密的方式主要有两种：
 
@@ -74,15 +74,13 @@ SSH 和 telnet、ftp 等协议主要的区别在于安全性。
    - 因为公钥是公开的，很多人可以持有公钥。若用私钥加密，那所有持有公钥的人都可以进行解密，这是不安全的！
    - 若用公钥加密，那只能由私钥解密，而私钥是私有不公开的，只能由特定的私钥持有人解密，保证的数据的安全性。
 
-
-### <font color=#FF4500> ssh 原理  </font> 
+### <font color=#FF4500> ssh 原理  </font>
 
 在 SSH 安全协议的原理中， 运用了非对称加密与对称加密算法的结合.
 
 - 其认证过程如下图所示:
   
 ![原理](./image/ssh原理.webp)
-
 
 **ssh 认证过程如下:**
 
@@ -94,7 +92,7 @@ SSH 和 telnet、ftp 等协议主要的区别在于安全性。
 6. `Server` 端会最后比较 `Digest1` 和 `Digest2` 是否相同，完成认证过程。
    - 需要注意的是：一台主机可能既是Client，也是Server。所以会同时拥有authorized_keys和known_hosts。
 
-------
+---
 
 每次 ssh 都要输入密码是不是很烦呢？与密码验证相对的，是公钥验证。也就是说，要实现免密码登入. 首先要设置 SSH 钥匙。我们只需要执行这些初始配置步骤一次, 之后的再次认证登陆就毫不费力了。
 
@@ -120,10 +118,8 @@ SSH 和 telnet、ftp 等协议主要的区别在于安全性。
 - RSA（和 DSA）认证协议利用密钥对的这些特殊性质进行安全认证，并且不需要在网上传输任何保密的信息。
   - 公用密钥之所以被称作是 “公用的” 有一个原因。因为它只能用于对那些给我们的消息进行加密，所以我们不需要太担心它会落入其它人手中。
 - 一旦我们的公用密钥已经被拷贝到 remotebox 并且为了 remotebox 的 sshd 能够定位它而把它放在一个专门的文件（`~/.ssh/authorized_keys`）里，我们就为使用 RSA 认证登录到 remotebox 上做好了准备。
- 
+
 使用密钥登录的时候:
-
-
 
 1. 我们只要在 localbox 的控制台键入 `ssh drobbins@remotebox` ，就象我们常做的一样。
    - 可这一次， ssh 告诉 remotebox 的 sshd 它想使用 RSA 认证协议。
@@ -132,7 +128,7 @@ SSH 和 telnet、ftp 等协议主要的区别在于安全性。
    - 实际上等于在说：“瞧，我 确实有匹配的专用密钥；我能成功的对您的消息进行解密！”
 4. 最后， sshd 得出结论，既然我们持有匹配的专用密钥，就应当允许我们登录。因此，我们有匹配的专用密钥这一事实授权我们访问 remotebox。
 
-## <font color=#009A000> 0x02 别名 </font> 
+## <font color=#009A000> 0x02 别名 </font>
 
 每次都输入 `ssh user@remote -p port`，时间久了也会觉得很麻烦，特别是当 `user`, `remote` 和 `port` 都得输入，而且还不好记忆的时候。配置别名可以让我们进一步偷懒。在 `~/.ssh/config` 里面追加以下内容：
 
