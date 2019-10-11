@@ -122,6 +122,17 @@ sed -i "s/\#\!\/usr\/bin\/env\ python/\#\!\/usr\/bin\/env\ python3/" ~/.autojump
 # j -a `pwd` 添加常用路径
 ```
 
+### <font color=#FF4500> ssh 备份后恢复: </font>
+
+```bash
+cp -r .ssh ~/
+# fix: 权限相关
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/config
+chmod 644 id_rsa.pub
+chmod 600 id_rsa
+```
+
 ### <font color=#FF4500> 解决 python pip install慢的方法 </font>
 
 ```sh
