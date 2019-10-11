@@ -27,8 +27,12 @@
     - `-name` '文件名'
     - `-size` 
     - `-type`
+      - d 仅查找文件夹
+      - f 进查找普通文件
     - `-ctime` `-mtime` `-atime` 
         -  -n n天以内.
+    - `-printf` 指定输出格式(文件名中有特殊字符时使用)
+      - `%p` File's name.
     - `maxdepth` `mindepth` 搜索深度
     - `-ok` 或 `-exec` 执行的命令 `{} \;`
         -高级用法: `find ./ -name "*.md" -size +10k | xargs ls -alh`
@@ -121,3 +125,21 @@
     - 命令行模式
     - 编辑模式
     - 末行模式
+
+
+## <font color=#009A000> 0x04 文本查找替换 </font>
+
+```sh
+# 删除匹配行
+sed -i '/onechunk.xsl/d'
+
+## 文本查找替换
+sed -i "s/python/python3/" ~/.autojump/bin/autojump
+
+# 特殊字符使用 \ (空格, #, / 等均需要转义)
+sed -i "s/\#\!\/usr\/bin\/env\ python/\#\!\/usr\/bin\/env\ python3/" ~/.autojump/bin/autojump
+
+# 文件名中包含特殊字符(如: 空格, 中文)
+# find ./ -name "*.md" -printf "\"%p\"" 在文件路径周围添加引号
+find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
+```
