@@ -1,6 +1,6 @@
-# <font color=#0099ff> **linux 命令** </font> 
+# <font color=#0099ff> **linux 命令** </font>
 
-## <font color=#0099ff> **常用命令** </font> 
+## <font color=#0099ff> **常用命令** </font>
 
 - `ls`
     - <font color=#EA00DA>ls 相关通配符与正则表达式.</font>
@@ -21,7 +21,7 @@
 - `touch` 创建一个文件
 - 使刚刚修改的 `~/.bashrc` 生效: `source .bashrc`
 
-## <font color=#009A000> 0x00 搜索 </font> 
+## <font color=#009A000> 0x00 搜索 </font>
 
 - `find 搜索路径 参数 搜索内容`
     - `-name` '文件名'
@@ -40,7 +40,7 @@
         - `histroy | grep dpigs*`
     - `grep -R -n "软件"`
         - 递归搜索并显示行号;
-## <font color=#009A000> 0x01 压缩解压缩 </font> 
+## <font color=#009A000> 0x01 压缩解压缩 </font>
 - `gzip`  
     - `*.gz`
 - `bzip2`
@@ -69,7 +69,7 @@
     - `unzip 压缩包名 -d 解压目录`
 -  `who` : 查看当前系统有谁在线与否;
 
-## <font color=#009A000> 0x02 软件的安装、卸载、更新 </font> 
+## <font color=#009A000> 0x02 软件的安装、卸载、更新 </font>
 - ubuntu 在线安装:
     - `sudo apt-get install 安装包名`
     - `sudo apt install 安装包名`
@@ -112,7 +112,7 @@
     - `sudo rm  /0bits` 删除第二步的填充，如果用 `df -h` 会发现可用的虚拟空间增加许多，但是实际的磁盘空间没有缩减
     - 
     
-## <font color=#009A000> 0x03 vi / vim  </font> 
+## <font color=#009A000> 0x03 vi / vim  </font>
 - `vimtutor` 
     - 内置教程
 - `vi` linux 自带

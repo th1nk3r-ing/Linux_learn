@@ -1,4 +1,4 @@
-# <font color=#0099ff> **Makefile learn** </font> 
+# <font color=#0099ff> **Makefile learn** </font>
 
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
 
@@ -9,7 +9,7 @@
 > 3. [GNU make - online](http://www.gnu.org/software/make/manual/make.html)
 > 4. [万能 makefile 写法详解，一步一步写一个实用的 makefile](https://blog.csdn.net/huyansoft/article/details/8924624)
 
-## <font color=#009A000> 0x00 基础</font> 
+## <font color=#009A000> 0x00 基础</font>
 - 编译和链接:
     - 一般来说，无论是 C 还是 C++，首先要把源文件编译成中间代码文件，在 Windows 下也就是 .obj 文件，UNIX 下是 .o 文件，即 Object File，这个动作叫做 **编译（compile）**。
         - 编译时，编译器需要的是语法的正确，函数与变量的声明的正确。 
@@ -65,9 +65,9 @@
 - makefile 的自动推导:
     - 只要 make 看到一个 .o 文件，它就会自动的把 .c 文件加在依赖关系中，如果 make 找到一个`whatever.o` ，那么 `whatever.c` 就会是 `whatever.o` 的依赖文件。
 
-## <font color=#009A000> 0x01 变量,函数,命令,条件判断 </font> 
+## <font color=#009A000> 0x01 变量,函数,命令,条件判断 </font>
 
-### <font color=#FF4500> 命令 </font> 
+### <font color=#FF4500> 命令 </font>
 
 - 每条规则中的命令和操作系统 Shell 的命令行是一致的。 make 会一按顺序一条一条的执行命令，每条命令的开头必须以 Tab 键开头，除非，命令是紧跟在依赖规则后面的分号后的。在命令行之间中的空格或是空行会被忽略，但是如果该空格或空行是以 Tab 键开头的，那么 make 会认为其是一个空命令。
     -  <u>如果你要让上一条命令的结果应用在下一条命令时，你应该使用分号分隔这两条命令</u>
@@ -89,7 +89,7 @@
     - 有两个变量，一个是 `SHELL` ，一个是 `MAKEFLAGS` ，这两个变量不管你是否 export，其总是要传递到下层 Makefle 中，特别是 `MAKEFLAGS` 变量，其中包含了 make 的参数信息，
     - <u> `MAKEFLAGS = -j` 启动默认多核编译! </u>
 
-### <font color=#FF4500> 变量 </font> 
+### <font color=#FF4500> 变量 </font>
 
 - Makefle 中的变量其实就是 C/C++ 中的宏。如果你要让通配符在变量中展开，也就是让 objects 的值是所有 .o 的文件名的集合(`objects = *.o`)，那么，你可以这样：
     - 列出一确定文件夹中的所有 .c 文件: `objects := $(wildcard *.c)`
@@ -134,7 +134,7 @@
     - `$^` : 所有的依赖目标的集合。以空格分隔。如果在依赖目标中有多个重复的，那个这个变量会去除重复的依赖目标，只保留一份。
     - `$+` : 这个变量很像 `$^` ，也是所有依赖目标的集合。只是它不去除重复的依赖目标。
     - 
-### <font color=#FF4500> 判断 </font> 
+### <font color=#FF4500> 判断 </font>
 - `ifeq/ifneq/ifdef、 else 和 endif`, 
     - 在 <conditional-directive> 这一行上，多余的空格是被允许的，但是不能以 Tab 键作为开始（不然就被认为是命令）。
 ```makefile 
@@ -148,7 +148,7 @@ endif
 - make 是在读取 Makefle 时就计算条件表达式的值，并根据条件表达式的值来选择语句，
     - 所以, <u>你最好不要把自动化变量（如 $@ 等）放入条件表达式中，因为自动化变量是在运行时才有的</u>。
 
-### <font color=#FF4500> 函数 </font> 
+### <font color=#FF4500> 函数 </font>
 - 函数调用后，函数的返回值可以当做变量来使用. 
 - 函数的使用方法: `$(<function> <arguments>)`
     - `<function>` 就是函数名，
@@ -184,7 +184,7 @@ endif
 - ` $@` 这个变量表示着目前规则中所有的目标的集合, 就像一个数组.
 
 
-### <font color=#FF4500> 静态模式 demo </font> 
+### <font color=#FF4500> 静态模式 demo </font>
 
 - 
     ```makefile 
@@ -207,7 +207,7 @@ endif
     emacs -f batch-byte-compile $<
     ```
 
-### <font color=#FF4500> 自动生成依赖 </font> 
+### <font color=#FF4500> 自动生成依赖 </font>
 
 - 在 Makefle 中，我们的依赖关系可能会需要包含一系列的头文件，但如果是一个比较大型的工程，你必需清楚哪些 C 文件包含了哪些头文件，并且，你在加入或删除头文件时，也需要小心地修改 Makefle，这是一个很没有维护性的工作。
     - 为了避免这种繁重而又容易出错的事情，我们可以使用 C/C++ 编译的一个功能。大多数的 C/C++ 编译器都支持一个 `-M` 的选项，即自动找寻源文件中包含的头文件，并生成一个依赖关系。
@@ -256,7 +256,7 @@ include $(sources:.c=.d)
     - 即: `main.o : main.c defs.h` -> `main.o main.d : main.c defs.h`
 - 我们的 .d 文件也会自动更新了，并会自动生成了，当然，你还可以在这个 .d 文件中加入的不只是依赖关系，包括生成的命令也可一并加入，让每个 .d 文件都包含一个完赖的规则。
 
-## <font color=#009A000> 技巧总结 </font> 
+## <font color=#009A000> 技巧总结 </font>
 
 - 你希望第二条命令得在 cd 之后的基础上运行，那么你就不能把这两条命令写在两行上，而应该把这两条命令写在一行上，用分号分隔。
 

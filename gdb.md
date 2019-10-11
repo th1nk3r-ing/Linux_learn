@@ -1,4 +1,4 @@
-## <font color=#0099ff> **GDB 调试** </font> 
+## <font color=#0099ff> **GDB 调试** </font>
 
 > `@think3r` 2017-09-06 00:01:26
 

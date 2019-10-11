@@ -1,4 +1,4 @@
-# <font color=#0099ff> **Linux基础知识** </font> 
+# <font color=#0099ff> **Linux基础知识** </font>
 
 - `Linux` 操作系统的发展过程：
   > 参见： 《鸟哥的 Linux 私房菜》 —— `Linux 之前， Unix 的历史`。
@@ -26,17 +26,17 @@
 
 <div STYLE="page-break-after: always;"></div><!------------------ 分页符 ----------------->
 
-# <font color=#0099ff> **GNG** </font> 
+# <font color=#0099ff> **GNG** </font>
 
 1984 年，`Richard Mathew Stallman` 开始 GNU 计划， 这个计划癿目的是：建立一个自由、开放的 Unix 操作系统(Free Unix)。 但是建立一个操作系统谈何容易啊！而丏在当时癿 GNU 是仅有自己一个人单打独斗癿叱托曼～ 这实在太麻烦，但又丌想放弃这个计划，那可怎举办啊？
 
 
 
-# <font color=#0099ff> **Linux 基础知识** </font> 
+# <font color=#0099ff> **Linux 基础知识** </font>
 
 > `@think3r` 2017-09-03 19:04:43
 
-## <font color=#009A000> 一、常用命令 </font> 
+## <font color=#009A000> 一、常用命令 </font>
 
 - 调出图形计算器:
     - `gnome-calculator` 
@@ -46,7 +46,7 @@
     - 放大: `ctrl + shift + \+`
     - 缩小: `ctrl + \-`
 
-## <font color=#009A000> 二、软件管理 </font> 
+## <font color=#009A000> 二、软件管理 </font>
 
     
 - 更新Linux 软件:
@@ -78,7 +78,7 @@
         - `grep -r "颜色空间" ./ -n`
 - 
 
-## <font color=#009A000> 三  </font> 
+## <font color=#009A000> 三  </font>
 
 - 压缩解压缩:
     - 解压缩:

@@ -1,4 +1,4 @@
-# <font color=#0099ff> **Linux Leran** </font> 
+# <font color=#0099ff> **Linux Leran** </font>
 
 > `@think3r` 2017-11-14 0:22:30
 

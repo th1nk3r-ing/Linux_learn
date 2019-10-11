@@ -1,11 +1,11 @@
-# <font color=#0099ff> **TFTP 命令** </font> 
+# <font color=#0099ff> **TFTP 命令** </font>
 
 > `@think3r` 2017-08-07 22:50:21
 > 参考链接 : 
 >   1. [tftp命令](http://man.linuxde.net/tftp)
 >   2. [tftp使用方法](http://blog.sina.com.cn/s/blog_7d7e9d0f0101ifoz.html)
 
-## <font color=#009A000> 一、TFTP 简介 </font> 
+## <font color=#009A000> 一、TFTP 简介 </font>
 
 - tftp 命令用在本机和 tftp 服务器之间使用 TFTP 协议传输文件。
 - TFTP 是用来下载远程文件的最简单网络协议，它其于 UDP 协议而实现。
@@ -14,7 +14,7 @@
     - 嵌入式目标系统的 tftp-client 支持
 - busybox 中内置了 tftp 的命令支持。
 
-## <font color=#009A000> 二、 tftp 命令的用法 </font> 
+## <font color=#009A000> 二、 tftp 命令的用法 </font>
 
 - `tftp [option] [参数]`   
     - tftp 默认占用 `69` 端口。
@@ -31,7 +31,7 @@
    ````
 
 
-## <font color=#009A000> 三、TFTP 命令说明 </font> 
+## <font color=#009A000> 三、TFTP 命令说明 </font>
 
 - 主要用法:
     - `tftp –g/-p 目标文件名  源文件名  服务器地址`
@@ -47,7 +47,7 @@
 <div STYLE="page-break-after: always;"></div><!------------------分页符------------------->
 
 
-## <font color=#009A000> 四、 TFTP 命令实例 </font> 
+## <font color=#009A000> 四、 TFTP 命令实例 </font>
 
 
 - **更名** 的上传与下载: 

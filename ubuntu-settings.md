@@ -1,8 +1,8 @@
-# <font color=#0099ff> **ubuntu 设置** </font> 
+# <font color=#0099ff> **ubuntu 设置** </font>
 
 > `@think3r` 2017-11-09 0:3:52
 
-## <font color=#009A000> 0x00 vmware 虚拟机安装 </font> 
+## <font color=#009A000> 0x00 vmware 虚拟机安装 </font>
 
 - 国内镜像:
     - [http://mirrors.163.com]()
@@ -12,12 +12,12 @@
         - 搜索 `Software and Updates(软件更新)`, 测试并选择其他站点中最快的镜像站点, 用来加速 update.
     - 安装 VMWare-Tools;
 
-## <font color=#009A000> 0x00 vmware 安装 ubuntu 虚拟机 </font> 
+## <font color=#009A000> 0x00 vmware 安装 ubuntu 虚拟机 </font>
 
 - <a href="http://blog.csdn.net/guanggy/article/details/4636884" target="_blank">Ubuntu 修改用户密码与启动root账号</a>
     - ubuntu 的默认账号不是 root? root 需要单独启用??
 
-- ### <font color=#FF4500> ssh 相关 </font> 
+- ### <font color=#FF4500> ssh 相关 </font>
     - [Ubuntu18.04 ssh 开机自动启动的设置方法如下](https://blog.csdn.net/fandroid/article/details/86799932)
         ```sh 
         # 安装 ssh
@@ -80,7 +80,7 @@
         - `ln -s /mnt/hgfs/win-Desktop/ /home/th1nk3r/`
         - 注意需要使用绝对路径, 否则会出现错误: `符号连接的层数过多`;
 
-### <font color=#FF4500> git 相关 </font> 
+### <font color=#FF4500> git 相关 </font>
 
 - 安装 git: `sudo apt-get install git`
 - 设置 
@@ -103,20 +103,40 @@ PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 # \[\033[0;32m\]\$(parse_git_branch_and_add_brackets)\[\033[0m\]\$ 
 ```
 
-### <font color=#FF4500> autojump </font> 
+### <font color=#FF4500> autojump </font>
 
 ```sh
-sudo apt install python #安装 python
+# 0x00
 git clone https://github.com/wting/autojump.git #拷贝源码
+
+# 0x01 python2 的安装方法
+sudo apt install python #安装 python
 cd autojump && ./install.py #进入目录并安装
+
+# 0x01 python3 的安装方法:
+sudo apt install python3
+python3 install.py
+sed -i "s/\#\!\/usr\/bin\/env\ python/\#\!\/usr\/bin\/env\ python3/" ~/.autojump/bin/autojump
+
+# .bashrc 添加脚本支持
+# j -a `pwd` 添加常用路径
 ```
 
-### <font color=#FF4500> 杂项软件 </font> 
+### <font color=#FF4500> 解决 python pip install慢的方法 </font>
+
+```sh
+# file: ~/.pip/pip.conf
+# pip 源: 清华;  (解决pip install慢的方法)[https://blog.csdn.net/yang5915/article/details/83175804]
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+### <font color=#FF4500> 杂项软件 </font>
 
 - 代码规模统计: `cloc`
 - 视频编解码: `ffmpeg`
 
-## <font color=#009A000> **ubuntu 系统备份** </font> 
+## <font color=#009A000> **ubuntu 系统备份** </font>
 
 - 分区与安装挂在目录的选择;
 - 一些相关设置的操作步骤;
