@@ -11,6 +11,7 @@ set number
 
 " 检索高亮
 set hlsearch
+hi Search term=standout ctermfg=0 ctermbg=3
 
 " 语法高亮
 syntax enable
@@ -24,3 +25,6 @@ filetype on
 
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 set mouse=a
+
+" 高亮行设置
+set cursorline

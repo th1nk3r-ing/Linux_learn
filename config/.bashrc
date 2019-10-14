@@ -8,6 +8,14 @@ case $- in
 	*) return;;
 esac
 
+export prt_Green="\e[1;32m"
+export prt_Yellow="\e[1;33m"
+export prt_Red="\e[1;31m"
+export prt_RedLine="\e[4;31m"
+export prt_GreenLine="\e[4;32m"
+export prt_YellowLine="\e[4;33m"
+export prt_End="\e[0m"
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -92,7 +100,6 @@ alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
 alias la='ls -A'
 alias l='ls -CF'
 alias vi='vim'
-alias cdwin='cd /mnt/hgfs/win-Desktop'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
