@@ -23,8 +23,5 @@ set showmatch
 " 侦测文件类型 
 filetype on
 
-" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=a
-
 " 高亮行设置
 set cursorline
