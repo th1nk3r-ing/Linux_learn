@@ -14,4 +14,6 @@
 
 ### 5. [ubuntu 设置](./ubuntu-settings.md)
 
-### 6. [ssh原理](./ssh原理.md)
+### 6. ~~[ssh原理](./ssh原理.md)(尚待补充)~~ 
+
+### 7. ~~[cmake 学习](./Cmake_learn.md)~~
