@@ -137,6 +137,10 @@ Host alias
     HostName remote
     User user
     Port port
+Host mi6
+    HostName 192.168.1.11
+    User my_Mi6_userName
+    Port 8022    
 ```
 
 - 使用: `ssh alias` 即可;
