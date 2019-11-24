@@ -100,6 +100,18 @@ alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
 alias la='ls -A'
 alias l='ls -CF'
 alias vi='vim'
+alias clc='clear'
+
+# if is WSL, add some WSL-unique-alias
+uname -a | grep "Microsoft" >/dev/null
+if [ $? -eq 0 ] ;then
+	alias e.='explorer.exe .'
+fi
+
+# add android-termux command;
+if [ ! -f ~/termux_sh.sh ]; then
+	. ~/termux_sh
+fi
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -133,7 +145,7 @@ export PATH=$PATH:/opt/google/chrome
 eval `dircolors $HOME/.dir_colors`
 
 #autojump
-[[ -s /home/th1nk3r/.autojump/etc/profile.d/autojump.sh ]] && source /home/th1nk3r/.autojump/etc/profile.d/autojump.sh
+[[ -s /home/think3r/.autojump/etc/profile.d/autojump.sh ]] && source /home/think3r/.autojump/etc/profile.d/autojump.sh
 
 # 函数: 使用命令得到 git 项目的分支名字;
 function parse_git_branch_and_add_brackets {

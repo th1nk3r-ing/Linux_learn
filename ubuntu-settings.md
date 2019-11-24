@@ -129,8 +129,8 @@ cp -r .ssh ~/
 # fix: 权限相关
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/config
-chmod 644 id_rsa.pub
-chmod 600 id_rsa
+chmod 644 ~/.ssh/id_rsa.pub
+chmod 600 ~/.ssh/id_rsa
 ```
 
 ### <font color=#FF4500> 解决 python pip install慢的方法 </font>
