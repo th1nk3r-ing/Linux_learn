@@ -109,8 +109,8 @@ if [ $? -eq 0 ] ;then
 fi
 
 # add android-termux command;
-if [ ! -f ~/termux_sh.sh ]; then
-	. ~/termux_sh
+if [ -f ~/termux_sh.sh ]; then
+	. ~/termux_sh.sh
 fi
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -142,10 +142,14 @@ fi
 export PATH=$PATH:/opt/google/chrome
 
 #取消windows路径中的文件夹背景色
-eval `dircolors $HOME/.dir_colors`
+if [ -f ~/.dir_colors ]; then
+	eval `dircolors $HOME/.dir_colors`
+fi
 
 #autojump
-[[ -s /home/think3r/.autojump/etc/profile.d/autojump.sh ]] && source /home/think3r/.autojump/etc/profile.d/autojump.sh
+if [ -d $HOME/.autojump ]; then
+	[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+fi
 
 # 函数: 使用命令得到 git 项目的分支名字;
 function parse_git_branch_and_add_brackets {
