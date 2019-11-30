@@ -96,7 +96,12 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
+if [ -x /usr/local/bin/exa ]; then
+	alias ll="exa -aHlFg --time-style=long-iso"
+	alias lll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
+else
+	alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
+fi
 alias la='ls -A'
 alias l='ls -CF'
 alias vi='vim'
@@ -106,6 +111,8 @@ alias clc='clear'
 uname -a | grep "Microsoft" >/dev/null
 if [ $? -eq 0 ] ;then
 	alias e.='explorer.exe .'
+# 挂载网络磁盘
+#	sudo mount -t drvfs D: /mnt/d
 fi
 
 # add android-termux command;
