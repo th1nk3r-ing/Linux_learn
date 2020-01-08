@@ -89,5 +89,5 @@
         |压缩包类型|压缩命令|    
         |---|---|
 
-- 
-
+- 安装 man 文档:
+  - `sudo apt-get install manpages-posix-dev glibc-doc`

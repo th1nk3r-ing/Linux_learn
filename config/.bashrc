@@ -96,12 +96,10 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-if [ -x /usr/local/bin/exa ]; then
-	alias ll="exa -aHlFg --time-style=long-iso"
-	alias lll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
-else
-	alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
+if command -v exa > /dev/null; then
+	alias el="exa -aHlFg --time-style=long-iso"
 fi
+alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
 alias la='ls -A'
 alias l='ls -CF'
 alias vi='vim'
@@ -166,3 +164,10 @@ function parse_git_branch_and_add_brackets {
 #PS1="\h:\W \u\[\033[0;32m\]\$(parse_git_branch_and_add_brackets) \[\033[0m\]\$ "
 #PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\$(parse_git_branch_and_add_brackets) \[\033[0m\]\$ "
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[0;32m\]\$(parse_git_branch_and_add_brackets)\[\033[0m\]\$ "
+
+
+# 自动挂载网络磁盘
+#if [ ! -f "/mnt/u/.bashrc" ]; then
+#	echo passwd | sudo -S mount -t drvfs U: /mnt/u
+#	echo -e $prt_Green "mount netdisk U success!" $prt_End
+#fi
