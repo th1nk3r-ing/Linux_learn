@@ -106,8 +106,7 @@ alias vi='vim'
 alias clc='clear'
 
 # if is WSL, add some WSL-unique-alias
-uname -a | grep "Microsoft" >/dev/null
-if [ $? -eq 0 ] ;then
+if uname -a | grep "Microsoft" >/dev/null;then
 	alias e.='explorer.exe .'
 # 挂载网络磁盘
 #	sudo mount -t drvfs D: /mnt/d
@@ -148,12 +147,12 @@ export PATH=$PATH:/opt/google/chrome
 
 #取消windows路径中的文件夹背景色
 if [ -f ~/.dir_colors ]; then
-	eval `dircolors $HOME/.dir_colors`
+	eval "$(dircolors "$HOME/.dir_colors")"
 fi
 
 #autojump
-if [ -d $HOME/.autojump ]; then
-	[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+if [ -d "$HOME/.autojump" ]; then
+	[[ -s "$HOME/.autojump/etc/profile.d/autojump.sh" ]] && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 fi
 
 # 函数: 使用命令得到 git 项目的分支名字;
