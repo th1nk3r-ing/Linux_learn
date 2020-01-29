@@ -63,30 +63,40 @@
 
 - 安装 `chrome`
 - linux 下的 7 中文件类型:
-    - 普通文件 f, 目录 d, 符号链接 l, 管道 p,  套接字 s, 字符设备 c, 块设备b.
+  - 普通文件 f, 目录 d, 符号链接 l, 管道 p,  套接字 s, 字符设备 c, 块设备b.
 - 搜素
-    - find, `find 搜索路径 参数 搜索内容`
-        - `-name` '文件名'
-        - `-size` 
-        - `-type`
-        - `-ctime` `-mtime` `-atime` 
-            -  -n n天以内.
-        - `maxdepth` `mindepth` 搜索深度
-        - `-ok` 或 `-exec` 执行的命令 `{} \;`
-            -高级用法: `find ./ -name "*.md" -size +10k | xargs ls -alh`
-    - `grep -r '搜索内容' 搜素路径`
-        - `grep -r "颜色空间" ./ -n`
-- 
+  - find, `find 搜索路径 参数 搜索内容`
+    - `-name` '文件名'
+    - `-size` 
+    - `-type`
+    - `-ctime` `-mtime` `-atime` 
+      - -n n天以内.
+    - `maxdepth` `mindepth` 搜索深度
+    - `-ok` 或 `-exec` 执行的命令 `{} \;`
+        -高级用法: `find ./ -name "*.md" -size +10k | xargs ls -alh`
+    - `print` :
+      > print the full file name on the standard output, followed by a newline.
+    - `print0`
+      > print the full file name on the standard output, followed by a null character (instead of the newline character that -print uses).
+- `grep -r '搜索内容' 搜素路径`
+  - `grep -r "颜色空间" ./ -n` ;
+  - `-0, --null` :
+    > Input  items are terminated by a null character instead of by whitespace, and the quotes and backslash are not special (every character is taken lit‐              erally).  Disables the end of file string, which is treated like any other argument.  <u> Useful when input items might contain white space, quote marks,              or backslashes.  The GNU find -print0 option produces input suitable for this mode. </u>
+  - `grep && find` 带空格的文件:
+    - `find ./ -name "*.*" | xargs -0 grep "testChar"`
+
 
 ## <font color=#009A000> 三  </font>
 
 - 压缩解压缩:
     - 解压缩:
-        |压缩包类型|解压命令|    
-        |---|---|   
-        |`*.tar.gz`| `tar xzvf fileName`|
+        |压缩包类型|解压命令|
+        |---|---|
+        |`*.tar.gz` 或 `*.tgz`| `tar xzvf fileName`|
+        | `*.zip` | `unzip fileName` |
+        | `*.rar` | `unrar fileName` |
     - 压缩:
-        |压缩包类型|压缩命令|    
+        |压缩包类型|压缩命令|
         |---|---|
 
 - 安装 man 文档:
