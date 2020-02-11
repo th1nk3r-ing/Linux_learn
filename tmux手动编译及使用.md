@@ -1,4 +1,4 @@
-# <font color=#0099ff> **tmux 使用及手动编译 tmux ** </font>
+# <font color=#0099ff> **tmux 使用及手动编译 tmux** </font>
 
 > `@think3r` 2019-11-30 12:06:11
 
@@ -32,9 +32,9 @@ make && make install
 
 ### <font color=#FF4500> 0x01 使用 </font>
 
-1. 输入命令 tmux 使用工具
-2. 上下分屏：ctrl + b  再按 "
-3. 左右分屏：ctrl + b  再按 %
-4. 切换屏幕：ctrl + b  再按 o
-5. 关闭一个终端：ctrl + b  再按 x
-6. 上下分屏与左右分屏切换： ctrl + b  再按空格键
+1. 输入命令 `tmux` 使用工具
+2. 上下分屏：`ctrl + b`  再按 `"`
+3. 左右分屏：`ctrl + b  再按 `%`
+4. 切换屏幕：`ctrl + b`  再按 `o`
+5. 关闭一个终端：`ctrl + b`  再按 `x`
+6. 上下分屏与左右分屏切换： `ctrl + b`  再按空格键

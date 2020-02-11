@@ -1,9 +1,10 @@
 # <font color=#0099ff> **TFTP 命令** </font>
 
-> `@think3r` 2017-08-07 22:50:21
-> 参考链接 : 
->   1. [tftp命令](http://man.linuxde.net/tftp)
->   2. [tftp使用方法](http://blog.sina.com.cn/s/blog_7d7e9d0f0101ifoz.html)
+> `@think3r` 2017-08-07 22:50:21  
+> 参考链接 :
+> 1. [tftp命令](http://man.linuxde.net/tftp)
+> 2. [tftp使用方法](http://blog.sina.com.cn/s/blog_7d7e9d0f0101ifoz.html)
+> 3. [Trivial File Transfer Protocol -- wikipedia](https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol)
 
 ## <font color=#009A000> 一、TFTP 简介 </font>
 
@@ -17,24 +18,24 @@
 ## <font color=#009A000> 二、 tftp 命令的用法 </font>
 
 - `tftp [option] [参数]`   
-    - tftp 默认占用 `69` 端口。
+  - tftp 默认占用 `69` 端口。
 - **选项(option):**
 
- ````
-   -g 表示下载文件 (get), 下载文件时用.
-   -p 表示上传文件 (put), 上传文件时用，
-   -l 表示本地文件名(local file), 后跟存在于 Client 的源文件名，
+    ````
+    -g 表示下载文件 (get), 下载文件时用.
+    -p 表示上传文件 (put), 上传文件时用，
+    -l 表示本地文件名(local file), 后跟存在于 Client 的源文件名，
         或下载 Client 后重命名的文件名。
-   -r 表示远程主机的文件名(remote file), 后跟 Server 即 PC 机 tftp 服务器根目录中的
+    -r 表示远程主机的文件名(remote file), 后跟 Server 即 PC 机 tftp 服务器根目录中的
         源文件名，或上传 Server 后重命名后的文件名。
-   -b SIZE Transfer blocks of SIZE octets (暂存多大数据后再写入, 可加快传输速度.)
-   ````
+    -b SIZE Transfer blocks of SIZE octets (暂存多大数据后再写入, 可加快传输速度.)
+    ````
 
 
 ## <font color=#009A000> 三、TFTP 命令说明 </font>
 
 - 主要用法:
-    - `tftp –g/-p 目标文件名  源文件名  服务器地址`
+  - `tftp –g/-p 目标文件名  源文件名  服务器地址`
 
 - 一些说明:
 

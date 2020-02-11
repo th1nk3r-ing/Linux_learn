@@ -8,6 +8,8 @@
 关于工具的学习, 用多少学多少才是较好的方式, 即:
 > **We learn by making mistakes and doing projects.** <br>
 
+## <font color=#009A000> 0x00 专业技能 </font>
+
 ### 1. [Linux 基础知识 shell-cmd](./Linux基础知识.md)
 
 ### 2. [gcc 使用](./gcc使用.md)
@@ -23,3 +25,9 @@
 ### 7. ~~[cmake 学习](./Cmake_learn.md)~~
 
 ### 8. [打印重定向](./linux_输入输出.md)
+
+
+## <font color=#009A000> 零散知识 </font>
+
+1. [tmux 使用及手动编译 tmux](./tmux手动编译及使用.md)
+2. [tftp 命令详解](./TFTP命令详解.md)
