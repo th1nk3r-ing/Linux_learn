@@ -22,7 +22,7 @@
 
 ### 6. [ssh原理](./ssh原理.md)
 
-### 7. ~~[cmake 学习](./Cmake_learn.md)~~
+### 7. [cmake 学习](./Cmake_learn.md)
 
 ### 8. [打印重定向](./linux_输入输出.md)
 
