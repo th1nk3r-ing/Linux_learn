@@ -12,22 +12,21 @@
 
 ### 1. [Linux 基础知识 shell-cmd](./Linux基础知识.md)
 
-### 2. [gcc 使用](./gcc使用.md)
+### 2. [ubuntu 设置](./ubuntu-settings.md)
 
-### 3. [makefile 学习](./MakeFile_learn.md)
+### 3. [gcc 使用](./gcc使用.md)
 
-### 4. [gdb 使用](./gdb.md)
+### 4. [makefile 学习](./MakeFile_learn.md)
 
-### 5. [ubuntu 设置](./ubuntu-settings.md)
+### 5. [gdb 使用](./gdb.md)
 
-### 6. [ssh原理](./ssh原理.md)
+### 6. [ssh 原理](./ssh原理.md)
 
 ### 7. [cmake 学习](./Cmake_learn.md)
 
-### 8. [打印重定向](./linux_输入输出.md)
-
-
-## <font color=#009A000> 零散知识 </font>
+## <font color=#009A000> 0x01 零散知识 </font>
 
 1. [tmux 使用及手动编译 tmux](./tmux手动编译及使用.md)
 2. [tftp 命令详解](./TFTP命令详解.md)
+3. [ubuntu安装sqlite](./ubuntu安装sqlite.md)
+4. [linux tty 与 打印重定向](./linux_输入输出.md)
