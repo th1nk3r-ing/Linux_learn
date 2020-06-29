@@ -4,8 +4,11 @@
 
 ## <font color=#009A000> 0x00 vmware 虚拟机安装 </font>
 
+- [Ubuntu 各版本代号简介](https://blog.csdn.net/zhengmx100/article/details/78352773)
 - 国内镜像:
-    - [http://mirrors.163.com]()
+    - [Ubuntu18.04更换国内源（阿里，网易，中科大，清华等源）](https://www.cnblogs.com/fanbi/p/10423080.html)
+    - [http://mirrors.163.com](http://mirrors.163.com)
+    - [https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
 - 安装略;
     - [Operating System not found for VMware解决方案](https://blog.csdn.net/dearbaba_8520/article/details/80506349)
     - 更新源修改为阿里云:
