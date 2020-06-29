@@ -160,3 +160,9 @@ index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 - <font color=#9664FF>学习使用 VIM, 同时 vscode 也安装 `vim` 和 `vi` </font>
 - <font color=#EA00DA>cmder 配置与备份</font>
     - alias 设置: `C:\Program Files My\cmder\vendor\git-for-windows\etc`
+
+## <font color=#009A000> **待读** </font>
+
+- [mac 装了 oh my zsh 后比用 bash 具体好在哪儿？](https://www.zhihu.com/question/29977255)
+- ubuntu 安装 zsh 和 oh-my-zsh;
+- vim 进阶
