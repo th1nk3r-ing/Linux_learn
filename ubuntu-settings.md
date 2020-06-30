@@ -2,11 +2,10 @@
 
 > `@think3r` 2017-11-09 0:3:52
 
-
-
 ## <font color=#009A000> **0x-1 待读** </font>
 
 - [mac 装了 oh my zsh 后比用 bash 具体好在哪儿？](https://www.zhihu.com/question/29977255)
+  - [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)
 - `.rc_add` 修改 :
   - mac 的 prt 配置(仅添加至 mac);
   - mac 的 `PS1` 配置到 (zsh);
@@ -172,8 +171,6 @@ chmod 600 ~/.ssh/id_rsa
 [global]
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 ```
-
-
 
 ## <font color=#009A000> **ubuntu 系统备份** </font>
 
