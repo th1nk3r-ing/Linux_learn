@@ -15,21 +15,26 @@ alias la='ls -A'
 alias l='ls -CF'
 alias clc='clear'
 
-# if is WSL, add some WSL-unique-alias
-if uname -a | grep "Microsoft" >/dev/null;then
+# if is WSL / MACOS, add some platform-unique-alias
+if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
     alias e.='explorer.exe .'
+
     # 挂载网络磁盘
     # sudo mount -t drvfs D: /mnt/d
+
+    #取消windows路径中的文件夹背景色
+    if [ -f ~/.dir_colors ]; then
+        eval "$(dircolors "$HOME/.dir_colors")"
+    fi
+elif (uname -a | grep "Darwin" >/dev/null) ;then       # MACOS
+    alias e.='open .'
+    alias ll="ls -alhFGT"   # MACOS ll 特殊化;
+    #echo "this is $prt_YellowLine macos $prt_End, reg open ."
 fi
 
 # add android-termux command;
 if [ -f ~/termux_sh.sh ]; then
     . ~/termux_sh.sh
-fi
-
-#取消windows路径中的文件夹背景色
-if [ -f ~/.dir_colors ]; then
-    eval "$(dircolors "$HOME/.dir_colors")"
 fi
 
 #autojump
@@ -42,20 +47,26 @@ function parse_git_branch_and_add_brackets {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
 }
 
+# PS1 相关
 if [ "$SHELL" = "/bin/bash" ]; then
     echo -e "current shell is $prt_Yellow bash $prt_End"
     #设置ssh连接时的shell配色方案为 ubuntu 自带(加入了显示 git 分支的功能;)
     #PS1="\h:\W \u\[\033[0;32m\]\$(parse_git_branch_and_add_brackets) \[\033[0m\]\$ "
     #PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\$(parse_git_branch_and_add_brackets) \[\033[0m\]\$ "
     PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[0;32m\]\$(parse_git_branch_and_add_brackets)\[\033[0m\]\$ "
+elif [ "$SHELL" = "/bin/zsh" ]; then
+    # oh-my-zsh 默认主题的情况下, 修改 PS1
+    if [ -d "$HOME/.oh-my-zsh" ] && [ "$ZSH_THEME" = "robbyrussell" ]; then
+        PROMPT='%{$fg_bold[red]%}-> %{$fg_bold[green]%}%p%{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}% %{$fg[magenta]%}%(?..%?%2v)%{$reset_color%}#: '
+    fi
 fi
 
 if [ "$SHELL" = "/bin/zsh" ]; then
     # oh-my-zsh 的自动补全插件
     if [ -d "$HOME/.oh-my-zsh/plugins/incr" ]; then
-        source "$HOME//.oh-my-zsh/plugins/incr/incr*.zsh"
+        source "$HOME/.oh-my-zsh/plugins/incr/incr*.zsh"
         #echo -e "have is $prt_Red incr file $prt_End"
     fi
 
-    echo -e "current shell is $prt_Yellow zsh $prt_End"
+    #echo -e "current shell is $prt_Yellow zsh $prt_End"
 fi

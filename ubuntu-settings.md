@@ -6,10 +6,7 @@
 
 - [mac 装了 oh my zsh 后比用 bash 具体好在哪儿？](https://www.zhihu.com/question/29977255)
   - [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)
-- `.rc_add` 修改 :
-  - mac 的 prt 配置(仅添加至 mac);
-  - mac 的 `PS1` 配置到 (zsh);
-- 修改整个的配置流程, 如 `bashrc` 和 `zshrc` 的 `source` 命令追加, 最终导出一个文件夹给;
+- `cp ./.rc_add ~/ && echo "\nsource ~/.rc_add" >> ~/.zshrc`
 - vim 进阶;
 
 ## <font color=#009A000> 0x-2 杂项软件 </font>
