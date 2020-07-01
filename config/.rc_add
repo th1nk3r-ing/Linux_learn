@@ -1,17 +1,16 @@
-# ubuntu's bash & zsh persional configeriation
+# ubuntu/MacOs bash & zsh persional configeriation
 # @think3r 2020-07-01 00:06:07
 
 # print color alias
-export prt_Green="\e[1;32m"
-export prt_Yellow="\e[1;33m"
-export prt_Red="\e[1;31m"
-export prt_RedLine="\e[4;31m"
-export prt_GreenLine="\e[4;32m"
-export prt_YellowLine="\e[4;33m"
-export prt_End="\e[0m"
-
-#  MACOS 下的颜色输出不太一样;
-if (uname -a | grep "Darwin" >/dev/null) ;then
+if (uname -a | grep "Linux" >/dev/null) ; then # gnu-linux
+    export prt_Green="\e[1;32m"
+    export prt_Yellow="\e[1;33m"
+    export prt_Red="\e[1;31m"
+    export prt_RedLine="\e[4;31m"
+    export prt_GreenLine="\e[4;32m"
+    export prt_YellowLine="\e[4;33m"
+    export prt_End="\e[0m"
+elif (uname -a | grep "Darwin" >/dev/null) ;then #  MACOS 下的颜色输出不太一样;
     export prt_Green="\033[1;32m"
     export prt_Yellow="\033[1;33m"
     export prt_Red="\033[1;31m"
@@ -74,10 +73,10 @@ fi
 
 if [ "$SHELL" = "/bin/zsh" ]; then
     # oh-my-zsh 的自动补全插件
-    if [ -d "$HOME/.oh-my-zsh/plugins/incr" ]; then
-        source "$HOME/.oh-my-zsh/plugins/incr/incr*.zsh"
-        #echo -e "have is $prt_Red incr file $prt_End"
-    fi
+    #if [ -d "$HOME/.oh-my-zsh/plugins/incr" ]; then
+    #    source "$HOME/.oh-my-zsh/plugins/incr/incr*.zsh"
+    #    #echo -e "have is $prt_Red incr file $prt_End"
+    #fi
 
     #echo -e "current shell is $prt_Yellow zsh $prt_End"
 fi
