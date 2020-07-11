@@ -1,8 +1,8 @@
-# ubuntu/MacOs bash & zsh persional configeriation
+# ubuntu's bash & zsh persional configeriation
 # @think3r 2020-07-01 00:06:07
 
 # print color alias
-if (uname -a | grep "Linux" >/dev/null) ; then # gnu-linux
+if (uname -a | grep "Linux" > /dev/null) ; then # gnu-linux
     export prt_Green="\e[1;32m"
     export prt_Yellow="\e[1;33m"
     export prt_Red="\e[1;31m"
@@ -10,7 +10,7 @@ if (uname -a | grep "Linux" >/dev/null) ; then # gnu-linux
     export prt_GreenLine="\e[4;32m"
     export prt_YellowLine="\e[4;33m"
     export prt_End="\e[0m"
-elif (uname -a | grep "Darwin" >/dev/null) ;then #  MACOS 下的颜色输出不太一样;
+elif (uname -a | grep "Darwin" > /dev/null) ;then #  MACOS 下的颜色输出不太一样;
     export prt_Green="\033[1;32m"
     export prt_Yellow="\033[1;33m"
     export prt_Red="\033[1;31m"
@@ -31,6 +31,11 @@ if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
 
     # 挂载网络磁盘
     # sudo mount -t drvfs D: /mnt/d
+    # 自动挂载网络磁盘
+    #if [ ! -f "/mnt/u/.bashrc" ]; then
+    #	echo passwd | sudo -S mount -t drvfs U: /mnt/u
+    #	echo -e $prt_Green "mount netdisk U success!" $prt_End
+    #fi
 
     #取消windows路径中的文件夹背景色
     if [ -f ~/.dir_colors ]; then
@@ -40,6 +45,11 @@ elif (uname -a | grep "Darwin" >/dev/null) ;then       # MACOS
     alias e.='open .'
     alias ll="ls -alhFGT"   # MACOS ll 特殊化;
     #echo "this is $prt_YellowLine macos $prt_End, reg open ."
+fi
+
+# some more ls aliases
+if command -v exa > /dev/null; then
+	alias el="exa -aHlFg --time-style=long-iso"
 fi
 
 # add android-termux command;
@@ -78,5 +88,14 @@ if [ "$SHELL" = "/bin/zsh" ]; then
     #    #echo -e "have is $prt_Red incr file $prt_End"
     #fi
 
-    #echo -e "current shell is $prt_Yellow zsh $prt_End"
+    echo -e "current shell is $prt_Yellow zsh $prt_End"
+fi
+
+# 本地的可执行文件 path 添加;
+if [ -d "$HOME/bin" ]; then
+    # add adb path; 如果不加入, 则需要使用 adb.exe 代替 adb
+    my_adb_path="$HOME/bin/platform-tools"
+    if [ -d "$my_adb_path" ]; then
+       PATH="$PATH:$my_adb_path"
+    fi
 fi
