@@ -12,7 +12,7 @@
 ## <font color=#009A000> 0x-2 杂项软件 </font>
 
 - 换源 : [https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
-- `sudo apt-get install sl cmake cloc ffmpeg tree busybox shellcheck`
+- `sudo apt-get install screenfetch sl cmake cloc ffmpeg tree busybox shellcheck clang figlet`
 - `sudo apt-get install zsh`
 
 ## <font color=#009A000> 0x-3 </font>
