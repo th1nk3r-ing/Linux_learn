@@ -147,6 +147,8 @@
   - 对文件执行 `sed` 操作;
 - 查看某个进程的内存分布 : 
   - `pgrep threadName | xargs pmap`
+- 递归删除某个路径下的所有空文件夹 :
+  - `find -type d -empty -print0| xargs -0 -n 1 rm -rf`
 - [多次 `grep` 没有看到输出](https://www.cnblogs.com/jwentest/p/8186634.html)
   - 管道 `|` 是全缓冲的，一般来说 buffer_size 为 4096，有些是 8192。不管具体值多少，只有 buffer_size 满了，才会看到输出。
   - `grep` 当带上了 `--line-buffer` 的时候，每输出一行，就刷新一次。
