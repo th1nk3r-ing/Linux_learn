@@ -19,7 +19,6 @@ cmake /path/to/my/source/folder # cmake srcDir
 
 ## <font color=#009A000> 0x01 example </font>
 
-
 ```cmake
 # cmake 内置命令支持大写、小写或者混合使用; 而内置变量是区分大小写的，或者干脆就说，cmake的所有变量都是区分大小写的
 # cmake最低版本需求，不加入此行会受到警告信息
