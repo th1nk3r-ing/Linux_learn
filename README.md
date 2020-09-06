@@ -16,13 +16,15 @@
 
 ### 3. [gcc 使用](./gcc使用.md)
 
-### 4. [makefile 学习](./MakeFile_learn.md)
+### 4. [makefile 学习](./dsl/MakeFile_learn.md)
 
 ### 5. [gdb 使用](./gdb.md)
 
 ### 6. [ssh 原理](./ssh原理.md)
 
-### 7. [cmake 学习](./Cmake_learn.md)
+### 7. [cmake 学习](./dsl/cmake_learn.md)
+
+### 8. [gradle 学习](./dsl/gradle_learn.md)
 
 ## <font color=#009A000> 0x01 零散知识 </font>
 
