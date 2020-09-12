@@ -7,6 +7,8 @@
 > 4. [CMake 完全教程 lolimay/CMake-Tutorial](https://github.com/lolimay/CMake-Tutorial)
 > 5. [CMake output/build directory](https://stackoverflow.com/questions/18826789/cmake-output-build-directory)
 > 6. [CMake文档](https://mubu.com/doc/t1VDCEn4O0)
+> 7. [CMake编译中target_link_libraries中属性PRIVATE、PUBLIC、INTERFACE含义](https://blog.csdn.net/turbock/article/details/90034787)
+> 8. [target_compile_definitions和target_compile_options中第二个参数的含义](https://stackoverflow.com/questions/30546677/cmake-how-to-set-multiple-compile-definitions-for-target-executable)
 
 ## <font color=#009A000> 0x00 </font>
 
@@ -130,8 +132,10 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
   - CMake 提供了很多和平台无关的命令，在任何平台都可以使用：chdir, copy, copy_if_different 等;
 - 打印运行的每一行 CMake : `--trace`
 - 常用指令 :
-  - 可执行文件 : `add_executable(exename srcname)`;
-  - lib 库 : `add_library(libname  [SHARED|STATIC|MODULE]  [EXCLUDE_FROM_ALL]  source1 source2 ... sourceN)`;
+  - 成果物 :
+    - 可执行文件 : `add_executable(exename srcname)`;
+    - lib 库 : `add_library(libname  [SHARED|STATIC|MODULE]  [EXCLUDE_FROM_ALL]  source1 source2 ... sourceN)`;
+    - 自定义目标 : `add_custom_target`
   - 头文件路径 :
     - `target_include_directories( <target>  [SYSTEM]  [BEFORE]   <INTERFACE|PUBLIC|PRIVATE>  [items1...]    [<INTERFACE|PUBLIC|PRIVATE>  [items2...] ...])`
     - `include_directories( [AFTER|BEFORE]  [SYSTEM]  dir1 [dir2 …])`
@@ -147,6 +151,12 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
     - 区别：
       - `target_link_libraries` 可以给工程或者库文件设置其需要链接的库文件，而且不需要填写全路径;
       - 但是 `link_libraries` 只能给工程添加依赖的库，而且必须添加全路径, 因而不常用;
+  - 编译选项 :
+    - 通过命令行定义的宏变量 :
+      - `target_compile_definitions( <target> <INTERFACE|PUBLIC|PRIVATE> [items1...][<INTERFACE|PUBLIC|PRIVATE> [items2...] ...] )`
+    - gcc其他的一些编译选项指定，比如 `-fPIC` :
+      - `target_compile_options(<target> [BEFORE] <INTERFACE|PUBLIC|PRIVATE> [items1...] [<INTERFACE|PUBLIC|PRIVATE> [items2...] ...]`
+    - 
 - 变量与缓存 :
   - 局部变量 : `CMakeLists.txt` 相当于一个函数，第一个执行的 `CMakeLists.txt` 相当于主函数，正常设置的变量不能跨越 `CMakeLists.tx` t文件，相当于局部变量只在当前函数域里面作用一样;
   - 缓存变量 : 缓存变量就是 cache 变量，相当于全局变量，都是在第一个执行的 `CMakeLists.txt` 里面被设置的，不过在子项目的 `CMakeLists.txt` 文件里面也是可以修改这个变量的，此时会影响父目录的 `CMakeLists.txt`，这些变量用来配置整个工程，配置好之后对整个工程使用。

@@ -40,8 +40,6 @@ sh tools/do-compile-openssl.sh $FF_TARGET
 ./Configure   zlib-dynamic no-shared --openssldir=/Users/yangzhongyao/work/MGPlayerSDK/android/contrib/build/openssl-armv7a/output --cross-compile-prefix=arm-linux-androideabi- android-armv7
 ```
 
-
-
 ## <font color=#009A000> 0x01 Android mpf cmake 编译 </font>
 
 ```log
@@ -110,6 +108,16 @@ set(CMAKE_TOOLCHAIN_FILE "/home/think3r/bin/android-ndk-r14b/build/cmake/android
 --target=aarch64-linux-harmonyos 
 --gcc-toolchain=/home/think3r/bin/hongmeng-native-linux-x86_64-1.0.0.0/llvm
 --sysroot=/home/think3r/bin/hongmeng-native-linux-x86_64-1.0.0.0/sysroot  
+
+cmake -DCMAKE_TOOLCHAIN_FILE=$NDK_PATH/build/cmake/android.toolchain.cmake \
+    -DANDROID_NDK=$NDK_PATH                      \
+    -DCMAKE_BUILD_TYPE=Release                     \
+    -DANDROID_ABI=$abi          \
+    -DANDROID_NATIVE_API_LEVEL=16                  \
+    -DANDROID_STL=c++_static \
+    -DCMAKE_CXX_FLAGS=-frtti -fexceptions --std=c++1z \
+    -DCMAKE_INSTALL_PREFIX=$OUTPUT_PATH \
+    ../..
 
 ```
 
