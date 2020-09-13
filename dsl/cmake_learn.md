@@ -1,5 +1,7 @@
 # <font color=#0099ff> **Cmake 学习** </font>
 
+<!-- [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) --->
+
 > `@think3r` 2019-10-14 22:48:12
 > 1. [CMake offical Documentation](https://cmake.org/cmake/help/v3.15/)
 > 2. [CMake 入门实战 -- hahack](https://www.hahack.com/codes/cmake/#stq=&stp=0)
@@ -10,12 +12,12 @@
 > 7. [CMake编译中target_link_libraries中属性PRIVATE、PUBLIC、INTERFACE含义](https://blog.csdn.net/turbock/article/details/90034787)
 > 8. [target_compile_definitions和target_compile_options中第二个参数的含义](https://stackoverflow.com/questions/30546677/cmake-how-to-set-multiple-compile-definitions-for-target-executable)
 
-## <font color=#009A000> 0x00 </font>
+## <font color=#009A000> 0x00 构建 </font>
 
-`cmake` 是一个构建工具, 其为 `DSL`, 用来生成 `makefile`, 最终编译还是使用的 `make`;
+`cmake` (Cross Platform Make) 是一个构建工具, 其为 `DSL` 语言, 用来生成 `makefile`, 最终编译还是使用的 `make`;
 
 ```sh
-# 外部构建(推荐使用)
+# 外部构建( out-of-source 推荐使用)
 cd /path/to/my/build/folder     # 进入想要存储成果物的文件夹
 cmake /path/to/my/source/folder # cmake srcDir
 ```
@@ -82,11 +84,11 @@ set_target_properties(${Library_OutPutName}_static PROPERTIES
 # 设置动态库版本号, 主要是为了解决 linux 上的 dll-hell 问题;
 #  [LINUX下动态库及版本号控制](https://blog.csdn.net/David_xtd/article/details/7045792)
 # {libname.so.x.y.z (real name) ->  x是主版本号(Major Version Number)，y是次版本号(Minor Version Number)，z是发布版本号(Release Version Number) }
-set_target_properties(${Library_OutPutName}_shared PROPERTIES VERSION 1.2.3 SOVERSION 1) 
+set_target_properties(${Library_OutPutName}_shared PROPERTIES VERSION 1.2.3 SOVERSION 1)
 
 # 安装共享库和头文件:
 # 设置库文件文件输出目录
-#set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/lib) 
+#set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/lib)
 install(TARGETS ${Library_OutPutName}_shared ${Library_OutPutName}_static
 		LIBRARY DESTINATION ${PROJECT_SOURCE_DIR}/install/lib
 		ARCHIVE DESTINATION ${PROJECT_SOURCE_DIR}/install/lib)
@@ -104,7 +106,7 @@ aux_source_directory(./demo/src/ src_demo_List)
 
 # 链接文件夹路径 (使用绝对路径可避免报错)
 link_directories(${PROJECT_BINARY_DIR}/)
-# link_libraries -> Link libraries to all targets added later. 
+# link_libraries -> Link libraries to all targets added later.
 # 静态库 (add_executable 之前指定) 
 #link_libraries(lib${Library_OutPutName}.a)
 add_executable(${My_Target} ${src_demo_List})
@@ -115,7 +117,7 @@ target_link_libraries(${My_Target} -l${PROJECT_BINARY_DIR}/lib${Library_OutPutNa
 install(TARGETS ${My_Target} DESTINATION ${PROJECT_SOURCE_DIR}/install
 		PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_EXECUTE)
 
-# 配置依赖关系;
+# 配置 target 依赖关系, 避免 make -j 依赖导致错误;
 add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName}_static )
 ```
 
@@ -138,6 +140,7 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
     - 自定义目标 : `add_custom_target`
   - 头文件路径 :
     - `target_include_directories( <target>  [SYSTEM]  [BEFORE]   <INTERFACE|PUBLIC|PRIVATE>  [items1...]    [<INTERFACE|PUBLIC|PRIVATE>  [items2...] ...])`
+      - 一般推荐使用上述带 target 的.
     - `include_directories( [AFTER|BEFORE]  [SYSTEM]  dir1 [dir2 …])`
       - ​`[AFTER|BEFORE]` ：指定了要添加路径是添加到原有列表之前还是之后
       - `[SYSTEM]`  ：若指定了system参数，则把被包含的路径当做系统包含路径来处理
@@ -153,10 +156,10 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
       - 但是 `link_libraries` 只能给工程添加依赖的库，而且必须添加全路径, 因而不常用;
   - 编译选项 :
     - 通过命令行定义的宏变量 :
+      - `add_definitions(-DAndroid)`
       - `target_compile_definitions( <target> <INTERFACE|PUBLIC|PRIVATE> [items1...][<INTERFACE|PUBLIC|PRIVATE> [items2...] ...] )`
-    - gcc其他的一些编译选项指定，比如 `-fPIC` :
+    - gcc 其他的一些编译选项指定，比如 `-fPIC` :
       - `target_compile_options(<target> [BEFORE] <INTERFACE|PUBLIC|PRIVATE> [items1...] [<INTERFACE|PUBLIC|PRIVATE> [items2...] ...]`
-    - 
 - 变量与缓存 :
   - 局部变量 : `CMakeLists.txt` 相当于一个函数，第一个执行的 `CMakeLists.txt` 相当于主函数，正常设置的变量不能跨越 `CMakeLists.tx` t文件，相当于局部变量只在当前函数域里面作用一样;
   - 缓存变量 : 缓存变量就是 cache 变量，相当于全局变量，都是在第一个执行的 `CMakeLists.txt` 里面被设置的，不过在子项目的 `CMakeLists.txt` 文件里面也是可以修改这个变量的，此时会影响父目录的 `CMakeLists.txt`，这些变量用来配置整个工程，配置好之后对整个工程使用。
@@ -167,10 +170,17 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
   - 内置变量 (CMake 里面包含大量的内置变量，和自定义的变量相同，常用的有以下：) :
     - `CMAKE_C_COMPILER` ：指定 `C` 编译器
     - `CMAKE_CXX_COMPILER` ：指定 `C++` 编译器
-    - `EXECUTABLE_OUTPUT_PATH` ：指定可执行文件的存放路径
-    - `LIBRARY_OUTPUT_PATH` ：指定库文件的放置路径
+    - `EXECUTABLE_OUTPUT_PATH` ：指定**最终**可执行文件的存放路径
+    - `LIBRARY_OUTPUT_PATH` ：指定**最终**库文件的放置路径
     - `CMAKE_CURRENT_SOURCE_DIR` ：当前处理的 `CMakeLists.txt` 所在的路径
     - `CMAKE_BUILD_TYPE` ：控制构建的时候是 `Debug` 还是 `Release`, 如 ：`set(CMAKE_BUILD_TYPE Debug)`
     - `CMAKE_SOURCR_DIR` ：无论外部构建还是内部构建，都指的是工程的顶层目录
     - `CMAKE_BINARY_DIR` ：内部构建指的是工程顶层目录，外部构建指的是工程发生编译的目录
     - `CMAKE_CURRENT_LIST_LINE` ：输出这个内置变量所在的行;
+    - `CMAKE_BUILD_TYPE` : 配置编译类型, 可为 : `Debug, Release, RelWithDebInfo, MinSizeRel`
+    - `CMAKE_INSTALL_PREFIX` : 安装前缀, 与 `install()` 中的 `DESTINATION` 关系为 :
+      - 如果 `DESTINATION` 路径以 `/` 开头，那么指的是绝对路径，这时候 `CMAKE_INSTALL_PREFIX` 其实就无效了;
+      - 如果你希望使用 `CMAKE_INSTALL_PREFIX` 来定义安装路径，就要写成相对路径, 最终路径为 : `${CMAKE_INSTALL_PREFIX}/<DESTINATION 定义的路径>`
+- `add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])`
+  - 这个指令用于向当前工程添加存放源文件的子目录，并可以指定 **中间** 二进制和目标二进制存放的位置。
+  - [https://cmake.org/cmake/help/latest/command/add_subdirectory.html](https://cmake.org/cmake/help/latest/command/add_subdirectory.html)

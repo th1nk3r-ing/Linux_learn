@@ -1,5 +1,7 @@
 # <font color=#0099ff> **Gradle** </font>
 
+<!-- [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) --->
+
 > `@think3r` 2020-08-10 00:01:14 <br />
 > 参考链接 :
 > 1. [来自Gradle开发团队的Gradle入门教程](https://www.bilibili.com/video/BV1DE411Z7nt?from=search&seid=5541083429304083164)
