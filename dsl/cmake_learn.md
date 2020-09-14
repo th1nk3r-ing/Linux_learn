@@ -11,6 +11,7 @@
 > 6. [CMake文档](https://mubu.com/doc/t1VDCEn4O0)
 > 7. [CMake编译中target_link_libraries中属性PRIVATE、PUBLIC、INTERFACE含义](https://blog.csdn.net/turbock/article/details/90034787)
 > 8. [target_compile_definitions和target_compile_options中第二个参数的含义](https://stackoverflow.com/questions/30546677/cmake-how-to-set-multiple-compile-definitions-for-target-executable)
+> 9. [CMake 条件判断](https://www.cnblogs.com/stonehat/p/7702744.html)
 
 ## <font color=#009A000> 0x00 构建 </font>
 
@@ -163,7 +164,7 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
 - 变量与缓存 :
   - 局部变量 : `CMakeLists.txt` 相当于一个函数，第一个执行的 `CMakeLists.txt` 相当于主函数，正常设置的变量不能跨越 `CMakeLists.tx` t文件，相当于局部变量只在当前函数域里面作用一样;
   - 缓存变量 : 缓存变量就是 cache 变量，相当于全局变量，都是在第一个执行的 `CMakeLists.txt` 里面被设置的，不过在子项目的 `CMakeLists.txt` 文件里面也是可以修改这个变量的，此时会影响父目录的 `CMakeLists.txt`，这些变量用来配置整个工程，配置好之后对整个工程使用。
-    - 如 : `set(MY_CACHE_VALUE "cache_value" CACHE INTERNAL "THIS IS MY CACHE VALUE")
+    - 如 : `set(MY_CACHE_VALUE "cache_value" CACHE INTERNAL "THIS IS MY CACHE VALUE")`
   - 环境变量 :
     - `set(ENV{variable_name} value)`
     - `$ENV{variable_name}`
@@ -172,15 +173,85 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
     - `CMAKE_CXX_COMPILER` ：指定 `C++` 编译器
     - `EXECUTABLE_OUTPUT_PATH` ：指定**最终**可执行文件的存放路径
     - `LIBRARY_OUTPUT_PATH` ：指定**最终**库文件的放置路径
-    - `CMAKE_CURRENT_SOURCE_DIR` ：当前处理的 `CMakeLists.txt` 所在的路径
-    - `CMAKE_BUILD_TYPE` ：控制构建的时候是 `Debug` 还是 `Release`, 如 ：`set(CMAKE_BUILD_TYPE Debug)`
+    - 固定变量 :
+      - `CMAKE_CURRENT_SOURCE_DIR` ：当前处理的 `CMakeLists.txt` 所在的路径
+      - `CMAKE_CURRENT_LIST_FILE`
+      - `CMAKE_CURRENT_LIST_LINE`
+      - `CMAKE_SYSTEM`
+        - `CMAKE_SYSTEM_NAME`, `CMAKE_SYSTEM_VERSION`, `CMAKE_SYSTEM_PROCESSOR`
+    - `CMAKE_BUILD_TYPE` ：控制构建的时候是 `Debug` 还是 `Release`,可为 : `Debug, Release, RelWithDebInfo, MinSizeRel`
     - `CMAKE_SOURCR_DIR` ：无论外部构建还是内部构建，都指的是工程的顶层目录
     - `CMAKE_BINARY_DIR` ：内部构建指的是工程顶层目录，外部构建指的是工程发生编译的目录
     - `CMAKE_CURRENT_LIST_LINE` ：输出这个内置变量所在的行;
-    - `CMAKE_BUILD_TYPE` : 配置编译类型, 可为 : `Debug, Release, RelWithDebInfo, MinSizeRel`
     - `CMAKE_INSTALL_PREFIX` : 安装前缀, 与 `install()` 中的 `DESTINATION` 关系为 :
       - 如果 `DESTINATION` 路径以 `/` 开头，那么指的是绝对路径，这时候 `CMAKE_INSTALL_PREFIX` 其实就无效了;
       - 如果你希望使用 `CMAKE_INSTALL_PREFIX` 来定义安装路径，就要写成相对路径, 最终路径为 : `${CMAKE_INSTALL_PREFIX}/<DESTINATION 定义的路径>`
 - `add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])`
   - 这个指令用于向当前工程添加存放源文件的子目录，并可以指定 **中间** 二进制和目标二进制存放的位置。
   - [https://cmake.org/cmake/help/latest/command/add_subdirectory.html](https://cmake.org/cmake/help/latest/command/add_subdirectory.html)
+- 配置文件 :
+  - `configure_file`
+- 执行脚本 :
+  > 1. [cmake：使用execute_process调用shell命令或脚本](https://blog.csdn.net/qq_28584889/article/details/97758450)
+  > 2. [CMake命令之add_custom_comand 和 add_custom_target](https://blog.csdn.net/fuyajun01/article/details/8907207)
+  - 在 cmake 中也可以通过 `add_custom_comand` 和 `add_custom_target` 执行 shell 命令，但是他们是一般执行命令跟 `target` 的生成有关；
+  - 而 `execute_process` 只是简单地在 cmake 执行编译之前调用 shell 命令，具体使用需要结合需求来选择！
+
+  ```cmake
+  execute_process(
+    COMMAND <cmd1> [args1...]]
+    [COMMAND <cmd2> [args2...] [...]]
+    [WORKING_DIRECTORY <directory>] # 如果指定了 WORKING_DIRECTORY，则指定的目录将作为子进程当前的工作目录
+    [TIMEOUT <seconds>] #如果指定了 TIMEOUT 值，则如果在指定的时间内（以秒为单位计算，允许有小数位）子进程执行仍未完成，则将会被中断。
+    [RESULT_VARIABLE <variable>] # 如果指定了 RESULT_VARIABLE 变量，则最后命令执行的结果将保存在该变量中，它是最后一个子进程执行完后的返回值或描述某种错误信息的字符串。
+    [OUTPUT_VARIABLE <variable>] #如果指定了OUTPUT_VARIABLE或ERROR_VARIABLE变量，则该变量会分别保存标准输出和标准错误输出的内容。
+    [ERROR_VARIABLE <variable>]
+    [INPUT_FILE <file>] # 如果指定了INPUT_FILE，UTPUT_FILE或ERROR_FILE等文件名，则它们会分别与第一个子进程的标准输入，最后一个子进程的标准输出以及所有子进程的标准错误输出相关联。
+    [OUTPUT_FILE <file>]
+    [ERROR_FILE <file>]
+    [OUTPUT_QUIET] # 如果指定了OUTPUT_QUIET或ERROR_QUIET，则会忽略标准输出和错误输出。如果在同一管道中同时指定了多个OUTPUT_*或ERROR_*选项，则优先级顺序是未知的（应避免这种情况）。
+    [ERROR_QUIET]
+    [OUTPUT_STRIP_TRAILING_WHITESPACE]
+    [ERROR_STRIP_TRAILING_WHITESPACE])
+  # 执行 shell 命令
+  execute_process(COMMAND <一句 shell 命令> WORKING_DIRECTORY <这句 shell 命令执行的工作目录>)
+  # 执行 shell 脚本
+  execute_process(COMMAND sh test.sh WORKING_DIRECTORY <test.sh 所在目录>)
+  ```
+
+- 配置文件 :
+
+  ```cmake
+  # 循环 + 判断 + 脚本/命令
+  set(mylist "a" "b" c "d" "TRUE" )
+  foreach(_var ${mylist})
+    message("当前变量是：${_var}")
+    execute_process(COMMAND grep -c "#define ${_var}" ../demo/inc/common.h
+            OUTPUT_VARIABLE marcTest)
+    IF(marcTest MATCHES "1")
+      message(STATUS  "yes marco : " ${marcTest})
+    ELSE(marcTest MATCHES "0")
+      message(STATUS  "no no no no : " ${marcTest})
+    ENDIF()
+  endforeach()
+
+  # 函数调用
+  function (argument_tester arg)
+    message(STATUS "ARGN: ${ARGN}")
+    message(STATUS "ARGC: ${ARGC}")
+    message(STATUS "ARGV: ${ARGV}")
+    message(STATUS "ARGV0: ${ARGV0}")
+    message(STATUS "ARGV0: ${arg}")
+
+    list(LENGTH ARGV  argv_len)
+    message(STATUS "length of ARGV: ${argv_len}")
+    set(i 0)
+    while( i LESS ${argv_len})
+         list(GET ARGV ${i} argv_value)
+         message(STATUS "argv${i}: ${argv_value}")
+
+         math(EXPR i "${i} + 1")
+    endwhile()
+  endfunction ()
+  argument_tester(arg0 arg1 arg2 arg3)
+  ```
