@@ -55,6 +55,8 @@ elif (uname -a | grep "Darwin" >/dev/null) ;then       # MACOS
     alias e.='open .'
     alias ll="ls -alhFGT"   # MACOS ll 特殊化;
     #echo "this is $prt_YellowLine macos $prt_End, reg open ."
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
 fi
 
 # some more ls aliases
