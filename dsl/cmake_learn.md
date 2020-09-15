@@ -37,6 +37,7 @@ set(My_Target "neonOsdDemo")	#可执行文件名称
 
 # 是否导出编译过程到 compile_commands.json 文件中
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# 具体的链接命令可参考 link.txt, 路径如下 : find . -name link.txt
 
 # 配置交叉编译工具链
 set(CMAKE_SYSTEM_NAME Linux)
@@ -125,6 +126,10 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
 ## <font color=#009A000> 0x02 总结 </font>
 
 - cmake 内置命令支持大写、小写或者混合使用; 而内置变量是区分大小写的，或者干脆就说，cmake 的所有变量都是区分大小写的;
+- cmake debug 方式 :
+  - `message()` 函数 ;
+  - 配置 `CMAKE_EXPORT_COMPILE_COMMANDS` 变量, 以查看编译命令;
+  - `find . -name link.txt` 查找链接命令;
 - 如果要产生其他编译器的 makefile, 则可使用 `-G <generator-name>` 选项;
   - 如 `cmake .. -G Ninja` 等;
   - 注 : 不同平台支持的 `-G` 选项不大一样, 只有 windows 平台的 cmake 支持 vs 工程文件输出;
