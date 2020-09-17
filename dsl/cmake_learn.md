@@ -162,7 +162,7 @@ add_dependencies(${My_Target}  ${Library_OutPutName}_shared ${Library_OutPutName
       - 但是 `link_libraries` 只能给工程添加依赖的库，而且必须添加全路径, 因而不常用;
   - 编译选项 :
     - 通过命令行定义的宏变量 :
-      - `add_definitions(-DAndroid)`
+      - `add_definitions(-DAndroid)` 向 c/c++ 编译器添加 `-D` 定义;
       - `target_compile_definitions( <target> <INTERFACE|PUBLIC|PRIVATE> [items1...][<INTERFACE|PUBLIC|PRIVATE> [items2...] ...] )`
     - gcc 其他的一些编译选项指定，比如 `-fPIC` :
       - `target_compile_options(<target> [BEFORE] <INTERFACE|PUBLIC|PRIVATE> [items1...] [<INTERFACE|PUBLIC|PRIVATE> [items2...] ...]`
