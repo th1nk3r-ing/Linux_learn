@@ -10,7 +10,7 @@
 
 ### <font color=#FF4500> Gradle </font>
 
-通用的构建工具, 纯 `java` 编写, 但其构建脚本的语言为 `groovy`(全面兼容 `java`). 因此与绝大部分 jvm 库一样, Gradle 本身的安装包(`Distribution`) 极为一个 脚本和一个 lib 的集合.
+通用的构建工具, 纯 `java` 编写, 但其构建脚本的语言为 `groovy`(全面兼容 `java`). 因此与绝大部分 jvm 库一样, Gradle 本身的安装包(`Distribution`) 即为一个 脚本和一个 lib 的集合.
 
 - 2019 年 3 月份开启了中国地区的 CDN : [servicces.Gradle.org](https://services.Gradle.org).
   - 在上述链接中可找到最新的 Gradle 版本;
@@ -22,7 +22,7 @@
 - `Gradle wrapper` 既 `Gradlew` :
   - 将构建与具体的 Gradle 版本绑定起来;
     - 如果机器上没有对应版本的 Gradle 的话, 其首先下载对应版本的额 Gradle, 保证运行环境的一致性;
-      - 启动一个 jvm, 加载 `Gradle-wrapper.jar` 用来下载真正的 `Distribution`;
+      - 启动一个 jvm, 加载 `Gradle-wrapper.jar` 读取同路径下的 `gradle-wrapper.properties` 中的配置, 来下载真正的 `Distribution`;
 - `Gradle_user_home`
   - 默认位置在 `~/.Gradle/`
     - `init.d` 中的配置对所有 Gradle 构建均生效, 最典型的配置为全局的仓库替换;
@@ -31,7 +31,7 @@
 - `Daemon` :
   - jvm 启动到完成所有 jar 包的加载, 需要 10s 左右的时间, 比较慢, 因此自 Gradle-3.0 之后, 默认启用了 daemon ;
   - 轻量级的 `client jvm` 连接查找 `Daemon Jvm`(通过 `socket`), 转发具体的参数和任务至 daemon jvm, daemon 完成后,将结果和日志发回至 jvm;
-  - 本次构建结束后, client jvm 会被销毁, 而 Daemon jvm 继续保留(默认空间三小时后自动退出);
+  - 本次构建结束后, client jvm 会被销毁, 而 Daemon jvm 继续保留(默认空闲三小时后自动退出);
   - Deamon 的兼容性, client 和 Daemon 版本要对应;
   - `--no-daemon` 参数;
 
@@ -39,7 +39,7 @@
 
 - `groovy` 是一个运行在 jvm 之上的脚本语言;
   - 强类型, 动态调用;
-- `DSL` : `groovy`, `Makefile`, `cMake` 等等;
+- `DSL` : `groovy`, `Makefile`, `CMake` 等等;
   - 闭包
 
 ## <font color=#009A000> 0x01 Gradle 构建 </font>
@@ -61,7 +61,7 @@
 - task :
   - Gradle 构建的最小单元;
   - 动态的 `task` 创建;
-  - `doFirst` , `doLast`, `dependsOn`, `afterEvaluate`
+  - **`doFirst` , `doLast`, `dependsOn`, `afterEvaluate`**
 
 ## <font color=#009A000> 0x02 Gradle 插件 </font>
 
@@ -103,7 +103,7 @@ groovy 语言 :
   - groovy 可省略括号
 - `def` 定义变量, 变量为弱类型;
 - 集合 `[a,b]`
-- `map [key1:value1, key2:value2]
+- `map [key1:value1, key2:value2]`
   - `map.get("key1")`
 - groovy 的闭包其实就是一段代码块. 主要把闭包当参数来使用;
   - `Closure` 类型;
