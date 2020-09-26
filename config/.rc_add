@@ -120,11 +120,16 @@ if command -v repo > /dev/null; then
 fi
 
 #set java env
-if [ -d "$HOME/bin/jdk-14.0.2/" ];then
+if [ -d "$HOME/bin/jdk-14.0.2" ];then
     export JAVA_HOME="$HOME/bin/jdk-14.0.2/"
     export JRE_HOME=${JAVA_HOME}
     export CLASSPATH=.:${JAVA_HOME}/lib
     export PATH=${JAVA_HOME}/bin:$PATH
+elif [ -d "$HOME/bin/jdk-15.jdk" ];then
+	export JAVA_HOME="$HOME/bin/jdk-15.jdk/Contents/Home/"
+	export JRE_HOME=${JAVA_HOME}
+	export CLASSPATH=.:${JAVA_HOME}/lib
+	export PATH=${JAVA_HOME}/bin:$PATH
 fi
 
 if [ -f "$HOME/.myPath_add" ]; then

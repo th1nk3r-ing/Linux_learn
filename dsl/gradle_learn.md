@@ -74,11 +74,20 @@
   - `build.Gradle` 中的 `apply plugin: 'com.android.application'`
     - 使用的是其自身 `buildscript` 下 `dependencies` 中的依赖包;
     - [https://mvnrepository.com/artifact/com.android.tools.build/Gradle/2.3.3](https://mvnrepository.com/artifact/com.android.tools.build/Gradle/2.3.3) 中下载对应 jar 包, 解压, 即可查看;
-- 插件类型简介 :
-  - `apply plugin: 'com.android.application'` 安卓 app 插件;
-  - `apply plugin: 'com.android.library'` 安卓 lib 插件;
-  - `apply plugin: 'java'` java 程序
-  - `apply plugin: 'war'` 打包成 war 包 ???
+- 因为 gradle 并不是只针对 Android 的构建工具, 其也可以构建 java, c++ 等等, 因为 Android 开发需要用到 Android 插件, 如下为常用的一些插件 :
+
+   ```gradle
+   /* 插件声明*/
+    dependencies {
+      classpath com.android.tools.build:gradle:2.3.3
+    }
+    /* 插件使用 */
+    apply plugin: 'com.android.application'  //安卓 app 插件;
+    apply plugin: 'com.android.library'      //安卓 lib 插件;
+    apply plugin: 'java'    //java 程序 (用 java 开发 Android 插件可省略)
+    apply plugin: 'war'     //打包成 war 包 ???
+    apply plugin: 'kotlin-android'     //kotlin 程序;
+   ```
 
 ## <font color=#009A000> 0x03 其他基础 </font>
 
@@ -114,6 +123,25 @@ groovy 语言 :
 - `repositories` 仓库路径配置 :
   - `mavenLocal()` 本地仓库;
   - `mavenCentral()` 服务器中央仓库;
+  - `google()` google 自家的拓展依赖库;
+  - `jcenter()` 第三方开源库;
+
+### <font color=#FF4500> Android `build.gradle` 解析 </font>
+
+- `applicationId` 每个应用唯一标识符, 默认为创建应用程序时指定的包名;
+- `minSdkVersion` 用于指定项目最低兼容的 Android 系统版本;
+- `targetSdkVersion` 表示你在该目标版本上已经做过了充分的测试, 系统将会为你的应用程序启用一些最新的功能和特性(`minSdkVersion` 没有而 `targetSdkVersion` 有的特性);
+- `buildType` --> `release` -->
+  - `minifyEnabled` 是否对项目代码进行混淆;
+  - `proguardFiles` 用于指定混淆时使用的规则文件;
+- Android Studio 项目的三种依赖 :
+  - 本地依赖 : 对本地的 jar 包或目录添加依赖关系;
+    - `compile/implementation fileTree`
+      - `compile` 在 gradle Plugin 3.0 以上被 `implementation` 取代;
+  - 库依赖 : 可以对项目中的库模块添加依赖关系;
+    - `implementation project(':')`
+  - 远程依赖 : 可以对 jcenter 仓库上的开源项目添加依赖关系;
+    - `implementation` 远程依赖声明;
 
 ---
 
