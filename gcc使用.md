@@ -2,12 +2,14 @@
 
 >> `@think3r` 2017-09-03 20:40:39  
 
-> 参考链接： 
+> 参考链接：
 >1. [GCC 基本使用](http://www.cnblogs.com/ggjucheng/archive/2011/12/14/2287738.html)
 >2. [GCC命令](http://man.linuxde.net/gcc)
 >3. [GCC中-O1 -O2 -O3 优化的原理是什么？](https://www.zhihu.com/question/27090458)
+>4. [gcc编译选项--转](https://www.cnblogs.com/fengbeihong/p/3641384.html)
+> 5. [Using the GNU Compiler Collection (GCC)](https://gcc.gnu.org/onlinedocs/gcc-10.2.0/gcc/)
 
-## <font color=#009A000> 零、测试代码: </font>
+## <font color=#009A000> 0x00 测试代码: </font>
 
 ```c
 //test.c
@@ -19,17 +21,15 @@ int main(void)
 }
 ```
 
-
-
-## <font color=#009A000> 一、GCC 基本编译指令 </font>
+## <font color=#009A000> 0x01 GCC 基本编译指令 </font>
 
 - `gcc (选项) (参数)`
   - 参数: C 源文件
   - 选项如下 :
 
 ```shell
--o：      指定生成的输出文件； 
--E：      仅执行编译预处理； 
+-o：      指定生成的输出文件；
+-E：      仅执行编译预处理；
 -S：      将C代码转换为汇编代码； 
 -c：      仅执行编译操作，不进行连接操作。
 ---------------------优化选项-----------------------------------------------
@@ -53,32 +53,29 @@ int main(void)
 ```
 
 - `gcc test.c`
-    - 将test.c预处理、汇编、编译并链接形成可执行文件。这里未指定输出文件，默认输出为a.out。 
-
+  - 将test.c预处理、汇编、编译并链接形成可执行文件。这里未指定输出文件，默认输出为a.out。
 - 一步到位的编译指令: **`gcc test.c -o test`**
-    - 包含了如下四个编译过程：
-        1. 预处理 (Preprocess)：
-            - `gcc -E test.c -o test.i` 或 `gcc -E test.c`
-        2. 编译为汇编代码 (Compilation)：
-            - `gcc -S test.i -o test.s`
-        3. 汇编 (Assembly):
-            - `gcc -c test.s -o test.o`
-        4. 连接 (Linking):
-            - `gcc test.o -o test`
-
+  - 包含了如下四个编译过程：
+    1. 预处理 (Preprocess)：
+        - `gcc -E test.c -o test.i` 或 `gcc -E test.c`
+    2. 编译为汇编代码 (Compilation)：
+        - `gcc -S test.i -o test.s`
+    3. 汇编 (Assembly):
+        - `gcc -c test.s -o test.o`
+    4. 连接 (Linking):
+        - `gcc test.o -o test`
 - **多源文件编译方法**
     1. `gcc testfun.c test.c -o test` 
-        - 将 `testfun.c` 和 `test.c` 分别编译后链接成 `test` 可执行文件。   
-    2. 分别编译各个源文件，之后对编译后输出的目标文件链接。 
+        - 将 `testfun.c` 和 `test.c` 分别编译后链接成 `test` 可执行文件。
+    2. 分别编译各个源文件，之后对编译后输出的目标文件链接。
         ```shell
-        gcc -c testfun.c #将testfun.c编译成testfun.o 
-        gcc -c test.c #将test.c编译成test.o 
-        gcc -o testfun.o test.o -o test #将testfun.o和test.o链接成test 
+        gcc -c testfun.c #将testfun.c编译成testfun.o
+        gcc -c test.c #将test.c编译成test.o
+        gcc -o testfun.o test.o -o test #将testfun.o和test.o链接成test
         ```
     3.第一中方法编译时需要所有文件重新编译，而第二种方法可以只重新编译修改的文件，未修改的文件不用重新编译。
 
-
-## <font color=#009A000> 二、库文件链接编译 </font>
+## <font color=#009A000> 0x02 库文件链接编译 </font>
 
 - 开发软件时，完全不使用第三方函数库的情况是比较少见的，通常来讲都需要借助许多函数库的支持才能够完成相应的功能。从程序员的角度看，函数库实际上就是一些头文件（.h）和库文件（so、或lib、dll）的集合。
 
@@ -87,49 +84,55 @@ int main(void)
 - Linux下的库文件分为两大类分别是**动态链接库**（通常以.so结尾）和 **静态链接库**（通常以.a结尾），二者的区别仅在于程序执行时所需的代码是在运行时动态加载的，还是在编译时静态加载的。
 
 - 例如我们的程序  `test.c` 是在 linux 上使用 c 连接 mysql，这个时候我们需要去 mysql 官网下载 MySQL Connectors的 C库，下载下来解压之后，有一个 include文件夹，里面包含mysql connectors 的头文件，还有一个 lib 文件夹，里面包含二进制 so 文件 `libmysqlclient.so`
-    - 其中 inclulde 文件夹的路径是`/usr/dev/mysql/include`, lib 文件夹是`/usr/dev/mysql/lib`
+  - 其中 inclulde 文件夹的路径是`/usr/dev/mysql/include`, lib 文件夹是`/usr/dev/mysql/lib`
 - 编译连接:
-    - 首先我们要进行编译test.c为目标文件:
-        - `gcc –c –I /usr/dev/mysql/include test.c –o test.o`
-    - 把所有目标文件链接成可执行文件:
-        - `gcc –L /usr/dev/mysql/lib –lmysqlclient test.o –o test`
-    - 强制链接时使用静态链接库:
-        - 默认情况下， GCC 在链接时优先使用动态链接库，只有当动态链接库不存在时才考虑使用静态链接库，如果需要的话可以在编译时加上 `-static` 选项，强制使用静态链接库。
-        - 在 `/usr/dev/mysql/lib` 目录下有链接时所需要的库文件 `libmysqlclient.so` 和 `libmysqlclient.a` ，为了让GCC在链接时只用到静态链接库，可以使用下面的命令:
-            - `gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test`
+  - 首先我们要进行编译test.c为目标文件:
+    - `gcc –c –I /usr/dev/mysql/include test.c –o test.o`
+  - 把所有目标文件链接成可执行文件:
+    - `gcc –L /usr/dev/mysql/lib –lmysqlclient test.o –o test`
+  - 强制链接时使用静态链接库:
+    - 默认情况下， GCC 在链接时优先使用动态链接库，只有当动态链接库不存在时才考虑使用静态链接库，如果需要的话可以在编译时加上 `-static` 选项，强制使用静态链接库。
+    - 在 `/usr/dev/mysql/lib` 目录下有链接时所需要的库文件 `libmysqlclient.so` 和 `libmysqlclient.a` ，为了让GCC在链接时只用到静态链接库，可以使用下面的命令:
+      - `gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test`
 - 库文件查找顺序:
-    - 静态库链接时搜索路径顺序：          
-        1. 先会去找 GCC 命令中的参数 `-L` 指定的目录     
-        2. 再找 gcc 的环境变量 LIBRARY_PATH       
-        3. 再找内定目录 `/lib` `/usr/lib` `/usr/local/lib` 这是当初 compile gcc 时写在程序内的
-        - `LIBRARY_PATH` 环境变量：指定程序静态链接库文件搜索路径
-    - 动态链接时、执行时搜索路径顺序:
-        1. 编译目标代码时指定的动态库搜索路径
-        2. 环境变量 LD_LIBRARY_PATH 指定的动态库搜索路径
-        3. 配置文件 `/etc/ld.so.conf` 中指定的动态库搜索路径
-        4. 默认的动态库搜索路径 `/lib`
-        5. 默认的动态库搜索路径 `/usr/lib`
-        - LD_LIBRARY_PATH 环境变量：指定程序动态链接库文件搜索路径
+  - 静态库链接时搜索路径顺序：
+      1. 先会去找 GCC 命令中的参数 `-L` 指定的目录
+      2. 再找 gcc 的环境变量 `LIBRARY_PATH`
+      3. 再找内定目录 `/lib` `/usr/lib` `/usr/local/lib` 这是当初 compile gcc 时写在程序内的
+         - `LIBRARY_PATH` 环境变量：指定程序静态链接库文件搜索路径
+  - 动态链接时、执行时搜索路径顺序:
+      1. 编译目标代码时指定的动态库搜索路径
+      2. 环境变量 LD_LIBRARY_PATH 指定的动态库搜索路径
+      3. 配置文件 `/etc/ld.so.conf` 中指定的动态库搜索路径
+      4. 默认的动态库搜索路径 `/lib`
+      5. 默认的动态库搜索路径 `/usr/lib`
+         - `LD_LIBRARY_PATH` 环境变量：指定程序动态链接库文件搜索路径
 
-## <font color=#009A000> 三、GCC 进阶 </font>
-- **<u>说明:</u>**  
-    - 如下内容均来自阅读 `<<深入理解计算机系统>>` 中的查缺补漏~     
-    - 其中的引用内容均来自 <<深入理解计算机系统>>
+## <font color=#009A000> 0x03 GCC 进阶 </font>
 
-- [GCC编译选项 -m64 -m32 -mx32](https://blog.csdn.net/yyywill/article/details/54426900)
-    - 编译 32/64 位程序
+- **<u>说明:</u>**
+  - 如下内容均来自阅读 `<<深入理解计算机系统>>` 中的查缺补漏~
+  - 其中的引用内容均来自 <<深入理解计算机系统>>
+- [GCC编译选项 `-m64 -m32 -mx32`](https://blog.csdn.net/yyywill/article/details/54426900)
+  - 编译 `32/64` 位程序
 - [int, int32_t, int64_t](https://www.cnblogs.com/Free-Thinker/p/7058773.html)
-    - > 为了避免由于依赖 "典型" 大小和不同的编译器设置带来的奇怪行为, ISO C99 引入了一类数据类型, 其数据大小是固定的, 不随编译器和机器设置而变化. 其中就有 `int32_t, int64_t` .
-    - 尽量使用固定长度数据类型, 可以很方便的进行代码的移植;
+  - > 为了避免由于依赖 "典型" 大小和不同的编译器设置带来的奇怪行为, ISO C99 引入了一类数据类型, 其数据大小是固定的, 不随编译器和机器设置而变化. 其中就有 `int32_t, int64_t` .
+  - 尽量使用固定长度数据类型, 可以很方便的进行代码的移植;
 - [size_t类型](https://www.cnblogs.com/zzw818/p/6912959.html)
 - 指针的大小一般与该计算机的字长相等
-    - > 每台计算机都一个字长, 指明指针数据的标称大小. 
-    - [指针的大小到底是由谁决定？是多少？](https://www.cnblogs.com/noble/p/4144167.html)
-
+  - > 每台计算机都一个字长, 指明指针数据的标称大小. 
+  - [指针的大小到底是由谁决定？是多少？](https://www.cnblogs.com/noble/p/4144167.html)
 - gcc 分析头文件依赖:
-    - `gcc -I ../common/ -I ../common_dsp -M -H dsp.h 2>&1 | grep -v "usr"`
-    > 参考链接如下:
-    > 1. [open-source-tools-examine-and-adjust-include-dependencies](http://gernotklingler.com/blog/open-source-tools-examine-and-adjust-include-dependencies/)
-    > 2. [Linux 重定向：一些重定向问题的解决](http://blog.chinaunix.net/uid-28903506-id-4931889.html)
-    > 3. [2>&1使用](https://www.cnblogs.com/yangyongzhi/p/3364939.html)
-    > 4. `grep -v`
+  - `gcc -I ../common/ -I ../common_dsp -M -H dsp.h 2>&1 | grep -v "usr"`
+  > 参考链接如下:
+  > 1. [open-source-tools-examine-and-adjust-include-dependencies](http://gernotklingler.com/blog/open-source-tools-examine-and-adjust-include-dependencies/)
+  > 2. [Linux 重定向：一些重定向问题的解决](http://blog.chinaunix.net/uid-28903506-id-4931889.html)
+  > 3. [2>&1 使用](https://www.cnblogs.com/yangyongzhi/p/3364939.html)
+  > 4. `grep -v`
+- 选项传递 :
+  - `-Wl,<options>` 告诉编译器将后面的参数传递给链接器
+    > Pass comma-separated <options> on to the linker.
+  - `-Wa,<options>` 传递给汇编器
+    > Pass comma-separated <options> on to the assembler.
+  - `-Wp,<options>` 传递给预处理器
+    > Pass comma-separated <options> on to the preprocessor.
