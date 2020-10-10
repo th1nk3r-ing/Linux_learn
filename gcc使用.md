@@ -130,7 +130,11 @@ int main(void)
 - 选项传递 :
   - `-Wl,<options>` 告诉编译器将后面的参数传递给链接器
     > Pass comma-separated <options> on to the linker.
+    > if the linker is being invoked indirectly, via a compiler driver (e.g. gcc) then all the linker command line options should be prefixed by -Wl, (or whatever is appropriate for the particular compiler driver) like this: `gcc -Wl,--start-group foo.o bar.o -Wl,--end-group`, This is important, because otherwise the compiler driver program may silently drop the linker options, resulting in a bad link.  
+    > 翻译 : 如果链接器是通过编译器驱动程序(例如gcc)间接调用的，那么所有链接器命令行选项都应该像这样以-Wl作为前缀(或者任何适合特定编译器驱动程序的前缀) `gcc -Wl,--start-group foo.o bar.o -Wl,--end-group` ; 这一点很重要，因为否则编译器驱动程序可能会悄无声息地删除链接器选项，从而导致错误链接。
   - `-Wa,<options>` 传递给汇编器
     > Pass comma-separated <options> on to the assembler.
   - `-Wp,<options>` 传递给预处理器
     > Pass comma-separated <options> on to the preprocessor.
+- [动态库的链接和链接选项-L，-rpath-link，-rpath](https://my.oschina.net/shelllife/blog/115958)
+  - 
