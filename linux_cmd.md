@@ -113,6 +113,10 @@
     > [清理VMware虚拟机磁盘，解决虚拟机磁盘只增不减问题](https://blog.csdn.net/doctor_warren/article/details/81286991)
     - `sudo dd if=/dev/zero of=/0bits bs=20M` 将碎片空间填充上 0，结束的时候会提示磁盘空间不足，忽略即可
     - `sudo rm  /0bits` 删除第二步的填充，如果用 `df -h` 会发现可用的虚拟空间增加许多，但是实际的磁盘空间没有缩减
+- [Linux wc 命令](https://www.runoob.com/linux/linux-comm-wc.html)
+  - `wc -l` 统计行数, for example :
+    - `find . -name "*.o" | wc -l`
+    - `ls pwd/*.c | wc -l`
 
 ## <font color=#009A000> 0x03 vi / vim  </font>
 

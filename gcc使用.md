@@ -6,6 +6,8 @@
 >1. [GCC 基本使用](http://www.cnblogs.com/ggjucheng/archive/2011/12/14/2287738.html)
 >2. [GCC命令](http://man.linuxde.net/gcc)
 >3. [GCC中-O1 -O2 -O3 优化的原理是什么？](https://www.zhihu.com/question/27090458)
+>4. [gcc编译选项--转](https://www.cnblogs.com/fengbeihong/p/3641384.html)
+> 5. [Using the GNU Compiler Collection (GCC)](https://gcc.gnu.org/onlinedocs/gcc-10.2.0/gcc/)
 
 ## <font color=#009A000> 0x00 测试代码: </font>
 
@@ -137,4 +139,3 @@ int main(void)
   - `-Wp,<options>` 传递给预处理器
     > Pass comma-separated <options> on to the preprocessor.
 - [动态库的链接和链接选项-L，-rpath-link，-rpath](https://my.oschina.net/shelllife/blog/115958)
-  - 
