@@ -132,6 +132,12 @@ elif [ -d "$HOME/bin/jdk-15.jdk" ];then
 	export PATH=${JAVA_HOME}/bin:$PATH
 fi
 
+if (uname -a | grep "Darwin" > /dev/null) ;then
+	if [ -d "/usr/local/opt/binutils/bin" ]; then
+		export PATH="$PATH:/usr/local/opt/binutils/bin"
+	fi
+fi
+
 if [ -f "$HOME/.myPath_add" ]; then
 	source ~/.myPath_add
 fi
