@@ -33,3 +33,4 @@
 3. [ubuntu安装sqlite](./ubuntu安装sqlite.md)
 4. [linux tty 与 打印重定向](./linux_输入输出.md)
 5. [linux 系统中的软件安装方式](./Linux系统中软件四种安装原理.md)
+6. [ffmpeg 相关](./ffmpeg.md)
