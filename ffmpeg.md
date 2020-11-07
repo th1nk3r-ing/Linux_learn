@@ -8,13 +8,26 @@
   - 用来查看媒体文件格式的工具 :
     - `-show_format`  输出格式信息;
     - `-print_format json` 以 JSON 格式输出;
+      - `-of csv` 以 csv 表格输出(可用 excel 打开)
     - `-show_frames` 显示帧信息;
     - `-show_packets` 查看包信息;
-- [让ffmpeg支持10bit编码](https://www.cnblogs.com/koder/p/7851387.html)
+
+## <font color=#009A000> 0x01 组合命令 </font>
+
+> 参考链接 : <br/>
+> 1. [FFmpeg使用手册 - ffprobe 的常用命令](http://blog.chinaunix.net/uid-11344913-id-5750194.html)
+
+- [让 ffmpeg 支持 10bit 编码](https://www.cnblogs.com/koder/p/7851387.html)
   - `ffmpeg.exe -i input.ts -vcodec libx265 -pix_fmt yuv420p10le -acodec copy output.ts`
   - `ffmpeg -i 比利林恩_4k_60fps_h265.mkv -vcodec libx265 -pix_fmt yuv420p -acodec copy output.mkv`
+- 使用 ffprobe 查看文件中帧对应时间(pts)是否对齐 :
+  - `ffprobe -show_frames file | grep -E "media_type|pkt_pts_time"`
+- 单独查看视频的帧信息 
+  - `ffprobe -show_frame -select_streams v -of xml input.mp4`
 
-## <font color=#009A000> 0x01 x264 </font>
+# <font color=#0099ff> **其它** </font>
+
+## <font color=#009A000> 0x0 x264 </font>
 
 - [Low latency, high performance x264 options for for most streaming services (Youtube, Facebook,...)](https://obsproject.com/forum/resources/low-latency-high-performance-x264-options-for-for-most-streaming-services-youtube-facebook.726/)
 - [去抖音面试被问到硬编码与软编码区别，如何选取硬编与软编？](https://my.oschina.net/u/4338729/blog/3399299)
