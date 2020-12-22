@@ -128,7 +128,7 @@ groovy 语言 :
 
 ### <font color=#FF4500> Android `build.gradle` 解析 </font>
 
-- `applicationId` 每个应用唯一标识符, 默认为创建应用程序时指定的包名;
+- `applicationId` 每个应用唯一标识符, 默认为创建应用程序时指定的包名(lib 没有);
 - `minSdkVersion` 用于指定项目最低兼容的 Android 系统版本;
 - `targetSdkVersion` 表示你在该目标版本上已经做过了充分的测试, 系统将会为你的应用程序启用一些最新的功能和特性(`minSdkVersion` 没有而 `targetSdkVersion` 有的特性);
 - `buildType` --> `release` -->
