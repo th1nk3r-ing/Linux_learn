@@ -65,3 +65,14 @@ EOF
   - `nproc` 等价于 `sysctl -n machdep.cpu.thread_count` 都是获取 cpu 核数;
   - `which` 等价于 `command -v` 都是查找命令位置的;
 - `||` 执行对应命令, 有错误时, 执行之后的命令;
+
+### <font color=#FF4500> 时间计算 </font>
+
+```sh
+startTime=$(date +'%Y-%m-%d %H:%M:%S')
+#执行程序
+endTime=$(date +'%Y-%m-%d %H:%M:%S')
+startSeconds=$(date --date="$startTime" +%s);
+endSeconds=$(date --date="$endTime" +%s);
+echo "本次运行时间" $((endSeconds-startSeconds)) "s"
+```
