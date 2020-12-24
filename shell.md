@@ -69,10 +69,18 @@ EOF
 ### <font color=#FF4500> 时间计算 </font>
 
 ```sh
-startTime=$(date +'%Y-%m-%d %H:%M:%S')
-#执行程序
-endTime=$(date +'%Y-%m-%d %H:%M:%S')
-startSeconds=$(date --date="$startTime" +%s);
-endSeconds=$(date --date="$endTime" +%s);
-echo "本次运行时间" $((endSeconds-startSeconds)) "s"
+if [ "$(uname -s)" = "Linux" ]; then
+    date_execute="date"
+elif [ "$(uname -s)" = "Darwin" ]; then
+    date_execute="gdate"
+fi
+
+if command -v $date_execute > /dev/null; then
+    startTime=$($date_execute +'%Y-%m-%d %H:%M:%S')
+    #执行程序
+    endTime=$($date_execute +'%Y-%m-%d %H:%M:%S')
+    start_seconds=$($date_execute --date="$startTime" +%s);
+    end_seconds=$($date_execute --date="$endTime" +%s);
+    echo -e "_____> using ${bldgrn}" $((end_seconds-start_seconds)) "${txtrst} s"
+fi
 ```
