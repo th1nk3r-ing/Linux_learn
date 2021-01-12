@@ -49,6 +49,8 @@
 - `LOCAL_WHOLE_STATIC_LIBRARIES` 会加载整个静态库.
 - `LOCAL_JNI_SHARED_LIBRARIES` 定义了要包含的 so 库文件的名字，如果程序没有采用 jni，不需要;
   - `LOCAL_JNI_SHARED_LIBRARIES := libxxx` 这样在编译的时候，NDK 自动会把这个 libxxx 打包进 apk； 放在 `your-apk/lib/` 目录下
+- `LOCAL_LDFLAGS += -Xlinker --build-id`
+  - 编译 so 时增加 build-id 选项;
 
 ## <font color=#009A000> Android Make </font>
 

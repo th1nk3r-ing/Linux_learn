@@ -50,6 +50,7 @@ int main(void)
 
     (在编译一些项目的时候可以 -W 和 -Wall 选项一起使用。)
 -std= gnu89 c89 c99 c11 指定 gcc 的版本;
+-Wl,:    将参数传递给连机器;
 ```
 
 - `gcc test.c`
@@ -139,3 +140,6 @@ int main(void)
   - `-Wp,<options>` 传递给预处理器
     > Pass comma-separated <options> on to the preprocessor.
 - [动态库的链接和链接选项-L，-rpath-link，-rpath](https://my.oschina.net/shelllife/blog/115958)
+- 编译 so 时启用 BuildID :
+  - `-Wl,--build-id`;
+  - 可通过 `file` 或者 `readelf -x .note.gnu.build-id libxxx.so` 看出来;
