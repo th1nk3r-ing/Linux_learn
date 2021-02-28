@@ -12,8 +12,9 @@
 ## <font color=#009A000> 0x-2 杂项软件 </font>
 
 - 换源 : [https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
-- `sudo apt-get install git repo screenfetch neofetch sl cmake cloc ffmpeg tree busybox shellcheck clang figlet unzip unrar`
+- `sudo apt-get install git  screenfetch neofetch sl cmake cloc ffmpeg tree busybox shellcheck clang figlet unzip unrar`
 - `sudo apt-get install zsh`
+- `sudo apt-get install repo`
 
 ## <font color=#009A000> 0x-3 </font>
 
@@ -112,7 +113,7 @@
 - 安装 git: `sudo apt-get install git`
 - 设置 
   - `git clone https://gitee.com/think3r/git_learn.git` 
-  - 拷贝其中的 `.gitconfig` 至 `~` 目录下;
+  - 拷贝其中的 `.gitconfig` 和 `.gitignore_global` 至 `~` 目录下;
   - 根据码云的帮助文档进行新的 git 公钥的添加;
 
 - **配置 ssh 显示 git 分支** :
