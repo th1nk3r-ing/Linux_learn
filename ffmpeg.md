@@ -1,6 +1,7 @@
 # <font color=#0099ff> **ffmpeg 相关** </font>
 
 > `@think3r` 2020-07-07 14:11:15
+> [FFmpeg 入门学习笔记 _](https://lingyunfx.com/2020/11/21/ffmpeg-used01/)
 
 ## <font color=#009A000> 0x00 ffmpeg </font>
 
@@ -24,6 +25,8 @@
   - `ffprobe -show_frames file | grep -E "media_type|pkt_pts_time"`
 - 单独查看视频的帧信息 
   - `ffprobe -show_frame -select_streams v -of xml input.mp4`
+- 串联音频视频 :
+  - `ffmpeg -i "concat:01.mp4|02.mp4|03.mp4" -c copy out.mp4`
 
 # <font color=#0099ff> **其它** </font>
 
