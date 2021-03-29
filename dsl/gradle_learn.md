@@ -167,3 +167,34 @@ groovy 语言 :
 
 - Gradle 是一个开源的自动化构建工具, 建立在 Apache Ant 和 Apache Maven 概念的基础上, 并引入了基于 Groovy 的 DSL, 而不是 xml 管理构建脚本;
 - Groovy 是一个基于 Java 虚拟机的一种敏捷的动态语言, 它是一种成熟的 OOP 编程语言, 既可以用于面向对象编程, 又可以用作纯粹的脚本语言, 使用该种语言不必要编写过多的代码, 同时又具有闭包和动态语言中的其他特性;
+
+---
+
+# <font color=#0099ff> **Gradle-Code** </font>
+
+```groovy
+// 设置缓存的时效, 避免每次都去通过网络下载依赖
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 24, 'hours'    // 检查远程依赖是否存在更新的间隔时间
+    resolutionStrategy.cacheDynamicVersionsFor 4, 'hours'    // 采用动态版本声明的依赖缓存的检查间隔时间
+}
+```
+
+```groovy
+// 编译时, 自动拷贝文件, 需要存在对应的文件, 否则会报错;
+ext { // 变量
+    fileBaseName="testLib-"
+    //fileType="release"
+    fileType="debug"
+    fileName = fileBaseName + fileType
+}
+delete fileTree("libs").matching { // 删除文件
+    include (fileBaseName + "*.so")
+}
+copy {  // 拷贝文件
+    from('./build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/')
+    into('libs/')
+    include(fileName + '*.aar')
+}
+compile(name: fileName, ext : 'aar')
+```
