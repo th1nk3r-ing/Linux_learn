@@ -172,6 +172,8 @@ groovy 语言 :
 
 # <font color=#0099ff> **Gradle-Code** </font>
 
+### <font color=#FF4500> 缓存时效 </font>
+
 ```groovy
 // 设置缓存的时效, 避免每次都去通过网络下载依赖
 configurations.all {
@@ -179,6 +181,8 @@ configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 4, 'hours'    // 采用动态版本声明的依赖缓存的检查间隔时间
 }
 ```
+
+### <font color=#FF4500> 自动拷贝 </font>
 
 ```groovy
 // 编译时, 自动拷贝文件, 需要存在对应的文件, 否则会报错;
@@ -197,4 +201,14 @@ copy {  // 拷贝文件
     include(fileName + '*.aar')
 }
 compile(name: fileName, ext : 'aar')
+```
+
+### <font color=#FF4500> 执行命令 </font>
+
+```groovy
+// 获取当前的 git 版本
+task test12() {
+    def myVersion = 'git rev-parse --short HEAD'.execute().text.trim()
+    System.out.println("\n ------> " + myVersion  + "\n")
+}
 ```
