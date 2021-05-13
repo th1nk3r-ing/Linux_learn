@@ -28,6 +28,8 @@
   - `ffprobe -show_frame -select_streams v -of xml input.mp4`
 - 串联音频视频 :
   - `ffmpeg -i "concat:01.mp4|02.mp4|03.mp4" -c copy out.mp4`
+- ffplay 播放 pcm 数据:
+  - `ffplay -ar 44100 -channels 2 -f s16le -i aout.pcm`
 
 # <font color=#0099ff> **其它** </font>
 
