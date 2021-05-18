@@ -30,6 +30,8 @@
   - `ffmpeg -i "concat:01.mp4|02.mp4|03.mp4" -c copy out.mp4`
 - ffplay 播放 pcm 数据:
   - `ffplay -ar 44100 -channels 2 -f s16le -i aout.pcm`
+- ffmpeg 替换视频内音频:
+  - `ffmpeg -i 0.mp4 -i 1.mp3 -c:v copy -c:a copy -map 0:v -map 1:a  out.flv`
 
 # <font color=#0099ff> **其它** </font>
 
