@@ -108,6 +108,15 @@ if (echo "$SHELL" | grep "zsh" >/dev/null); then
     echo -e "current shell is $prt_Yellow zsh $prt_End"
 fi
 
+# colourful man page
+export LESS_TERMCAP_mb=$'\E[01;34m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;36;44m'
+export LESS_TERMCAP_se=$'\E[0m'
+
 # 自己的可执行文件本地路径
 if [ -d "$HOME/bin" ]; then
     # add adb path; 如果不加入, 则需要使用 adb.exe 代替 adb
@@ -133,6 +142,11 @@ elif [ -d "$HOME/bin/jdk-15.jdk" ];then
 	export JRE_HOME=${JAVA_HOME}
 	export CLASSPATH=.:${JAVA_HOME}/lib
 	export PATH=${JAVA_HOME}/bin:$PATH
+elif [ -d "$HOME/bin/jdk-16.0.1.jdk" ];then
+    export JAVA_HOME="$HOME/bin/jdk-16.0.1.jdk/Contents/Home/"
+    export JRE_HOME=${JAVA_HOME}
+    export CLASSPATH=.:${JAVA_HOME}/lib
+    export PATH=${JAVA_HOME}/bin:$PATH
 fi
 
 if (uname -a | grep "Darwin" > /dev/null) ;then
