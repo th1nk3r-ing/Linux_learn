@@ -67,6 +67,16 @@ if command -v exa > /dev/null; then
 	alias el="exa -aHlFg --time-style=long-iso"
 fi
 
+if command -v trash > /dev/null; then
+    alias rm=trash
+	alias rl='ls ~/.Trash'
+	undelfile() {
+        mv -i ~/.Trash/$@ ./
+    }
+    alias ur=undelfile
+fi
+
+
 # add android-termux command;
 if [ -f ~/termux_sh.sh ]; then
     . ~/termux_sh.sh
@@ -145,14 +155,17 @@ elif [ -d "$HOME/bin/jdk-15.jdk" ];then
 elif [ -d "$HOME/bin/jdk-16.0.1.jdk" ];then
     export JAVA_HOME="$HOME/bin/jdk-16.0.1.jdk/Contents/Home/"
     export JRE_HOME=${JAVA_HOME}
-    export CLASSPATH=.:${JAVA_HOME}/lib
-    export PATH=${JAVA_HOME}/bin:$PATH
+	export CLASSPATH=.:${JAVA_HOME}/lib
+	export PATH=${JAVA_HOME}/bin:$PATH
 fi
 
 if (uname -a | grep "Darwin" > /dev/null) ;then
 	if [ -d "/usr/local/opt/binutils/bin" ]; then
 		export PATH="$PATH:/usr/local/opt/binutils/bin"
 	fi
+    if [ -d "/usr/local/opt/openjdk/bin/" ]; then
+        #PATH="/usr/local/opt/openjdk/bin/:$PATH"
+    fi
 fi
 
 if [ -f "$HOME/.myPath_add" ]; then
