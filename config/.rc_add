@@ -132,8 +132,13 @@ if [ -d "$HOME/bin" ]; then
     # add adb path; 如果不加入, 则需要使用 adb.exe 代替 adb
     my_adb_path="$HOME/bin/platform-tools"
     if [ -d "$my_adb_path" ]; then
-       PATH="$PATH:$my_adb_path"
+        PATH="$PATH:$my_adb_path"
     fi
+    # go
+	my_go_path="$HOME/bin/go/bin"
+	if [ -d "$my_go_path" ]; then
+	    PATH="$PATH:$my_go_path"
+	fi
 fi
 
 # git repo 使用清华源
