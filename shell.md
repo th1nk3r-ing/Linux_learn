@@ -84,3 +84,25 @@ if command -v $date_execute > /dev/null; then
     echo -e "_____> using ${bldgrn}" $((end_seconds-start_seconds)) "${txtrst} s"
 fi
 ```
+
+## <font color=#009A000> ijk 源码文件名修改 </font>
+
+```sh
+#!/bin/sh
+
+find . -path "*ijk*" | while read line ;
+do
+    DistName=$(echo $line|sed 's/ijk/think/g')
+	echo "Src: $line ; DistName: $DistName"
+	if [ -d $line ]; then
+	    mkdir -p $DistName
+	elif [ -f $line ]; then
+	    DistFileDir=${DistName%/*}
+		if [ ! -d $DistFileDir ]; then
+		    mkdir -p $DistFileDir
+		fi
+	    cp  $line $DistName
+	fi
+done
+
+```
