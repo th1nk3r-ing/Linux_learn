@@ -32,6 +32,9 @@
   - `ffplay -ar 44100 -channels 2 -f s16le -i aout.pcm`
 - ffmpeg 替换视频内音频:
   - `ffmpeg -i 0.mp4 -i 1.mp3 -c:v copy -c:a copy -map 0:v -map 1:a  out.flv`
+- 从指定位置开始:
+  - `-ss pos             seek to a given position in seconds`
+    - `-ss $(echo  "18 * 60" | bc)`  从 18 分钟的地方开始;
 
 # <font color=#0099ff> **其它** </font>
 
