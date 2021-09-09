@@ -4,8 +4,7 @@
 
 ## <font color=#009A000> **0x-1 待读** </font>
 
-- [mac 装了 oh my zsh 后比用 bash 具体好在哪儿？](https://www.zhihu.com/question/29977255)
-  - [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)
+- [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)
 - `cp ./.rc_add ~/ && echo "\nsource ~/.rc_add" >> ~/.zshrc`
 - vim 进阶;
 
