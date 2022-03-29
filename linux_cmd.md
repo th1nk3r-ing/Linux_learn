@@ -170,3 +170,9 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 | pdfattach | 给 pdf 添加附件 |
 | pdf2ps | pdf 转 ps |
 | pdf2dsc | pdf 转 dsc |
+
+## <font color=#009A000> youtube 下载 </font>
+
+- `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]'  --merge-output-format mp4  URL`
+  - `yt-dlp` 比 `youtube-dl` 下载块一些;
+- `youtube-dl`
