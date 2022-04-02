@@ -2,6 +2,7 @@
 # @think3r 2020-07-01 00:06:07
 
 # print color alias
+# TODO: 改用 AOSP 中的 color
 if (uname -a | grep "Linux" > /dev/null) ; then # gnu-linux
     export prt_Green="\e[1;32m"
     export prt_Yellow="\e[1;33m"

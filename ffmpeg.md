@@ -20,10 +20,10 @@
 > 1. [FFmpeg使用手册 - ffprobe 的常用命令](http://blog.chinaunix.net/uid-11344913-id-5750194.html)
 
 - [让 ffmpeg 支持 10bit 编码](https://www.cnblogs.com/koder/p/7851387.html)
-  - `ffmpeg.exe -i input.ts -vcodec libx265 -pix_fmt yuv420p10le -acodec copy output.ts`
+  - `ffmpeg -i input.ts -vcodec libx265 -pix_fmt yuv420p10le -acodec copy output.ts`
   - `ffmpeg -i 比利林恩_4k_60fps_h265.mkv -vcodec libx265 -pix_fmt yuv420p -acodec copy output.mkv`
 - 使用 ffprobe 查看文件中帧对应时间(pts)是否对齐 :
-  - `ffprobe -show_frames file | grep -E "media_type|pkt_pts_time"`
+  - `ffprobe -show_frames file | grep -E "media_type|pts_time|pict_type"`
 - 单独查看视频的帧信息 
   - `ffprobe -show_frame -select_streams v -of xml input.mp4`
 - 串联音频视频 :
@@ -33,8 +33,15 @@
 - ffmpeg 替换视频内音频:
   - `ffmpeg -i 0.mp4 -i 1.mp3 -c:v copy -c:a copy -map 0:v -map 1:a  out.flv`
 - 从指定位置开始:
-  - `-ss pos             seek to a given position in seconds`
+  - `-ss pos seek to a given position in seconds`
     - `-ss $(echo  "18 * 60" | bc)`  从 18 分钟的地方开始;
+- hevc 的 `hev1` 转 `hvc1`:
+  - `-tag:v hvc1`
+- 解码器选择 :
+  - `-c:v hevc_videotoolbox` 使用硬件 mediaCodec
+  - `-acodec copy -vcodec copy` 编码直接拷贝, 不转码;
+- 视频码率控制 :
+  - `-b:v 32375k`
 
 # <font color=#0099ff> **其它** </font>
 
