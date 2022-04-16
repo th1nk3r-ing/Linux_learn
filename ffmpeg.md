@@ -42,6 +42,10 @@
   - `-acodec copy -vcodec copy` 编码直接拷贝, 不转码;
 - 视频码率控制 :
   - `-b:v 32375k`
+- 音频 :
+  - 拼接音频 : `ffmpeg -i "concat:1.mp3|2.mp3" -acodec copy out.mp3`
+  - 裁剪音频 : `ffmpeg -i out.mp3 -ss 0 -t 08:02 -acodec copy out1.mp3`
+  - 移除音轨 : `ffmpeg -i 1.mp4 -vcodec copy -an out_noAudio.mp4`
 
 # <font color=#0099ff> **其它** </font>
 

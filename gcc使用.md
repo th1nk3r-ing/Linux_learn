@@ -150,3 +150,9 @@ int main(void)
 - 编译 so 时启用 BuildID :
   - `-Wl,--build-id`;
   - 可通过 `file` 或者 `readelf -x .note.gnu.build-id libxxx.so` 看出来;
+
+
+### <font color=#FF4500> TODO :  </font>
+
+1. [这些__attribute__的知识你应该知道](https://www.jianshu.com/p/9ca8ccc7e881)
+2. [Java中@Deprecated作用、使用以及引用](https://blog.csdn.net/u013361445/article/details/49777741)
