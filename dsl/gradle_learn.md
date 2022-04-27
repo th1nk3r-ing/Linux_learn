@@ -5,6 +5,7 @@
 > `@think3r` 2020-08-10 00:01:14 <br />
 > 参考链接 :
 > 1. [来自Gradle开发团队的Gradle入门教程](https://www.bilibili.com/video/BV1DE411Z7nt?from=search&seid=5541083429304083164)
+> 2. [Android Gradle 插件版本所需的 Gradle 版本对照](https://developer.android.google.cn/studio/releases/gradle-plugin.html#updating-plugin)
 
 ## <font color=#009A000> 0x00 基础概念 </font>
 
