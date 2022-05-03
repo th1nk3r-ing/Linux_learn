@@ -175,4 +175,5 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 
 - `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]'  --merge-output-format mp4  URL`
   - `yt-dlp` 比 `youtube-dl` 下载块一些;
-- `youtube-dl`
+- `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
+  - 下载整个 playlist 的视频
