@@ -180,6 +180,11 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 
 ## <font color=#009A000> vim 使用 </font>
 
+> 1. [VIM学习笔记 插件列表 (Plugins)](http://yyq123.github.io/learn-vim/learn-vim-plugin.html)
+> 2. [用于C++项目的vim配置](https://blog.csdn.net/qq_41100010/article/details/121075296)
+> 3. [Vim设置](http://www.cppblog.com/qywyh/articles/57039.html)
+> 4. [ Neovim+Coc.nvim配置 目前个人最舒服终端编辑环境(Python&C++)](https://www.cnblogs.com/cniwoq/p/13272746.html)
+
 - 插件安装 :
   - 安装 vim-plug :  `curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
@@ -191,6 +196,7 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
     - `PlugUpdate` 更新插件
 - 快捷键 :
   - `ctrl+w+w` 在窗口之间切换
+  - `u` 撤回，`ctrl+r` 反撤回
   - `F2` tagbar 开关
     - `brew install ctags` 安装依赖
   - `F3` NERDTreeToggle 开关
