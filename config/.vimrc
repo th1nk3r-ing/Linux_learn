@@ -28,10 +28,43 @@ set cursorline
 
 " 右下角状态栏设置
 set laststatus=2
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+" set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
 " 关闭打开时的错误: Error detected while processing BufNewFile Autocommands for "*.groovy"..FileType Autocommands for "*"..Syntax Autocommands for "*"..function <SNR>6_SynSet[25]..script /opt/local/share/vim/vim82/syntax/groovy.vim: Line256
 set re=0
 
 " Vim复制代码不带行号
-" se mouse=a
+" set mouse=a
+
+call plug#begin('~/.vim/plugged')
+    " 目录树
+    Plug 'preservim/nerdtree'
+    " vim-airline 标签栏插件
+    Plug 'Vim-airline/vim-airline'
+    " vim-airline 标签栏插件的主题插件
+    Plug 'Vim-airline/vim-airline-themes'
+	" 括号自动匹配
+    Plug 'jiangmiao/auto-pairs'
+	" Syntastic 语法检查
+    Plug 'scrooloose/syntastic'
+    " 彩色显示括号对
+	Plug 'luochen1990/rainbow'
+	" 模糊匹配, 需要 vim 支持 python
+	" Plug 'Yggdroot/LeaderF'
+	" tagbar (依赖 ctags)
+	Plug 'majutsushi/tagbar'
+call plug#end()
+
+let g:airline#extensions#tabline#enabled = 1
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='►'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:rainbow_active = 1
+nmap <F2> :TagbarToggle<CR>
+let g:tagbar_sort = 0
+let g:tagbar_left=1
+let g:tagbar_autofocus = 1

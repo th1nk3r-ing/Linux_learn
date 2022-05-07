@@ -177,3 +177,20 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   - `yt-dlp` 比 `youtube-dl` 下载块一些;
 - `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
   - 下载整个 playlist 的视频
+
+## <font color=#009A000> vim 使用 </font>
+
+- 插件安装 :
+  - 安装 vim-plug :  `curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
+  - 拷贝 `.vimrc` 配置文件
+  - 通过 vim-plug 安装插件, `VIM` 开启 vim, 通过 `:` 输入以下命令 :
+    - `PlugStatus` 查看插件状态
+    - `PlugInstall` 安装插件
+    - `PlugClean` 插件清理
+    - `PlugUpdate` 更新插件
+- 快捷键 :
+  - `ctrl+w+w` 在窗口之间切换
+  - `F2` tagbar 开关
+    - `brew install ctags` 安装依赖
+  - `F3` NERDTreeToggle 开关

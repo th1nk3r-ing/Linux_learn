@@ -1,7 +1,7 @@
 # <font color=#0099ff> **ffmpeg 相关** </font>
 
 > `@think3r` 2020-07-07 14:11:15
-> 1. [FFmpeg 入门学习笔记 _](https://lingyunfx.com/2020/11/21/ffmpeg-used01/)
+> 1. [FFmpeg 入门学习笔记](https://lingyunfx.com/2020/11/21/ffmpeg-used01/)
 > 2. [FFmpeg DASH部分指令参数参考](https://www.jianshu.com/p/637553d479b4?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)
 
 ## <font color=#009A000> 0x00 ffmpeg </font>
