@@ -26,7 +26,7 @@ set showmatch               " 高亮显示匹配的括号
 set cursorline              " 高亮行设置
 
 " 右下角状态栏设置
-set laststatus=2
+set laststatus=2  			"始终显示所有窗口的状态栏
 " set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
 "光标移动到buffer的顶部和底部时保持3行距离, 或set so=3
@@ -44,23 +44,33 @@ set autoread
 
 " 插件加载
 call plug#begin('~/.vim/plugged')
+    " Plug 'tweekmonster/startuptime.vim'   " vim 启动时间统计
     Plug 'preservim/nerdtree'               " 目录树
     Plug 'Vim-airline/vim-airline'          " vim-airline 标签栏插件
     Plug 'Vim-airline/vim-airline-themes'   " vim-airline 标签栏插件的主题插件
     Plug 'jiangmiao/auto-pairs'             " 括号自动匹配
 	Plug 'luochen1990/rainbow'              " 彩色显示括号对
 	" Syntastic 语法检查,  ale 支持 LSP 的异步语法检查
-    Plug 'scrooloose/syntastic'
+    Plug 'scrooloose/syntastic', { 'for' : ['c', 'cpp', 'go', 'java', 'objc', 'markdown', 'sh', 'make'] }
     "Plug 'dense-analysis/ale'
 	" 模糊匹配, 需要 vim 支持 python
 	" Plug 'Yggdroot/LeaderF'
-	Plug 'majutsushi/tagbar'                " tagbar (依赖 ctags)
-    Plug 'octol/vim-cpp-enhanced-highlight' " C/C++ 语法高亮增强插件
+	Plug 'majutsushi/tagbar', { 'for' : ['c', 'cpp', 'go', 'java', 'objc'] }          " tagbar (依赖 ctags)
+	Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : ['c', 'cpp', 'make'] }         " C/C++ 语法高亮增强插件
 call plug#end()
 
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme="dark"      " 设置0题
+" let g:airline_extensions = []   						" 选择性加载指定的 airline 拓展
+let g:airline#extensions#wordcount#enabled = 0       	" 不显示文档总字数, 大文件加速
+let g:airline#extensions#whitespace#enabled = 0 		" 关闭状态显示空白符号计数
+let g:airline_section_warning = ''                      " 取消显示warning部分
+let g:airline#extensions#term#enabled = 0
+let g:airline#extensions#tabline#enabled = 1            " 设置允许修改默认tab样式
 let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#buffer_nr_show = 0
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_section_y = airline#section#create(['%{strftime("%H:%M")} [HEX=0x%02.2B]'])			" 显示日期
+" let g:airline_section_b = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
 let g:syntastic_enable_signs = 1
