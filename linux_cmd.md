@@ -44,6 +44,7 @@
     - `histroy | grep dpigs*`
   - `grep -R -n "软件"`
     - 递归搜索并显示行号;
+  - `grep -v`
 ## <font color=#009A000> 0x01 压缩解压缩 </font>
 - `gzip`  
   - `*.gz`
@@ -199,4 +200,14 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   - `u` 撤回，`ctrl+r` 反撤回
   - `F2` tagbar 开关
     - `brew install ctags` 安装依赖
-  - `F3` NERDTreeToggle 开关
+  - NERDTree :
+    - `F3` 开关
+    - `:b <Key Word>` 切换多 buffer
+    - `:bn`, `:bp` 切换前后 buffer
+    - `q` 退出
+  - `:%!grep xxxx` 过滤 buffer 中的文本并替换 buffer
+  - `grep -v` 反向过滤
+- VIM 的缓冲区 Buffer :
+  - 是一块内存区域，用于存储着正在编辑的文件。在保存缓冲区并退出时，内容也随之被写回原始文件。
+  - 在启动vi时，可以指定多个文件做为参数，例如 `vi file1 file2 file3`，参数中的所有文件都会被载入缓冲区，但vi只会在窗口中显示第一个文件。
+  - 可以使用 `:help buffers` 命令，查看关于缓冲区的帮助信息

@@ -59,7 +59,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : ['c', 'cpp', 'make'] }         " C/C++ 语法高亮增强插件
 call plug#end()
 
-let g:airline_theme="dark"      " 设置0题
+let g:airline_theme="dark"      " 设置主题
 " let g:airline_extensions = []   						" 选择性加载指定的 airline 拓展
 let g:airline#extensions#wordcount#enabled = 0       	" 不显示文档总字数, 大文件加速
 let g:airline#extensions#whitespace#enabled = 0 		" 关闭状态显示空白符号计数
