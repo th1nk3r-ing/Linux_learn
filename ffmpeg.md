@@ -24,7 +24,7 @@
   - `ffmpeg -i 比利林恩_4k_60fps_h265.mkv -vcodec libx265 -pix_fmt yuv420p -acodec copy output.mkv`
 - 使用 ffprobe 查看文件中帧对应时间(pts)是否对齐 :
   - `ffprobe -show_frames file | grep -E "media_type|pts_time|pict_type"`
-- 单独查看视频的帧信息 
+- 单独查看视频的帧信息
   - `ffprobe -show_frame -select_streams v -of xml input.mp4`
 - 串联音频视频 :
   - `ffmpeg -i "concat:01.mp4|02.mp4|03.mp4" -c copy out.mp4`

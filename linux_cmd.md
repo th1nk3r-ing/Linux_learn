@@ -8,7 +8,7 @@
     - `ls Linux?.md`
     - `ls Linux[34].md`
     - `ls Linux[a-f].md`
-- `cd`  
+- `cd`
   - `cd -` 跳至上一次操作的路径
   - 文件的连接数... 软硬链接.
 - `pwd`
@@ -25,7 +25,7 @@
 
 - `find 搜索路径 参数 搜索内容`
   - `-name` '文件名'
-  - `-size` 
+  - `-size`
   - `-type`
     - d 仅查找文件夹
     - f 进查找普通文件
@@ -46,7 +46,7 @@
     - 递归搜索并显示行号;
   - `grep -v`
 ## <font color=#009A000> 0x01 压缩解压缩 </font>
-- `gzip`  
+- `gzip`
   - `*.gz`
 - `bzip2`
   - `*.bz2`
@@ -55,7 +55,7 @@
   - `x` 释放压缩文件
   - `v` 打印提示信息
   - `f` 指定压缩包名
-  - `z` 使用 `gzip` 压缩文件 
+  - `z` 使用 `gzip` 压缩文件
     - `xxx.tar.gz`
   - `j` 使用 `bzip2` 方式压缩文件
     - `xxx.tat.bz2`
@@ -63,7 +63,7 @@
     - `tar zcvf test.tar.gz file/dir`
   - 解压缩:
     - `tar zxvf tes .tar.gz -C 解压目录`
-- `rar` 
+- `rar`
   - 需要安装,
   - `rar a 压缩包名 原材料`
   - `rar x 压缩包名 解压目录名`
@@ -94,7 +94,7 @@
           - `sudo kill PID`
       2. 直接强制删除 lock 文件:
           - `sudo rm /var/lib/dpkg/lock`
-          - `sudo rm /var/lib/apt/lists/lock` 
+          - `sudo rm /var/lib/apt/lists/lock`
 - 系统清理：
   - `sudo apt-get clean`  清空缓存
     - `/var/cashe/apt/archives`
@@ -211,3 +211,7 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   - 是一块内存区域，用于存储着正在编辑的文件。在保存缓冲区并退出时，内容也随之被写回原始文件。
   - 在启动vi时，可以指定多个文件做为参数，例如 `vi file1 file2 file3`，参数中的所有文件都会被载入缓冲区，但vi只会在窗口中显示第一个文件。
   - 可以使用 `:help buffers` 命令，查看关于缓冲区的帮助信息
+- vim 插件 `fzf`
+  - `ctrl + o` 打开文件搜索
+  - `ctrl + p` 打开文本搜索(基于 `Ag`)
+  - `ctrl + e` 打开的 buffer 中搜索切换

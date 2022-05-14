@@ -33,7 +33,7 @@
 ## <font color=#009A000> 一、常用命令 </font>
 
 - 调出图形计算器:
-  - `gnome-calculator` 
+  - `gnome-calculator`
 - 调出图形截图工具
   - `gnome-screenshot -i`
 - 终端中的一些命令:
@@ -78,9 +78,9 @@
   - `sudo apt-get install manpages-posix-dev glibc-doc`
 - `find 搜索路径 参数 搜索内容`
   - `-name` '文件名'
-  - `-size` 
+  - `-size`
   - `-type`
-  - `-ctime` `-mtime` `-atime` 
+  - `-ctime` `-mtime` `-atime`
     - -n n天以内.
   - `maxdepth` `mindepth` 搜索深度
   - `-ok` 或 `-exec` 执行的命令 `{} \;`
@@ -115,10 +115,10 @@
   - 当字符串中包含 `/` 时, 可用 `\/` 来转义;
 - `pgrep threadName`
 - `pkill threadName`
-- `pmap threadName` 
+- `pmap threadName`
   > report memory map of a process
 
-## <font color=#009A000> 五 `xargs` </font> 
+## <font color=#009A000> 五 `xargs` </font>
 > 参考链接 :
 > 1. [对find，xargs，grep和管道的一些深入理解](https://www.cnblogs.com/hwy89289709/p/7497069.html)
 > 2. [xargs命令详解，xargs与管道的区别](https://www.cnblogs.com/wangqiguo/p/6464234.html)
@@ -145,7 +145,7 @@
   - 寻找 `*.cmd` 文件;
   - 对每个文件执行 `grep` 操作( `-l` 为只输出文件路径);
   - 对文件执行 `sed` 操作;
-- 查看某个进程的内存分布 : 
+- 查看某个进程的内存分布 :
   - `pgrep threadName | xargs pmap`
 - 递归删除某个路径下的所有空文件夹 :
   - `find -type d -empty -print0| xargs -0 -n 1 rm -rf`

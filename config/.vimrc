@@ -4,6 +4,7 @@ set fencs=utf-8,gbk,gb2312,ucs-bom,gb18030,cp936
 filetype on                 " 侦测文件类型
 set number                  " 开启行号显示
 " set mouse=a               " 复制代码不带行号
+" set autochdir               " 自动切换到工作目录到当前文件的目录
 
 " 配置 table 为 4 个空格
 set ts=4
@@ -39,13 +40,13 @@ match WhitespaceEOL /\s\+$/
 set noeb                    " 去掉输入错误的提示声音
 set autoread
 
-" set background=dark
-" colorscheme onehalfdark
 
 " 插件加载
 call plug#begin('~/.vim/plugged')
     " Plug 'tweekmonster/startuptime.vim'   " vim 启动时间统计
-    Plug 'preservim/nerdtree'               " 目录树
+	Plug 'preservim/nerdtree'               " 目录树
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
     Plug 'Vim-airline/vim-airline'          " vim-airline 标签栏插件
     Plug 'Vim-airline/vim-airline-themes'   " vim-airline 标签栏插件的主题插件
     Plug 'jiangmiao/auto-pairs'             " 括号自动匹配
@@ -59,6 +60,12 @@ call plug#begin('~/.vim/plugged')
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for' : ['c', 'cpp', 'make'] }         " C/C++ 语法高亮增强插件
 call plug#end()
 
+set t_Co=256
+set background=dark
+" colorscheme PaperColor " papercolor-theme
+" colorscheme codedark
+
+
 let g:airline_theme="dark"      " 设置主题
 " let g:airline_extensions = []   						" 选择性加载指定的 airline 拓展
 let g:airline#extensions#wordcount#enabled = 0       	" 不显示文档总字数, 大文件加速
@@ -71,16 +78,23 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_section_y = airline#section#create(['%{strftime("%H:%M")} [HEX=0x%02.2B]'])			" 显示日期
 " let g:airline_section_b = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 
-map <F3> :NERDTreeMirror<CR>
-map <F3> :NERDTreeToggle<CR>
+map <silent> <F3> :NERDTreeMirror<CR>
+map <silent> <F3> :NERDTreeToggle<CR>
 let g:syntastic_enable_signs = 1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='►'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:rainbow_active = 1
-nmap <F2> :TagbarToggle<CR>
+nmap <silent> <F2> :TagbarToggle<CR>
 let g:tagbar_sort = 0
 let g:tagbar_left=1
 let g:tagbar_autofocus = 1
+
+" fzf 查看文件列表
+nnoremap <silent> <C-o> :Files<CR>
+" fzf buffer 列表
+nnoremap <silent> <C-e> :Buffers<CR>
+" fzf Ag 搜索
+nnoremap <silent> <C-A> :Ag<CR>
 
