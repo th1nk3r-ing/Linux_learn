@@ -3,6 +3,7 @@ set fencs=utf-8,gbk,gb2312,ucs-bom,gb18030,cp936
 
 filetype on                 " 侦测文件类型
 set number                  " 开启行号显示
+" set relativenumber number   " 设置相对行号"
 " set mouse=a               " 复制代码不带行号
 " set autochdir               " 自动切换到工作目录到当前文件的目录
 
@@ -80,11 +81,14 @@ let g:airline_section_y = airline#section#create(['%{strftime("%H:%M")} [HEX=0x%
 
 map <silent> <F3> :NERDTreeMirror<CR>
 map <silent> <F3> :NERDTreeToggle<CR>
+
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_enable_signs = 1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='►'
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_wq = 0
+
 let g:rainbow_active = 1
 nmap <silent> <F2> :TagbarToggle<CR>
 let g:tagbar_sort = 0
