@@ -2,28 +2,15 @@
 # @think3r 2020-07-01 00:06:07
 
 # print color alias
-# TODO: 改用 AOSP 中的 color
-if (uname -a | grep "Linux" > /dev/null) ; then # gnu-linux
-    export prt_Green="\e[1;32m"
-    export prt_Yellow="\e[1;33m"
-    export prt_Red="\e[1;31m"
-    export prt_Blue="\e[1;36m"
-    export prt_Purple="\e[1;35m"		
-    export prt_RedLine="\e[4;31m"
-    export prt_GreenLine="\e[4;32m"
-    export prt_YellowLine="\e[4;33m"	
-    export prt_End="\e[0m"
-elif (uname -a | grep "Darwin" > /dev/null) ;then #  MACOS 下的颜色输出不太一样;
-    export prt_Green="\033[1;32m"
-    export prt_Yellow="\033[1;33m"
-    export prt_Red="\033[1;31m"
-    export prt_Blue="\033[1;36m"
-    export prt_Purple="\033[1;35m"	
-    export prt_RedLine="\033[4;31m"
-    export prt_GreenLine="\033[4;32m"
-    export prt_YellowLine="\033[4;33m"
-    export prt_End="\033[0m"
-fi
+export prt_Bold=$(tput bold)
+export prt_Black=$(tput setaf 0)
+export prt_Red=$(tput setaf 1)
+export prt_Green=$(tput setaf 2)
+export prt_Yellow=$(tput setaf 3)
+export prt_Blue=$(tput setaf 4)
+export prt_Cyan=$(tput setaf 6)
+export prt_White=$(tput setaf 7)
+export prt_End=$(tput sgr0)
 
 alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
 alias la='ls -A'
@@ -120,13 +107,14 @@ if (echo "$SHELL" | grep "zsh" >/dev/null); then
 fi
 
 # colourful man page
-export LESS_TERMCAP_mb=$'\E[01;34m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;36;44m'
-export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_mb=$(printf "\e[1;31m")
+export LESS_TERMCAP_md=$(printf "\e[1;31m")
+export LESS_TERMCAP_me=$(printf "\e[0m")
+export LESS_TERMCAP_se=$(printf "\e[0m")
+export LESS_TERMCAP_so=$(printf "\e[1;44;33m")
+export LESS_TERMCAP_ue=$(printf "\e[0m")
+export LESS_TERMCAP_us=$(printf "\e[1;32m")
+
 
 # 自己的可执行文件本地路径
 if [ -d "$HOME/bin" ]; then
@@ -177,3 +165,5 @@ fi
 if [ -f "$HOME/.myPath_add" ]; then
 	source ~/.myPath_add
 fi
+
+#export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/
