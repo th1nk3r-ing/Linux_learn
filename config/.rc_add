@@ -2,15 +2,33 @@
 # @think3r 2020-07-01 00:06:07
 
 # print color alias
-export prt_Bold=$(tput bold)
-export prt_Black=$(tput setaf 0)
-export prt_Red=$(tput setaf 1)
-export prt_Green=$(tput setaf 2)
-export prt_Yellow=$(tput setaf 3)
-export prt_Blue=$(tput setaf 4)
-export prt_Cyan=$(tput setaf 6)
-export prt_White=$(tput setaf 7)
-export prt_End=$(tput sgr0)
+if command -v tput > /dev/null; then
+    export prt_Bold=$(tput bold)
+    export prt_Black=$(tput setaf 0)
+    export prt_Red=$(tput setaf 1)
+    export prt_Green=$(tput setaf 2)
+    export prt_Yellow=$(tput setaf 3)
+    export prt_Blue=$(tput setaf 4)
+    export prt_Cyan=$(tput setaf 6)
+    export prt_White=$(tput setaf 7)
+    export prt_End=$(tput sgr0)
+else
+    if (uname -a | grep "Linux" > /dev/null) ; then # gnu-linux
+        prt_Start="\e"
+    elif (uname -a | grep "Darwin" > /dev/null) ;then #  MACOS 下的颜色输出不太一样;
+        prt_Start="\033"
+    fi
+
+    export prt_Green=$prt_Start"[1;32m"
+    export prt_Yellow=$prt_Start"[1;33m"
+    export prt_Red=$prt_Start"[1;31m"
+    export prt_Blue=$prt_Start"[1;36m"
+    export prt_Purple=$prt_Start"[1;35m"
+    export prt_RedLine=$prt_Start"[4;31m"
+    export prt_GreenLine=$prt_Start"[4;32m"
+    export prt_YellowLine=$prt_Start"[4;33m"
+    export prt_End=$prt_Start"[0m"
+fi
 
 alias ll="ls -alhF --time-style='+%Y/%m/%d_%H:%M:%S'"
 alias la='ls -A'
@@ -31,7 +49,7 @@ if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
 
     #取消windows路径中的文件夹背景色
     if [ -f "$HOME/.dir_colors" ]; then
-        eval `dircolors "$HOME/.dir_colors"`
+        eval $(dircolors "$HOME/.dir_colors")
     fi
 
 	# [oh-my-zsh Tab completion not using dir_colors #1563](https://github.com/ohmyzsh/ohmyzsh/issues/1563)
@@ -55,15 +73,10 @@ if command -v exa > /dev/null; then
 	alias el="exa -aHlFg --time-style=long-iso"
 fi
 
+# https://github.com/macmade/trash
 if command -v trash > /dev/null; then
     alias rm=trash
-	alias rl='ls ~/.Trash'
-	undelfile() {
-        mv -i ~/.Trash/$@ ./
-    }
-    alias ur=undelfile
 fi
-
 
 # add android-termux command;
 if [ -f ~/termux_sh.sh ]; then
@@ -157,9 +170,9 @@ if (uname -a | grep "Darwin" > /dev/null) ;then
 	if [ -d "/usr/local/opt/binutils/bin" ]; then
 		export PATH="$PATH:/usr/local/opt/binutils/bin"
 	fi
-    if [ -d "/usr/local/opt/openjdk/bin/" ]; then
-        #PATH="/usr/local/opt/openjdk/bin/:$PATH"
-    fi
+    # if [ -d "/usr/local/opt/openjdk/bin/" ]; then
+        # PATH="/usr/local/opt/openjdk/bin/:$PATH"
+    # fi
 fi
 
 if [ -f "$HOME/.myPath_add" ]; then
