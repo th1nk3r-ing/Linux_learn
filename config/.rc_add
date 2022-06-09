@@ -42,18 +42,18 @@ if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
     # 挂载网络磁盘
     # sudo mount -t drvfs D: /mnt/d
     # 自动挂载网络磁盘
-    #if [ ! -f "/mnt/u/.bashrc" ]; then
+    #if [[ ! -f "/mnt/u/.bashrc" ]]; then
     #	echo passwd | sudo -S mount -t drvfs U: /mnt/u
     #	echo -e $prt_Green "mount netdisk U success!" $prt_End
     #fi
 
     #取消windows路径中的文件夹背景色
-    if [ -f "$HOME/.dir_colors" ]; then
+    if [[ -f "$HOME/.dir_colors" ]]; then
         eval $(dircolors "$HOME/.dir_colors")
     fi
 
 	# [oh-my-zsh Tab completion not using dir_colors #1563](https://github.com/ohmyzsh/ohmyzsh/issues/1563)
-    if (echo "$SHELL" | grep "zsh" >/dev/null) && [ -d "$HOME/.oh-my-zsh" ]; then
+    if (echo "$SHELL" | grep "zsh" >/dev/null) && [[ -d "$HOME/.oh-my-zsh" ]]; then
         # echo -e "$prt_Red fix zsh table color $prt_End"
         zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
     fi
@@ -79,12 +79,12 @@ if command -v trash > /dev/null; then
 fi
 
 # add android-termux command;
-if [ -f ~/termux_sh.sh ]; then
+if [[ -f ~/termux_sh.sh ]]; then
     . ~/termux_sh.sh
 fi
 
 #autojump
-if [ -d "$HOME/.autojump" ]; then
+if [[ -d "$HOME/.autojump" ]]; then
     [[ -s "$HOME/.autojump/etc/profile.d/autojump.sh" ]] && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 fi
 
@@ -104,14 +104,14 @@ elif (echo "$SHELL" | grep "zsh" >/dev/null); then
 	# 关闭 zsh shell 提示音
 	unsetopt beep
     # oh-my-zsh 默认主题的情况下, 修改 PS1
-    if [ -d "$HOME/.oh-my-zsh" ] && [ "$ZSH_THEME" = "robbyrussell" ]; then
+    if [[ -d "$HOME/.oh-my-zsh" ]] && [[ "$ZSH_THEME" == "robbyrussell" ]]; then
         PROMPT='%{$fg_bold[red]%}-> %{$fg_bold[green]%}%p%{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}% %{$fg[magenta]%}%(?..%?%2v)%{$reset_color%}#: '
     fi
 fi
 
 if (echo "$SHELL" | grep "zsh" >/dev/null); then
     # oh-my-zsh 的自动补全插件
-    #if [ -d "$HOME/.oh-my-zsh/plugins/incr" ]; then
+    #if [[ -d "$HOME/.oh-my-zsh/plugins/incr" ]]; then
     #    source "$HOME/.oh-my-zsh/plugins/incr/incr*.zsh"
     #    #echo -e "have is $prt_Red incr file $prt_End"
     #fi
@@ -130,15 +130,15 @@ export LESS_TERMCAP_us=$(printf "\e[1;32m")
 
 
 # 自己的可执行文件本地路径
-if [ -d "$HOME/bin" ]; then
+if [[ -d "$HOME/bin" ]]; then
     # add adb path; 如果不加入, 则需要使用 adb.exe 代替 adb
     my_adb_path="$HOME/bin/platform-tools"
-    if [ -d "$my_adb_path" ]; then
+    if [[ -d "$my_adb_path" ]]; then
         PATH="$PATH:$my_adb_path"
     fi
     # go
 	my_go_path="$HOME/bin/go/bin"
-	if [ -d "$my_go_path" ]; then
+	if [[ -d "$my_go_path" ]]; then
 	    PATH="$PATH:$my_go_path"
 	fi
 fi
@@ -149,17 +149,17 @@ if command -v repo > /dev/null; then
 fi
 
 #set java env
-if [ -d "$HOME/bin/jdk-14.0.2" ];then
+if [[ -d "$HOME/bin/jdk-14.0.2" ]];then
     export JAVA_HOME="$HOME/bin/jdk-14.0.2/"
     export JRE_HOME=${JAVA_HOME}
     export CLASSPATH=.:${JAVA_HOME}/lib
     export PATH=${JAVA_HOME}/bin:$PATH
-elif [ -d "$HOME/bin/jdk-15.jdk" ];then
+elif [[ -d "$HOME/bin/jdk-15.jdk" ]];then
 	export JAVA_HOME="$HOME/bin/jdk-15.jdk/Contents/Home/"
 	export JRE_HOME=${JAVA_HOME}
 	export CLASSPATH=.:${JAVA_HOME}/lib
 	export PATH=${JAVA_HOME}/bin:$PATH
-elif [ -d "$HOME/bin/jdk-16.0.1.jdk" ];then
+elif [[ -d "$HOME/bin/jdk-16.0.1.jdk" ]];then
     export JAVA_HOME="$HOME/bin/jdk-16.0.1.jdk/Contents/Home/"
     export JRE_HOME=${JAVA_HOME}
 	export CLASSPATH=.:${JAVA_HOME}/lib
@@ -167,15 +167,15 @@ elif [ -d "$HOME/bin/jdk-16.0.1.jdk" ];then
 fi
 
 if (uname -a | grep "Darwin" > /dev/null) ;then
-	if [ -d "/usr/local/opt/binutils/bin" ]; then
+	if [[ -d "/usr/local/opt/binutils/bin" ]]; then
 		export PATH="$PATH:/usr/local/opt/binutils/bin"
 	fi
-    # if [ -d "/usr/local/opt/openjdk/bin/" ]; then
+    # if [[ -d "/usr/local/opt/openjdk/bin/" ]]; then
         # PATH="/usr/local/opt/openjdk/bin/:$PATH"
     # fi
 fi
 
-if [ -f "$HOME/.myPath_add" ]; then
+if [[ -f "$HOME/.myPath_add" ]]; then
 	source ~/.myPath_add
 fi
 
