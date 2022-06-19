@@ -121,6 +121,11 @@
 
 ## <font color=#009A000> 0x03 vi / vim  </font>
 
+> 1. [VIM学习笔记 插件列表 (Plugins)](http://yyq123.github.io/learn-vim/learn-vim-plugin.html)
+> 2. [用于C++项目的vim配置](https://blog.csdn.net/qq_41100010/article/details/121075296)
+> 3. [Vim设置](http://www.cppblog.com/qywyh/articles/57039.html)
+> 4. [Neovim+Coc.nvim配置 目前个人最舒服终端编辑环境(Python&C++)](https://www.cnblogs.com/cniwoq/p/13272746.html)
+
 - `vimtutor`
   - 内置教程
 - `vi` linux 自带
@@ -129,63 +134,6 @@
   - 命令行模式
   - 编辑模式
   - 末行模式
-
-## <font color=#009A000> 0x04 文本查找替换 </font>
-
-```sh
-# 删除匹配行
-sed -i '/onechunk.xsl/d'
-
-## 文本查找替换
-sed -i "s/python/python3/" ~/.autojump/bin/autojump
-
-# 特殊字符使用 \ (空格, #, / 等均需要转义)
-sed -i "s/\#\!\/usr\/bin\/env\ python/\#\!\/usr\/bin\/env\ python3/" ~/.autojump/bin/autojump
-
-# 文件名中包含特殊字符(如: 空格, 中文)
-# find ./ -name "*.md" -printf "\"%p\"" 在文件路径周围添加引号
-find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
-```
-
-## <font color=#009A000> 0x02 pdf 工具 </font>
-
-> [MacOS PDF分割和合并](https://www.jianshu.com/p/002a4bad9f9b)
-
-- [xpdf --> pdf 命令行工具](http://www.xpdfreader.com/)
-- [pdfunite --> github 开源 pdf 合并工具](https://github.com/mtgrosser/pdfunite)
-
-| 命令 | 功能 |
-| --- | --- |
-| pdfunite | 合并 pdf |
-| pdftotext | pdf 转 text |
-| pdftops | pdf 转 ops |
-| pdftoppm | pdf 转 ppm |
-| pdftohtml | pdf 转 html |
-| pdftocairo | pdf 转 cairo |
-| pdfsig | pdf 签名 |
-| pdfseparate | 拆分 pdf |
-| pdfinfo | pdf 元数据 |
-| pdfimages | pdf 转图片 |
-| pdffonts | 提取 pdf 字体 |
-| pdfdetach | 删除 pdf 内置附件 |
-| pdfattach | 给 pdf 添加附件 |
-| pdf2ps | pdf 转 ps |
-| pdf2dsc | pdf 转 dsc |
-
-## <font color=#009A000> youtube 下载 </font>
-
-- `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]'  --merge-output-format mp4  URL`
-  - `yt-dlp` 比 `youtube-dl` 下载块一些;
-- `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
-  - 下载整个 playlist 的视频
-
-## <font color=#009A000> vim 使用 </font>
-
-> 1. [VIM学习笔记 插件列表 (Plugins)](http://yyq123.github.io/learn-vim/learn-vim-plugin.html)
-> 2. [用于C++项目的vim配置](https://blog.csdn.net/qq_41100010/article/details/121075296)
-> 3. [Vim设置](http://www.cppblog.com/qywyh/articles/57039.html)
-> 4. [ Neovim+Coc.nvim配置 目前个人最舒服终端编辑环境(Python&C++)](https://www.cnblogs.com/cniwoq/p/13272746.html)
-
 - 插件安装 :
   - 安装 vim-plug :  `curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
@@ -256,9 +204,9 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 
   0		跳到本行第一个字符i
   ^		跳到本行第一个非空字符i
-  g_      跳到本行最后一个非空字符i
+  g_  跳到本行最后一个非空字符i
   $		跳到本行最后一个字符i
-  n|      跳到本行第n列i
+  n|  跳到本行第n列i
 
   gg      跳转到第一行
   G       跳转到最后一行
@@ -298,3 +246,52 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   ```
 
 - 我推荐你从 `h,j,k,l, w,b, G,/,?,n` 开始
+
+## <font color=#009A000> 0x04 文本查找替换 </font>
+
+```sh
+# 删除匹配行
+sed -i '/onechunk.xsl/d'
+
+## 文本查找替换
+sed -i "s/python/python3/" ~/.autojump/bin/autojump
+
+# 特殊字符使用 \ (空格, #, / 等均需要转义)
+sed -i "s/\#\!\/usr\/bin\/env\ python/\#\!\/usr\/bin\/env\ python3/" ~/.autojump/bin/autojump
+
+# 文件名中包含特殊字符(如: 空格, 中文)
+# find ./ -name "*.md" -printf "\"%p\"" 在文件路径周围添加引号
+find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
+```
+
+## <font color=#009A000> 0x02 pdf 工具 </font>
+
+> [MacOS PDF分割和合并](https://www.jianshu.com/p/002a4bad9f9b)
+
+- [xpdf --> pdf 命令行工具](http://www.xpdfreader.com/)
+- [pdfunite --> github 开源 pdf 合并工具](https://github.com/mtgrosser/pdfunite)
+
+| 命令 | 功能 |
+| --- | --- |
+| pdfunite | 合并 pdf |
+| pdftotext | pdf 转 text |
+| pdftops | pdf 转 ops |
+| pdftoppm | pdf 转 ppm |
+| pdftohtml | pdf 转 html |
+| pdftocairo | pdf 转 cairo |
+| pdfsig | pdf 签名 |
+| pdfseparate | 拆分 pdf |
+| pdfinfo | pdf 元数据 |
+| pdfimages | pdf 转图片 |
+| pdffonts | 提取 pdf 字体 |
+| pdfdetach | 删除 pdf 内置附件 |
+| pdfattach | 给 pdf 添加附件 |
+| pdf2ps | pdf 转 ps |
+| pdf2dsc | pdf 转 dsc |
+
+## <font color=#009A000> youtube 下载 </font>
+
+- `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]'  --merge-output-format mp4  URL`
+  - `yt-dlp` 比 `youtube-dl` 下载块一些;
+- `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
+  - 下载整个 playlist 的视频
