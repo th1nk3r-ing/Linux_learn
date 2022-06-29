@@ -68,7 +68,7 @@ set background=dark
 
 
 let g:airline_theme="dark"      " 设置主题
-" let g:airline_extensions = []   						" 选择性加载指定的 airline 拓展
+let g:airline_extensions = [ 'tabline']   	            " 选择性加载指定的 airline 拓展
 let g:airline#extensions#wordcount#enabled = 0       	" 不显示文档总字数, 大文件加速
 let g:airline#extensions#whitespace#enabled = 0 		" 关闭状态显示空白符号计数
 let g:airline_section_warning = ''                      " 取消显示warning部分
