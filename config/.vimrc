@@ -41,6 +41,9 @@ match WhitespaceEOL /\s\+$/
 set noeb                    " 去掉输入错误的提示声音
 set autoread
 
+" 默认复制到系统缓冲区中, ctrl+v 使用快速粘贴
+set clipboard=unnamed
+nmap <c-v> "+p
 
 " 插件加载
 call plug#begin('~/.vim/plugged')
@@ -53,7 +56,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'jiangmiao/auto-pairs'             " 括号自动匹配
 	Plug 'luochen1990/rainbow'              " 彩色显示括号对
 	" Syntastic 语法检查,  ale 支持 LSP 的异步语法检查
-    Plug 'scrooloose/syntastic', { 'for' : ['c', 'cpp', 'go', 'java', 'objc', 'markdown', 'sh', 'make'] }
+    Plug 'scrooloose/syntastic', { 'for' : ['c', 'cpp', 'go', 'java', 'objc', 'markdown', 'sh', 'make', 'json', 'xml'] }
     "Plug 'dense-analysis/ale'
 	" 模糊匹配, 需要 vim 支持 python
 	" Plug 'Yggdroot/LeaderF'
