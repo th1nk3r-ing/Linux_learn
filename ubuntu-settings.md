@@ -151,6 +151,11 @@ sed -i "s/\#\!\/usr\/bin\/env\ python/\#\!\/usr\/bin\/env\ python3/" ~/.autojump
 
 ### <font color=#FF4500> ssh 备份后恢复: </font>
 
+- `ssh-keygen -t ed25519 -C "xxxxx@xxxxx.com"` 生成 ssh 密钥对
+- 公钥 `*.pub` 添加到被登录的机器 `~/.ssh/authorized_keys` 文件中即可
+- 仅需在执行 ssh 的客户端机器上保留对应的 `~/.ssh/*rsa` 文件即可, 无需保留 `*.pub` 公钥
+  - 保留 `*.pub` 公钥可避免二次重新生成配置
+
 ```bash
 cp -r .ssh ~/
 # fix: 权限相关
