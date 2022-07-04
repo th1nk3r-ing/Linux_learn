@@ -11,6 +11,9 @@ set number                  " 开启行号显示
 set ts=4
 set cindent shiftwidth=4
 set autoindent shiftwidth=4
+set softtabstop=4
+" Allow tabs in Makefiles.
+autocmd FileType make,automake set noexpandtab shiftwidth=8 softtabstop=8
 " set expandtab             " 将 tab 键转换为空格
 
 " 检索高亮
@@ -37,6 +40,8 @@ set scrolloff=3
 " 行尾部的空格会显示红色
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
+" Do not highlight spaces at the end of line while typing on that line.
+autocmd InsertEnter * match WhitespaceEOL /\s\+\%#\@<!$/
 
 set noeb                    " 去掉输入错误的提示声音
 set autoread
