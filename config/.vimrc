@@ -14,7 +14,12 @@ set autoindent shiftwidth=4
 set softtabstop=4
 " Allow tabs in Makefiles.
 autocmd FileType make,automake set noexpandtab shiftwidth=8 softtabstop=8
-" set expandtab             " 将 tab 键转换为空格
+" python tabs config
+autocmd FileType python set tabstop=4 |
+				      \ set softtabstop=4 |
+				      \ set shiftwidth=4 |
+				      \ set expandtab
+"set expandtab             " 将 tab 键转换为空格
 
 " 检索高亮
 set hlsearch
