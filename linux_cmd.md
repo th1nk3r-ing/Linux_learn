@@ -295,3 +295,8 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   - `yt-dlp` 比 `youtube-dl` 下载块一些;
 - `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
   - 下载整个 playlist 的视频
+
+## <font color=#009A000> 正则表达式 </font>
+
+1. 反向过滤(反向选取/取反) : `^((?!你的规则).)*$`
+   - 多个关键词的话, 可用 `|` 隔离开来 : `^((?!filter_sdk|Bundle|Sqm|SQMDEBUG).)*$`
