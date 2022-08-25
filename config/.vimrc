@@ -89,7 +89,7 @@ let g:airline#extensions#term#enabled = 0
 let g:airline#extensions#tabline#enabled = 1            " 设置允许修改默认tab样式
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_section_y = airline#section#create(['%{strftime("%H:%M")} [HEX=0x%02.2B]'])			" 显示日期
+let g:airline_section_y = airline#section#create(['[%{"fenc=".(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?"+":"").""}] [HEX=0x%02.2B]'])			" 显示文件编码格式和当前数值
 " let g:airline_section_b = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 
 map <silent> <F3> :NERDTreeMirror<CR>
