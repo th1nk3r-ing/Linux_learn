@@ -153,8 +153,6 @@
     - `:b <Key Word>` 切换多 buffer
     - `:bn`, `:bp` 切换前后 buffer
     - `q` 退出
-  - `:%!grep xxxx` 过滤 buffer 中的文本并替换 buffer
-  - `grep -v` 反向过滤
 - VIM 的缓冲区 Buffer :
   - 是一块内存区域，用于存储着正在编辑的文件。在保存缓冲区并退出时，内容也随之被写回原始文件。
   - 在启动vi时，可以指定多个文件做为参数，例如 `vi file1 file2 file3`，参数中的所有文件都会被载入缓冲区，但vi只会在窗口中显示第一个文件。
@@ -246,6 +244,18 @@
   ```
 
 - 我推荐你从 `h,j,k,l, w,b, G,/,?,n` 开始
+- 过滤器 "
+  - ref :
+    - [VIM学习笔记 过滤器(Filter)](https://zhuanlan.zhihu.com/p/130983572)) :
+    - `:{range}!{motion}{filter}`
+      - range :
+        - 使用 `%` 指代整个文件
+        - `4,6` 表示指定行数
+  - 常用命令 :
+    - `:%! grep xxxx` 过滤 buffer 中的文本并替换 buffer (处理日志时有用)
+      - `grep -v` 反向过滤
+    - `:%!cat -n` 在首行增加行号
+    - `:!sh` 可以调用 Shell 来执行当前文件中的命令
 
 ## <font color=#009A000> 0x04 文本查找替换 </font>
 
