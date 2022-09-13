@@ -310,3 +310,27 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 
 1. 反向过滤(反向选取/取反) : `^((?!你的规则).)*$`
    - 多个关键词的话, 可用 `|` 隔离开来 : `^((?!filter_sdk|Bundle|Sqm|SQMDEBUG).)*$`
+
+## <font color=#009A000> 二进制工具 </font>
+
+- `xxd`
+  - Usage : `xxd [options] [infile [outfile]]`
+  - `-g` 设定以几个字节为一块，默认为 2bytes, 0 为紧密排布模式
+  - `-b` 以二进制（0/1）的形式查看文件内容
+  - `-i` output in C include file style. (将某个文件以 C 数组的形式输出!)
+  - `-p` 没有右侧的 ascii 表
+  - `-r` 从 outfile 恢复到原 infile 格式
+  - 一般与 vim 配合使用 :
+    - `vim xxx -b`
+    - `:%! xxd -g 1`
+    - 修改(删除某个字节会被填充 00)
+    - `%! xxd -r`
+- `hexcurse`
+  - 终端上的二进制编辑器, 可以直接搜索二进制(且无换行烦恼)
+  - `ctrl+?` 帮助
+  - `ctrl+f` 搜索
+- `less`
+  - `-N` 显示行号
+  - `-m` 显示百分比
+- `xxd -g 1 xxx | less -N -m`
+  - 查看二进制, 注意不自动识别出来换行
