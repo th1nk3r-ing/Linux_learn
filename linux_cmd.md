@@ -25,6 +25,7 @@
 
 - `find 搜索路径 参数 搜索内容`
   - `-name` '文件名'
+    - `-iname` 不区分文件名大小写
   - `-size`
   - `-type`
     - d 仅查找文件夹
@@ -33,15 +34,15 @@
     - `-n` n 天以内.
   - `-printf` 指定输出格式(文件名中有特殊字符时使用)
     - `%p` File's name.
-  - `maxdepth` `mindepth` 搜索深度
+  - `maxdepth` &  `mindepth` 搜索深度
   - `-ok` 或 `-exec` 执行的命令 `{} \;`
       -高级用法: `find ./ -name "*.md" -size +10k | xargs ls -alh`
 - `grep -r '搜索内容' 搜素路径`
   - `grep -r "颜色空间" ./ -n`
-  - 在某个目录下的头文件中找到某个字符串:
-    - `find ./ -name "*.h" | xargs grep "字符串"`
-  - 寻找历史命令行中相关的命令:
-    - `histroy | grep dpigs*`
+  - `find ./ -name "*.h" | xargs grep "字符串"`
+    - 在某个目录下的头文件中找到某个字符串
+  - `histroy | grep dpigs*`
+    - 寻找历史命令行中相关的命令
   - `grep -R -n "软件"`
     - 递归搜索并显示行号;
   - `grep -v`
@@ -52,7 +53,7 @@
   - `*.bz2`
 - `tar` 打包:
   - `c` 创建压缩文件
-  - `x` 释放压缩文件
+  - `x` 释放(解)压缩文件
   - `v` 打印提示信息
   - `f` 指定压缩包名
   - `z` 使用 `gzip` 压缩文件
@@ -254,7 +255,7 @@
   - 常用命令 :
     - `:%! grep xxxx` 过滤 buffer 中的文本并替换 buffer (处理日志时有用)
       - `grep -v` 反向过滤
-    - `:%!cat -n` 在首行增加行号
+    - `:%! cat -n` 在首行增加行号
     - `:!sh` 可以调用 Shell 来执行当前文件中的命令
 
 ## <font color=#009A000> 0x04 文本查找替换 </font>

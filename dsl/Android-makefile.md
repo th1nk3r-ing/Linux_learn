@@ -27,7 +27,7 @@
 - `Android.mk` 中可以定义多个编译模块，每个编译模块都是
   - 以 `include $(CLEAR_VARS)` 开始，
     - `CLEAR_VARS` : 指向一个编译脚本
-    - `CLEAR_VARS` 由编译系统提供，指定让 GNU MAKEFILE 为你清除除 LOCAL_PATH 以外的所有 LOCAL_XXX 变量，清楚它们可以避免冲突.
+    - `CLEAR_VARS` 由编译系统提供，指定让 GNU MAKEFILE 为你清除除 LOCAL_PATH 以外的所有 LOCAL_XXX 变量，清除它们可以避免冲突.
   - 以 `include $(BUILD_XXX)` 结束
     - `BUILD_EXECUTABLE` 生成 C/C++ 可执行文件;
 
