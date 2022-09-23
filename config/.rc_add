@@ -56,6 +56,7 @@ if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
     if (echo "$SHELL" | grep "zsh" >/dev/null) && [[ -d "$HOME/.oh-my-zsh" ]]; then
         # echo -e "$prt_Red fix zsh table color $prt_End"
         zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+		VAR_OHMYZSH=1
     fi
 elif (uname -a | grep "Darwin" >/dev/null) ;then       # MACOS
     alias e.='open .'
@@ -120,13 +121,17 @@ if (echo "$SHELL" | grep "zsh" >/dev/null); then
 fi
 
 # colourful man page
-export LESS_TERMCAP_mb=$(printf "\e[1;31m")
-export LESS_TERMCAP_md=$(printf "\e[1;31m")
-export LESS_TERMCAP_me=$(printf "\e[0m")
-export LESS_TERMCAP_se=$(printf "\e[0m")
-export LESS_TERMCAP_so=$(printf "\e[1;44;33m")
-export LESS_TERMCAP_ue=$(printf "\e[0m")
-export LESS_TERMCAP_us=$(printf "\e[1;32m")
+if [ "$VAR_OHMYZSH" = 0  ]; then
+	# oh-my-zsh 使用 colored-man-pages 插件
+	#echo "enable self colourful man page"
+	export LESS_TERMCAP_mb=$(printf "\e[1;31m")
+	export LESS_TERMCAP_md=$(printf "\e[1;31m")
+	export LESS_TERMCAP_me=$(printf "\e[0m")
+	export LESS_TERMCAP_se=$(printf "\e[0m")
+	export LESS_TERMCAP_so=$(printf "\e[1;44;33m")
+	export LESS_TERMCAP_ue=$(printf "\e[0m")
+	export LESS_TERMCAP_us=$(printf "\e[1;32m")
+fi
 
 
 # 自己的可执行文件本地路径
