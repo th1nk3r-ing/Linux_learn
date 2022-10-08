@@ -257,6 +257,9 @@
       - `grep -v` 反向过滤
     - `:%! cat -n` 在首行增加行号
     - `:!sh` 可以调用 Shell 来执行当前文件中的命令
+- 搜索 :
+  - `/xxx` 查找 xxx 关键字;
+  - `/\vAAA|BBB` 同时查找 AAA 和 BBB 关键字;
 
 ## <font color=#009A000> 0x04 文本查找替换 </font>
 
