@@ -126,6 +126,7 @@
 > 2. [用于C++项目的vim配置](https://blog.csdn.net/qq_41100010/article/details/121075296)
 > 3. [Vim设置](http://www.cppblog.com/qywyh/articles/57039.html)
 > 4. [Neovim+Coc.nvim配置 目前个人最舒服终端编辑环境(Python&C++)](https://www.cnblogs.com/cniwoq/p/13272746.html)
+> 5. [vim 里的 "\r" 和 "\n"](https://blog.csdn.net/robertsong2004/article/details/50826143)
 
 - `vimtutor`
   - 内置教程
@@ -252,11 +253,18 @@
       - range :
         - 使用 `%` 指代整个文件
         - `4,6` 表示指定行数
+      - motion :
+        - 使用 `s` 表示 sed
   - 常用命令 :
     - `:%! grep xxxx` 过滤 buffer 中的文本并替换 buffer (处理日志时有用)
       - `grep -v` 反向过滤
     - `:%! cat -n` 在首行增加行号
     - `:!sh` 可以调用 Shell 来执行当前文件中的命令
+    - `%s/,/\r\t/g` 用于将 `,` 改为换行 + `\t`
+      - 拆分 json 等时较为有用;
+      - `\n` 表示行尾，是一个位置。`\r` 表示回车，是一个字符
+      - 查找时，`\n` 代表换行符， `\r` 代表回车符
+      - 替换时，`\r` 代表换行，`\n` 代表空字符
 - 搜索 :
   - `/xxx` 查找 xxx 关键字;
   - `/\vAAA|BBB` 同时查找 AAA 和 BBB 关键字;
