@@ -80,11 +80,8 @@ int main(void)
 ## <font color=#009A000> 0x02 库文件链接编译 </font>
 
 - 开发软件时，完全不使用第三方函数库的情况是比较少见的，通常来讲都需要借助许多函数库的支持才能够完成相应的功能。从程序员的角度看，函数库实际上就是一些头文件（.h）和库文件（so、.a、lib、dll）的集合。
-
 - 虽然 Linux 下的大多数函数都默认将头文件放到 `/usr/include/` 目录下，而库文件则放到 `/usr/lib/` 目录下；Windows 所使用的库文件主要放在 Visual Stido 的目录下的 include 和 lib，以及系统文件夹下。但也有的时候，我们要用的库不再这些目录下，所以 GCC 在编译时必须用自己的办法来查找所需要的头文件和库文件。
-
 - Linux下的库文件分为两大类分别是**动态链接库**（通常以.so结尾）和 **静态链接库**（通常以.a结尾），二者的区别仅在于程序执行时所需的代码是在运行时动态加载的，还是在编译时静态加载的。
-
 - 例如我们的程序  `test.c` 是在 Linux 上使用 c 链接 mysql，这个时候我们需要去 mysql 官网下载 MySQL Connectors 的 C 库，下载下来解压之后，有一个 include 文件夹，里面包含 mysql connectors 的头文件，还有一个 lib 文件夹，里面包含二进制 so 文件 `libmysqlclient.so`
   - 其中 inclulde 文件夹的路径是`/usr/dev/mysql/include`, lib 文件夹是`/usr/dev/mysql/lib`
 - 编译连接:
@@ -121,18 +118,17 @@ int main(void)
   - 尽量使用固定长度数据类型, 可以很方便的进行代码的移植;
   - `printf` 时, 请使用格式化字符串 `"%"PRId64`, 避免不同架构下的 warning;
 - [ssize_t 和 size_t 详解](https://blog.csdn.net/lplp90908/article/details/50405899)
-  - `printf` 时, 请使用格式化字符串 `"%zu"`, 避免不同架构下的 warning;
+  - `printf` 64 位数值时, 请使用格式化字符串 `"%zu"`, 避免不同架构下的 warning;
 - 指针的大小一般与该计算机的字长相等
   - > 每台计算机都一个字长, 指明指针数据的标称大小.
   - [指针的大小到底是由谁决定？是多少？](https://www.cnblogs.com/noble/p/4144167.html)
-    - 指针大小是由当前CPU运行模式的寻址位数决定！
+    - **<u>指针大小是由当前 CPU 运行模式的寻址位数决定</u>**
 - gcc 分析头文件依赖:
   - `gcc -I ../common/ -I ../common_dsp -M -H dsp.h 2>&1 | grep -v "usr"`
   > 参考链接如下:
   > 1. [open-source-tools-examine-and-adjust-include-dependencies](http://gernotklingler.com/blog/open-source-tools-examine-and-adjust-include-dependencies/)
   > 2. [Linux 重定向：一些重定向问题的解决](http://blog.chinaunix.net/uid-28903506-id-4931889.html)
   > 3. [2>&1 使用](https://www.cnblogs.com/yangyongzhi/p/3364939.html)
-  > 4. `grep -v`
 - <u>编译选项传递 :</u>
   - `-Wl,<options>` 告诉编译器将后面的参数传递给链接器
     > Pass comma-separated <options> on to the linker.
@@ -150,7 +146,6 @@ int main(void)
 - 编译 so 时启用 BuildID :
   - `-Wl,--build-id`;
   - 可通过 `file` 或者 `readelf -x .note.gnu.build-id libxxx.so` 看出来;
-
 
 ### <font color=#FF4500> TODO :  </font>
 

@@ -182,5 +182,5 @@ index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 - <font color=#EA00DA>**ubuntu 常用软件&设置的安装脚本**</font>
 - 先使用虚拟机设置 ubuntu 环境. 之后在进行整机的安装.
 - <font color=#9664FF>学习使用 VIM, 同时 vscode 也安装 `vim` 和 `vi` </font>
-- <font color=#EA00DA>cmder 配置与备份</font>
+- ~~<font color=#EA00DA>cmder 配置与备份</font>~~
   - alias 设置: `C:\Program Files My\cmder\vendor\git-for-windows\etc`

@@ -1,4 +1,4 @@
-# <font color=#0099ff> **TFTP 命令** </font>
+# <font color=#0099ff> **tftp 命令** </font>
 
 > `@think3r` 2017-08-07 22:50:21
 > 参考链接 :
@@ -6,10 +6,10 @@
 > 2. [tftp使用方法](http://blog.sina.com.cn/s/blog_7d7e9d0f0101ifoz.html)
 > 3. [Trivial File Transfer Protocol -- wikipedia](https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol)
 
-## <font color=#009A000> 一、TFTP 简介 </font>
+## <font color=#009A000> 一、tftp 简介 </font>
 
-- tftp 命令用在本机和 tftp 服务器之间使用 TFTP 协议传输文件。
-- TFTP 是用来下载远程文件的最简单网络协议，它其于 UDP 协议而实现。
+- tftp 命令用在本机和 tftp 服务器之间使用 tftp 协议传输文件。
+- tftp 是用来下载远程文件的最简单网络协议，它其于 UDP 协议而实现。
 - 嵌入式 linux 的 tftp 开发环境包括两个方面：
   - linux 服务器端的 tftp-server 支持
   - 嵌入式目标系统的 tftp-client 支持
@@ -31,7 +31,7 @@
   -b SIZE Transfer blocks of SIZE octets (暂存多大数据后再写入, 可加快传输速度.)
   ````
 
-## <font color=#009A000> 三、TFTP 命令说明 </font>
+## <font color=#009A000> 三、tftp 命令说明 </font>
 
 - 主要用法:
   - `tftp –g/-p 目标文件名  源文件名  服务器地址`
@@ -45,7 +45,7 @@
 
 <div STYLE="page-break-after: always;"></div><!------------------分页符------------------->
 
-## <font color=#009A000> 四、 TFTP 命令实例 </font>
+## <font color=#009A000> 四、 tftp 命令实例 </font>
 
 - **更名** 的上传与下载:
   - 从 server 中的 tftp 根目录下，下载文件 `A.txt` 到 Client 并更名为 `B.txt` ；
@@ -71,4 +71,4 @@
         - **必须是 `-r` 选项** ,
   - 不更名 *上传* 文件至服务器:
     - `tftp –p –l/-r 源文件名   服务器地址`
-    - （此时参数-l与-r等效，使用时只使用其中一个）
+    - （此时参数 `-l` 与 `-r` 等效，使用时只使用其中一个）

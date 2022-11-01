@@ -8,7 +8,7 @@
 - ## <font color=#009A000> 0x00Linux软件包分类 </font>
 
 1. 源码包;
-2. 二进制包（RPM包）;
+2. 二进制包（RPM 包）;
 3. yum 在线安装;
 4. 脚本安装包;
 
@@ -16,16 +16,15 @@ PS: 其实 Linux 中软件包只有源码包和二进制（RPM）包两种软件
 
 ## <font color=#009A000> 0x01 源码包安装 </font>
 
-优点: 开源，如果有足够的能力，可以修改源代码； 较为安全;<br>
-缺点: 安装步骤较多; 编译时间较多;
+- 优点: 开源，如果有足够的能力，可以修改源代码； 较为安全;<br>
+- 缺点: 安装步骤较多; 编译时间较多;
 
 ## <font color=#009A000> 0x02 二进制包（RPM 包） </font>
 
-优点:
-1. 包管理系统简单，只通过几个命令就可以实现包的安装、升级、查询和卸载；
-2. 安装速度比源码包安装快的多
-
-缺点:  依赖性强;
+- 优点:
+  1. 包管理系统简单，只通过几个命令就可以实现包的安装、升级、查询和卸载；
+  2. 安装速度比源码包安装快的多
+- 缺点:  依赖性强;
 
 ## <font color=#009A000> 0x03 在线安装 </font>
 
@@ -45,17 +44,17 @@ PS: 其实 Linux 中软件包只有源码包和二进制（RPM）包两种软件
 
 ### <font color=#FF4500> 0x05 制作过程 </font>
 
-如下为脚本内容:
+- 如下为脚本额外添加的内容:
 
-```sh
-#!/bin/bash
+    ```sh
+    #!/bin/bash
 
-lines=9  # 变量 lines 的值是指这个脚本的行数加1（这个脚本共有8行；
-tail -n+$lines $0 > /tmp/hello.tar.bz2 # $0 表示脚本本身，这个命令用来把从 $lines 开始的内容写入一个 /tmp 目录的 hello.tar.bz2 文件里
-cd /tmp  # 切换到 /tmp 目录操作，解压出来的文件重启系统后将会消失。
-tar jxvf hello.tar.bz2
-cp hello /bin
-exit 0
-```
+    lines=9  # 变量 lines 的值是指这个脚本的行数加 1（这个脚本共有 8 行, 因此是 9);
+    tail -n+$lines $0 > /tmp/hello.tar.bz2 # $0 表示脚本本身，这个命令用来把从 $lines 开始的内容写入一个 /tmp 目录的 hello.tar.bz2 文件里
+    cd /tmp  # 切换到 /tmp 目录操作，解压出来的文件重启系统后将会消失。
+    tar jxvf hello.tar.bz2
+    cp hello /bin
+    exit 0
+    ```
 
-制作命令: `cat install.sh hello.tar.bz2 > helloinstall.run`
+- 制作命令: `cat install.sh hello.tar.bz2 > helloinstall.run`

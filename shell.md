@@ -22,9 +22,9 @@ elif [ "${ANDROID_ABI}" = "arm64" ] ; then
     ANDROID_ABI="arm64-v8a"
 fi
 
-if [ -f $SRC_DIR/src/libvlc.h ];then
+if [ -f $SRC_DIR/src/libvlc.h ]; then
     VLC_SRC_DIR="$SRC_DIR"
-elif [ -d $SRC_DIR/vlc ];then
+elif [ -d $SRC_DIR/vlc ]; then
     VLC_SRC_DIR=$SRC_DIR/vlc
 else
     echo "Could not find vlc sources"
@@ -38,7 +38,7 @@ fi
 
 init_local_props local.properties || { echo "Error initializing local.properties"; exit $?; }
 
-# shell 中写文件
+# shell 中写文件 https://blog.csdn.net/werewolf2017/article/details/109818114
 rm -rf $VLC_OUT_PATH/Android.mk
 cat << 'EOF' > $VLC_OUT_PATH/Android.mk
 LOCAL_PATH := $(call my-dir)

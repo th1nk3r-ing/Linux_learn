@@ -36,7 +36,7 @@
     - `%p` File's name.
   - `maxdepth` &  `mindepth` 搜索深度
   - `-ok` 或 `-exec` 执行的命令 `{} \;`
-      -高级用法: `find ./ -name "*.md" -size +10k | xargs ls -alh`
+    - 高级用法 : `find ./ -name "*.md" -size +10k | xargs ls -alh`
 - `grep -r '搜索内容' 搜素路径`
   - `grep -r "颜色空间" ./ -n`
   - `find ./ -name "*.h" | xargs grep "字符串"`
@@ -46,7 +46,9 @@
   - `grep -R -n "软件"`
     - 递归搜索并显示行号;
   - `grep -v`
+
 ## <font color=#009A000> 0x01 压缩解压缩 </font>
+
 - `gzip`
   - `*.gz`
 - `bzip2`
@@ -75,15 +77,16 @@
 - `who` : 查看当前系统有谁在线与否;
 
 ## <font color=#009A000> 0x02 软件的安装、卸载、更新 </font>
+
 - ubuntu 在线安装:
   - `sudo apt-get install 安装包名`
   - `sudo apt install 安装包名`
-      - ubuntu 16.04 以上
+    - ubuntu 16.04 以上
 - **源码安装:**
   - 下载源码, 查看源码中的 `readme.md` 文档, 根据不同编译需求安装
     - `sudo apt-get remove 安装包名`
 - 软件卸载:
-  - `sudo apt-get autoremov`
+  - `sudo apt-get autoremove`
 - 系统中的软件更新:
   - 搜索 `Software and Updates(软件更新)`, 测试并选择其他站点中最快的镜像站点, 用来加速 update.
     - 一般选择 <u>阿里云</u> 的站点即可;
@@ -91,7 +94,7 @@
   - `sudo apt-get dist-upgrade` 更新所有的软件.
   - [Ubuntu解决:无法获得锁](https://www.jianshu.com/p/8768e5bccfa8)
       1. kill 占用的进程( linux 只允许开一个 apt-get，当然 apt-get 和新立得也是只能同时开一个):
-          - `ps -aux|grep apt-get`
+          - `ps -aux | grep apt-get`
           - `sudo kill PID`
       2. 直接强制删除 lock 文件:
           - `sudo rm /var/lib/dpkg/lock`
@@ -111,12 +114,12 @@
   - `dpkg --get-selections | grep linux` 查看系统所有内核;
   - `sudo apt-get remove 【内核名】`  内核号较小的一般都能删除.
   - `sudo dpkg -P 包名` 删除已删除包的配置文件(状态位 `deinstall` 的包);
-- 磁盘清理:
+- ~~磁盘清理 :~~
     > [清理VMware虚拟机磁盘，解决虚拟机磁盘只增不减问题](https://blog.csdn.net/doctor_warren/article/details/81286991)
     - `sudo dd if=/dev/zero of=/0bits bs=20M` 将碎片空间填充上 0，结束的时候会提示磁盘空间不足，忽略即可
     - `sudo rm  /0bits` 删除第二步的填充，如果用 `df -h` 会发现可用的虚拟空间增加许多，但是实际的磁盘空间没有缩减
 - [Linux wc 命令](https://www.runoob.com/linux/linux-comm-wc.html)
-  - `wc -l` 统计行数, for example :
+  - `wc -l` 统计行数 :
     - `find . -name "*.o" | wc -l`
     - `ls pwd/*.c | wc -l`
 
@@ -161,7 +164,7 @@
   - 可以使用 `:help buffers` 命令，查看关于缓冲区的帮助信息
 - vim 插件 `fzf`
   - `ctrl + o` 打开文件搜索
-  - `ctrl + p` 打开文本搜索(基于 `Ag`)
+  - `ctrl + a` 打开文本搜索(基于 `Ag`)
   - `ctrl + e` 打开的 buffer 中搜索切换
 - 原生快捷键 :
 
@@ -202,11 +205,11 @@
   ge	移动到前一个单词的结尾
   gE	移动到前一个词组的结尾
 
-  0		跳到本行第一个字符i
-  ^		跳到本行第一个非空字符i
-  g_  跳到本行最后一个非空字符i
-  $		跳到本行最后一个字符i
-  n|  跳到本行第n列i
+  0		跳到本行第一个字符 i
+  ^		跳到本行第一个非空字符 i
+  g_  跳到本行最后一个非空字符 i
+  $		跳到本行最后一个字符 i
+  n|  跳到本行第 n 列 i
 
   gg      跳转到第一行
   G       跳转到最后一行
@@ -246,7 +249,7 @@
   ```
 
 - 我推荐你从 `h,j,k,l, w,b, G,/,?,n` 开始
-- 过滤器 "
+- 过滤器 :
   - ref :
     - [VIM学习笔记 过滤器(Filter)](https://zhuanlan.zhihu.com/p/130983572)) :
     - `:{range}!{motion}{filter}`
@@ -267,7 +270,7 @@
       - 替换时，`\r` 代表换行，`\n` 代表空字符
 - 搜索 :
   - `/xxx` 查找 xxx 关键字;
-  - `/\vAAA|BBB` 同时查找 AAA 和 BBB 关键字;
+  - `/\vAAA|BBB` 同时查找 AAA 和 BBB 关键字(相当于 `grep` 的 `-E`);
 
 ## <font color=#009A000> 0x04 文本查找替换 </font>
 
@@ -327,15 +330,17 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 
 - `xxd`
   - Usage : `xxd [options] [infile [outfile]]`
-  - `-g` 设定以几个字节为一块，默认为 2bytes, 0 为紧密排布模式
+  - `-c` 设定一行显示几个字节, 默认 `16-bytes`
+  - `-g` 设定以几个字节为一块，默认为 `2-bytes`, 0 为紧密排布模式
   - `-b` 以二进制（0/1）的形式查看文件内容
   - `-i` output in C include file style. (将某个文件以 C 数组的形式输出!)
+    - `xxd -C -i xxx.bin > out.c`
   - `-p` 没有右侧的 ascii 表
   - `-r` 从 outfile 恢复到原 infile 格式
   - 一般与 vim 配合使用 :
     - `vim xxx -b`
     - `:%! xxd -g 1`
-    - 修改(删除某个字节会被填充 00)
+      - 修改(删除某个字节会被填充 00)
     - `%! xxd -r`
 - `hexcurse`
   - 终端上的二进制编辑器, 可以直接搜索二进制(且无换行烦恼)
