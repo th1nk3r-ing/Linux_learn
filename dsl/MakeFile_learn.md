@@ -25,7 +25,8 @@
     3. 如果这个工程的头文件被改变了，那么我们需要编译引用了这几个头文件的 c 文件，并链接目标程序。
 - <u>Makefile 格式:</u>
   - > 即: prerequisites 中如果有一个以上的文件比 target 文件要新的话， command 所定义的命令就会被执行。
-      ```makefile 
+
+      ```makefile
       #makefile 规则
       target ... : prerequisites ...
           command
@@ -35,6 +36,7 @@
       # prerequisites 生成该 target 所依赖的文件和/或 target
       # command 该 target 要执行的命令（任意的 shell 命令） 一定要以 tab 开头!
       ```
+
   - make 并不管命令是怎么工作的，他只管执行所定义的命令。 make 会比较 targets 文件和 prerequisites 文件的修改日期，如果 prerequisites 文件的日期要比 targets 文件的日期要新，或者target 不存在的话，那么， make 就会执行后续定义的命令。
   - 若冒号后什么也没有，那么， make 就不会自动去找它的依赖性，也就不会自动执行其后所定义的命令。要执行其后的命令，就要在 make 命令后明显得指出这个 label 的名字。
   - 在找寻的过程中，如果出现错误，比如最后被依赖的文件找不到，那么 make 就会直接退出，并报错，
@@ -177,21 +179,20 @@ endif
   - 这个函数会新生成一个 Shell 程序来执行命令，
   - 所以你要注意其运行性能，如果你的 Makefle 中有一些比较复杂的规则，并大量使用了这个函数，那么对于你的系统性能是有害的。
 - `-$(subst output,,$@)` 中的 `$` 表示执行一个 Makefle 的函数，函数名为 subst，后面的为参数。
-
-- ` $@` 这个变量表示着目前规则中所有的目标的集合, 就像一个数组.
-
+- `$@` 这个变量表示着目前规则中所有的目标的集合, 就像一个数组.
 
 ### <font color=#FF4500> 静态模式 demo </font>
 
-- 
-    ```makefile 
-    #静态模式
-    objects = foo.o bar.o
-    all: $(objects)
-    $(objects): %.o: %.c
-    $(CC) -c $(CFLAGS) $< -o $@
-    ```
-- 上面的例子中，
+- 下面的例子中，
+
+  ```makefile
+  #静态模式
+  objects = foo.o bar.o
+  all: $(objects)
+  $(objects): %.o: %.c
+  $(CC) -c $(CFLAGS) $< -o $@
+  ```
+
   - 指明了我们的目标从 $object 中获取， %.o 表明要所有以 .o 结尾的目标，也就是 foo.o bar.o ，也就是变量 $object 集合的模式，
   - 而依赖模式 %.c 则取模式 %.o 的 % ，也就是 foo bar，并为其加下 .c 的后缀，于是，我们的依赖目标就是 foo.c bar.c 。
   - 而命令中的 $< 和 $@ 则是自动化变量， `$<` 表示第一个依赖文件， `$@` 表示目标集（也就是“foo.o bar.o”）。
@@ -220,7 +221,8 @@ endif
   - 答案是 Yes! 要利用 makefile 的 include 机制。
 
 示例:
-``` makefile 
+
+``` makefile
 include $(sources:.c=.d)
 
 #所有的 .d 文件依赖于 .c 文件， 
@@ -260,10 +262,12 @@ include $(sources:.c=.d)
   - `echo` 使用 `-e` 可以打印出带颜色的输出;
 
 - 而在 rm 命令前面加了一个小减号 `-` 的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。但 make 仍会报错:
+
     ```sh 
     -mkdir test
     mkdir: 无法创建目录 "test": 文件已存在; make: [clean] 错误 1 (忽略)
-    ``` 
+    ```
+
 - clean 的规则不要放在文件的开头，不然，这就会变成 make 的默认目标，相信谁也不愿意这样。不成文的规矩是——“clean 从来都是放在文件的最后”.
 - 反斜杠（`\` ）是换行符的意思。这样比较便于 makefle 的阅读。
   - 如果命令太长，你可以使用反斜杠（\ ）作为换行符。 make 对一行上有多少个字符没有限制。
