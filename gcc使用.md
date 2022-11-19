@@ -50,6 +50,10 @@ int main(void)
     (在编译一些项目的时候可以 -W 和 -Wall 选项一起使用。)
 -std= gnu89 c89 c99 c11 指定 gcc 的版本;
 -Wl, :    将参数传递给连机器;
+
+---------------------支持的选项-----------------------------------------------
+--help    查看帮助文档
+--help=?  可为 common|optimizers|params|target|warnings|[^]{joined|separate|undocumented} 等等, 查看具体的支持选项
 ```
 
 - `gcc test.c`

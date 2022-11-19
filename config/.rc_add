@@ -110,15 +110,16 @@ elif (echo "$SHELL" | grep "zsh" >/dev/null); then
     fi
 fi
 
-if (echo "$SHELL" | grep "zsh" >/dev/null); then
+#if (echo "$SHELL" | grep "zsh" >/dev/null); then
     # oh-my-zsh 的自动补全插件
     #if [[ -d "$HOME/.oh-my-zsh/plugins/incr" ]]; then
     #    source "$HOME/.oh-my-zsh/plugins/incr/incr*.zsh"
     #    #echo -e "have is $prt_Red incr file $prt_End"
     #fi
+#fi
 
-    echo -e "current shell is $prt_Yellow zsh $prt_End"
-fi
+echo -e "$prt_Bold$prt_Yellow$(date '+%Y-%m-%d')    $prt_Green$(date '+%H:%M:%S')    $prt_Cyan $(date '+week:%W-Day:%w') $prt_End"
+echo -e "Current shell is  $prt_Bold$prt_Yellow $SHELL $prt_End"
 
 # colourful man page
 if [ "$VAR_OHMYZSH" = 0  ]; then
