@@ -316,6 +316,8 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
 
 ## <font color=#009A000> youtube 下载 </font>
 
+- `yt-dlp  --list-formats URL` : 展示所有格式
+- `yt-dlp -fxxx+xxx URL` : 下载指定的两个列表数据
 - `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]'  --merge-output-format mp4  URL`
   - `yt-dlp` 比 `youtube-dl` 下载块一些;
 - `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
@@ -351,3 +353,10 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   - `-m` 显示百分比
 - `xxd -g 1 xxx | less -N -m`
   - 查看二进制, 注意不自动识别出来换行
+
+## <font color=#009A000> mac U 盘格式化 </font>
+
+- 查看磁盘与分区 : `diskutil list`
+- 删除分区 : `diskutil eraseVolume "Free Space" ExEFI /dev/disk2`
+- 格式化成 FAT32 : `diskutil partitionDisk /dev/disk2 1 MBR "MS-DOS FAT32" "2" 15GB`
+  - 可被打印机正确识别

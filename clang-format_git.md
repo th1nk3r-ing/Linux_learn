@@ -10,3 +10,4 @@ TODO :
 1. clang-format
 2. clang-format + git-hook
 3. clang-format my Own code
+4. `find . -iname "*.c" | xargs clang-format -style=file -i`
