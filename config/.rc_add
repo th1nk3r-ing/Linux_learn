@@ -89,6 +89,19 @@ if [[ -d "$HOME/.autojump" ]]; then
     [[ -s "$HOME/.autojump/etc/profile.d/autojump.sh" ]] && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 fi
 
+# 对 ts 视频文件进行二进制 dump
+function hex_dump_ts() {
+    if [ $# -eq 0 ]; then
+        echo -e "$prt_Red error! $prt_White need 1 param : $prt_Yellow ts-filePath ! $prt_End"
+        return 1
+    fi
+    if [ ! -f "$1" ]; then
+        echo -e "$prt_Red error! $prt_White file : $prt_Yellow $1 $prt_White not exits! $prt_End"
+        return 1
+    fi
+    xxd -g 1 -c 47 "$1" | less -N -m
+}
+
 # 函数: 使用命令得到 git 项目的分支名字;
 function parse_git_branch_and_add_brackets {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
