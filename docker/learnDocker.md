@@ -1,11 +1,15 @@
 # <font color=#0099ff> **docker 学习笔记** </font>
 
 > `@think3r` 2023-06-19 19:09:16
-> 1. [全面的Docker快速入门教程](https://zhuanlan.zhihu.com/p/435605760)
+>
+> 1. [全面的 Docker 快速入门教程](https://zhuanlan.zhihu.com/p/435605760)
 > 2. [Docker for Mac 的网络问题及解决办法（新增方法四）](https://www.haoyizebo.com/posts/fd0b9bd8/)
 > 3. [菜鸟教程 -- Docker 教程](https://www.runoob.com/docker/docker-tutorial.html)
 > 4. [如何制作Docker镜像（image）？](https://zhuanlan.zhihu.com/p/122380334)
 > 5. [突破 DockerHub 限制，全镜像加速服务](https://zhuanlan.zhihu.com/p/256359308)
+> 6. [DockerHub 里面有哪些好用的镜像?](https://www.zhihu.com/question/426345980)
+> 7. [Docker 命令大全 - runoob](https://www.runoob.com/docker/docker-command-manual.html)
+> 8. [macos 中 docker 的存储路径问题](https://www.cnblogs.com/robinunix/p/12795456.html)
 
 Docker 是一个开源的应用容器引擎，基于 Golang 语言开发，可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 服务器。容器是一个沙箱机制，相互之间不会有影响（类似于我们手机上运行的 app），并且容器开销是很低的。
 
@@ -13,7 +17,7 @@ Docker 是一个供开发人员和系统管理员构建、运行和与容器共�
 
 <u>注意：Docker 并非是一个通用的容器工具，**它依赖于已存在并运行的 Linux 内核环境。**</u>
 
-Docker的优势 :
+Docker 的优势 :
 
 - 灵活性：即使是最复杂的应用程序也可以容器化。
 - 轻量级：容器利用并共享主机内核，使它们在系统资源方面比虚拟机更有效率。
@@ -57,6 +61,7 @@ docker 使用了常见的 `CS` 架构，也就是 client-server 模式.
    - 很简单，那就是 APP Store，即应用商店。与之类似，既然 image 也是一种“可执行程序”，那么有没有 "Docker Image Store" 呢？
    - 答案是肯定的，这就是 `Docker Hub`，docker 官方的“应用商店”，你可以在这里下载到别人编写好的 image，这样你就不用自己编写 `dockerfile` 了。docker registry 可以用来存放各种 image，公共的可以供任何人下载 image 的仓库就是 docker Hub。
    - 用户通过 docker client 发送命令，docker daemon 接收到命令后向 docker registry 发送 image 下载请求，下载后存放在本地，这样我们就可以使用 image 了。
+   - `docker search xxx` : 搜索某某镜像
 
 NOTE: 一些需要注意的问题 :
 
@@ -83,3 +88,66 @@ docker 基于 Linux 内核提供这样几项功能实现的：
 
 1. 使用 hub 仓库中已有的环境，安装自己使用的软件环境后完成 image 创建
 2. 通过 Dockerfile，完成镜像 image 的创建
+
+## <font color=#009A000> 0x03 实战 </font>
+
+1. `docker info` : 查看 docker 的基本信息
+2. 配置 docker 阿里云镜像 :
+   1. `~/.docker/daemon.json` 中加入 `"registry-mirrors": ["https://xxxx.mirror.aliyuncs.com"]`
+   2. docker for Desktop 中修改配置
+3. `docker run` 相关 :
+   1. `-d` : detach, Run container in background and print container ID (后台运行容器，并返回容器ID)
+      - 其后可接 image 名称
+   2. `-i` : 以交互模式运行容器，通常与 -t 同时使用
+   3. `-t` : 为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+   4. `-p` : 指定端口映射，格式为：主机(宿主)端口:容器端口
+   5. `--name="nginx-lb"` : 为容器指定一个名称
+   6.
+4. `docker ps` : 查看正在运行的容器
+   - `-a` 查看所有(终止)状态的容器
+   - `-q` 查看对应的 container ID
+5. docker 的生命周期 :
+   ![docker 生命周期](../image/docker%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png)
+   1. `docker create` : `created`, 初建状态
+   2. `docker run` : `running` / `Up`, 运行状态
+      - `docker start` ： 容器转为运行状态；
+   3. `docker stop` : `stopped` / `exited`, 停止状态
+   4. `docker pause ：` paused, 停状态
+   5. `docker unpause` ： 取消暂停状态，容器进入运行状态；
+   6. `docker kill` : 容器在故障（死机）时，执行 kill（断电），容器转入停止状态，这种操作容易丢失数据，除非必要，否则不建议使用；
+   7. `docker rm -f xxx` : deleted：删除状态
+   8. `dead` : 死亡
+6. 进入正在运行的 container 的两种方法 :
+   1. `docker exec -it containerId /bin/bash` : 进入正在运行的容器并开启一个新的终端
+   2. `docker attach containerId` : 进入容器正在执行的终端，不会启动新的进程
+      - 如果使用 `exit` 退出，容器会停止运行！
+      - 如果想退出容器但不想容器停止，则按住 `Ctrl+P+Q` 退出
+7. docker 文件/存储相关 :
+   1. `docker cp 本地路径 容器id或者容器名字:容器内路径` : 本地到服务器
+8. docker 生成自定义镜像(修改启动命令)的方式 :
+   1. Dockerfile 的方式修改命令 :
+
+        ```Dockerfile
+        FROM image:demo  #要改动命令的镜像
+        WORKDIR /root/  #执行命令的工作目录路径
+        CMD ["python","main.py"] # 要更改的命令
+        ```
+
+   2. 直接通过 commit 修改 : `docker commit --change="WORKDIR /" -c 'CMD [ "bash" ]'  -m "基础ubuntu镜像" -a 'think3r' 639b37671e5c  outImage:v1`
+      1. `–change` : Apply Dockerfile instruction to the created image (可以写入 dockerfile 的语法语句)
+      2. `-c` : Apply Dockerfile instruction to the created image(可以写入启动命令)
+      3. `-m` : --message string, Commit message
+9. 导入和导出容器 :
+   1. 导出 : `docker export 1e560fca3906 > ubuntu.tar`
+   2. 导入 : `cat docker/ubuntu.tar | docker import - test/ubuntu:v1`
+10. 清理掉所有处于终止状态的容器 : `docker container prune`
+
+### <font color=#FF4500> docker 操作命令 </font>
+
+```sh
+apt-get update && apt-get upgrade
+apt-get install ca-certificates # 更新 ca 证书
+# 更改为清华源
+apt-get install vim-tiny tree file zsh inetutils-ping
+# git clone 拷贝 oh-my-zsh 及其插件
+```
