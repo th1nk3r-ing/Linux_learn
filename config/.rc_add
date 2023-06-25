@@ -39,8 +39,16 @@ alias la='ls -A'
 alias l='ls -CF'
 alias clc='clear'
 
+myOsInfo="*nix"
+
 # if is WSL / MACOS, add some platform-unique-alias
-if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
+if (uname -a | grep "icrosoft" >/dev/null); then      # WSL
+    if (uname -a | grep "WSL2" > /dev/null); then
+        myOsInfo="WSL-2"
+    else
+        myOsInfo="WSL-1"
+    fi
+
     alias e.='explorer.exe .'
 
     # 挂载网络磁盘
@@ -63,6 +71,7 @@ if (uname -a | grep "Microsoft" >/dev/null) ;then      # WSL
 		VAR_OHMYZSH=1
     fi
 elif (uname -a | grep "Darwin" >/dev/null) ;then       # MACOS
+    myOsInfo="MacOS"
     alias e.='open .'
     if command -v gls > /dev/null; then
         alias gll="gls -alhF --time-style='+%Y/%m/%d_%H:%M:%S' --color=auto"   # MACOS gnu-ls;
@@ -134,8 +143,9 @@ fi
     #    #echo -e "have is $prt_Red incr file $prt_End"
     #fi
 #fi
+
 echo -e "$prt_Bold$prt_Yellow$(date '+%Y-%m-%d')    $prt_Green$(date '+%H:%M:%S')    $prt_Cyan $(date '+Week:%W-Day:%w') $prt_End"
-echo -e "Current shell is  $prt_Bold$prt_Yellow $SHELL $prt_End"
+echo -e "Current shell is  $prt_Bold$prt_Yellow $SHELL $prt_End  on  $prt_Bold$prt_Green${myOsInfo}$prt_End"
 
 # colourful man page
 if [ "$VAR_OHMYZSH" = 0  ]; then
