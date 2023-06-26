@@ -45,6 +45,15 @@ myOsInfo="*nix"
 if (uname -a | grep "icrosoft" >/dev/null); then      # WSL
     if (uname -a | grep "WSL2" > /dev/null); then
         myOsInfo="WSL-2"
+
+        # WSL2 在 windows 挂载路径使用 git.exe 加快速度
+        function git() {
+            if $(pwd -P | grep -q "^\/mnt\/.\/*"); then
+                git.exe "$@"
+            else
+                command git "$@"
+            fi
+        }
     else
         myOsInfo="WSL-1"
     fi

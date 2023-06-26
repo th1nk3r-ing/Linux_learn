@@ -45,7 +45,7 @@
 - ### <font color=#FF4500> ssh 相关 </font>
   - [Ubuntu18.04 ssh 开机自动启动的设置方法如下](https://blog.csdn.net/fandroid/article/details/86799932)
 
-      ```sh 
+      ```sh
       # 安装 ssh
       sudo apt-get install openssh-server
 
@@ -68,7 +68,7 @@
       sudo systemctl status ssh
       ```
 
-  - 查看当前的ubuntu是否安装了ssh-server服务。默认只安装ssh-client服务: `dpkg -l | grep ssh` 
+  - 查看当前的ubuntu是否安装了ssh-server服务。默认只安装ssh-client服务: `dpkg -l | grep ssh`
   - 确认 ssh 服务是否启动: `ps -e | grep ssh`
   - 开启 ssh 连接虚拟机中的 ubuntu 的方法:
     - <a href="http://www.cnblogs.com/ifantastic/p/3415182.html" target="_blank">如何使用 SSH 连接 VMWare 虚拟机中的 Ubuntu</a>
@@ -89,7 +89,7 @@
 
 - 取消与 windows 共享文件夹时, windows 文件夹的背景色:
 
-    ```sh 
+    ```sh
     echo "eval \`dircolors $HOME/.dir_colors\`" >> ~/.bashrc
     echo "OTHER_WRITABLE 4;40" > ~/.dir_colors
     ```
@@ -98,7 +98,7 @@
 </a> 提供以下两种方法:~~ (ubuntu 18.04.1 此问题解决, 无需手动修改了)
     1. 在 Ubuntu 中把计算机硬件时间改成系统显示的时间，即禁用 Ubuntu的 UTC:
         - `timedatectl set-local-rtc 1 --adjust-system-clock`
-    2. 修改 Windows 对硬件时间的对待方式，让 Windows 把硬件时间当作UTC. 
+    2. 修改 Windows 对硬件时间的对待方式，让 Windows 把硬件时间当作UTC.
         - `win + r` 执行: `Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1`
 - 与 windows 共享文件夹:
   - ubunru 设置:
@@ -110,24 +110,24 @@
 ### <font color=#FF4500> git 相关 </font>
 
 - 安装 git: `sudo apt-get install git`
-- 设置 
-  - `git clone https://gitee.com/think3r/git_learn.git` 
+- 设置
+  - `git clone https://gitee.com/think3r/git_learn.git`
   - 拷贝其中的 `.gitconfig` 和 `.gitignore_global` 至 `~` 目录下;
   - 根据码云的帮助文档进行新的 git 公钥的添加;
 
 - **配置 ssh 显示 git 分支** :
   - >参考链接: <a href="https://www.jianshu.com/p/82783f76a868" target="_blank">让 Shell 命令提示符显示 Git 分支名称
 </a>
-  - `~/.bashrc` 添加如下代码, 之后 `source ~/.bashrc` 使能更改: 
+  - `~/.bashrc` 添加如下代码, 之后 `source ~/.bashrc` 使能更改:
 
-```sh 
+```sh
 function parse_git_branch_and_add_brackets {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
 }
 #PS1="\h:\W \u\[\033[0;32m\]\$(parse_git_branch_and_add_brackets) \[\033[0m\]\$ "
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[0;32m\]\$(parse_git_branch_and_add_brackets)\[\033[0m\]\$ "
-#也就是在原来的 PS1 后添加: 
-# \[\033[0;32m\]\$(parse_git_branch_and_add_brackets)\[\033[0m\]\$ 
+#也就是在原来的 PS1 后添加:
+# \[\033[0;32m\]\$(parse_git_branch_and_add_brackets)\[\033[0m\]\$
 ```
 
 ### <font color=#FF4500> autojump </font>
@@ -161,8 +161,8 @@ cp -r .ssh ~/
 # fix: 权限相关
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/config
-chmod 644 ~/.ssh/id_rsa.pub
-chmod 600 ~/.ssh/id_rsa
+chmod 644 ~/.ssh/*.pub
+chmod 600 ~/.ssh/*rsa
 ```
 
 ### <font color=#FF4500> 解决 python pip install慢的方法 </font>
