@@ -154,7 +154,7 @@ fi
 #fi
 
 echo -e "$prt_Bold$prt_Yellow$(date '+%Y-%m-%d')    $prt_Green$(date '+%H:%M:%S')    $prt_Cyan $(date '+Week:%W-Day:%w') $prt_End"
-echo -e "Current shell is  $prt_Bold$prt_Yellow $SHELL $prt_End  on  $prt_Bold$prt_Green${myOsInfo}$prt_End"
+echo -e "  Env is  $prt_Bold$prt_Yellow $SHELL $prt_End  on  $prt_Bold$prt_Green${myOsInfo}$prt_End"
 
 # colourful man page
 if [ "$VAR_OHMYZSH" = 0  ]; then
