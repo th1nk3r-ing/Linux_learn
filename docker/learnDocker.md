@@ -151,3 +151,28 @@ apt-get install ca-certificates # 更新 ca 证书
 apt-get install vim-tiny tree file zsh inetutils-ping
 # git clone 拷贝 oh-my-zsh 及其插件
 ```
+
+## <font color=#009A000> 0x04 常用 docker 命令 </font>
+
+FIXME: && TODO: 补充常用命令....
+
+```sh
+# dockerhub 等的凭证相关
+sudo cat /root/.docker/config.json  # 凭证存储位置
+echo "xxxx" | base64 --decode       # 密钥解码
+sudo docker login --username=aliyunxxxx registry.cn-hangzhou.aliyuncs.com  # 登录
+
+# 镜像相关
+docker images -a  # 列出所有镜像
+docker rmi xxx:xxx  # 删除指定镜像
+docker tag <image-name:tag> <username>/<repository>:<tag>  # 将本地构建的镜像与仓库中的镜像进行关联
+docker push <username>/<repository>:<tag>   # 将标记的镜像推送到 Docker 镜像仓库中
+docker pull registry.cn-hangzhou.aliyuncs.com/think3r/ubuntu_base:v2 # 拉取远端镜像
+docker search hello  # 搜索 hello 相关的镜像
+
+# 容器相关
+docker ps -a   # 查看当前所有容器的状态
+docker rm -f xxx # 删除指定容器
+
+docker run
+```

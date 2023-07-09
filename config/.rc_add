@@ -70,6 +70,9 @@ if (uname -a | grep "icrosoft" >/dev/null); then      # WSL
 
     #取消windows路径中的文件夹背景色
     if [[ -f "$HOME/.dir_colors" ]]; then
+        if [[ ! $SHELL ]]; then
+            export SHELL=/bin/zsh
+        fi
         eval $(dircolors "$HOME/.dir_colors")
     fi
 
