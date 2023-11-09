@@ -51,8 +51,8 @@ SSH 和 telnet、ftp 等协议主要的区别在于安全性。
 
 接下来，我们要让远程机器记住我们的公钥:
 
-- SSH 自带的拷贝命令 : `ssh-copy-id user@remote -p port` 
-- 手动添加 `ssh user@remote -p port 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub` 
+- SSH 自带的拷贝命令 : `ssh-copy-id user@remote -p port`
+- 手动添加 `ssh user@remote -p port 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub`
   - 即, 在远端执行新建 `.ssh` 文件夹，并把本地的 `~/.ssh/id_rsa.pub` （也就是公钥）追加到远端的 `.ssh/authorized_keys` 中。
 
 **注意:** <u>要正确理解公钥模式下的认证过程! 首先我们需要了解一些加密学基础知识, 参加下方的知识点.</u>
@@ -71,7 +71,7 @@ Host alias
 Host mi6
     HostName 192.168.1.11
     User my_Mi6_userName
-    Port 8022 
+    Port 8022
 ```
 
 - 使用: `ssh alias` 即可;
@@ -145,7 +145,7 @@ Host mi6
 在 SSH 安全协议的原理中， 运用了非对称加密与对称加密算法的结合. **SSH 数据传输时候基本上所有过程都是使用对称密钥来加密。只有在刚开始创建连接阶段和身份认证握手阶段才使用非对称加密。**
 
 - 其认证过程如下图所示:
-  
+
 ![原理](./image/ssh原理.webp)
 
 **简略的 ssh 认证过程如下:**
@@ -181,8 +181,8 @@ SSH 提供两种级别的安全验证：
 SSH 建立连接的过程主要分为下面几个阶段：
 
 1. **SSH 协议版本协商阶段:** SSH 目前包括 SSH1 和 SSH2 两个大版本( SSH1 已弃用 )。
-   - 客户端通过 TCP 三次握手与服务器的 SSH 端口建立 TCP 连接。 
-   - 服务器通过建立好的连接向客户端发送一个包含 SSH 版本信息的报文，格式为 `SSH-<SSH协议大版本号>.<SSH协议小版本号>-<软件版本号>`，软件版本号主要用于调试。 
+   - 客户端通过 TCP 三次握手与服务器的 SSH 端口建立 TCP 连接。
+   - 服务器通过建立好的连接向客户端发送一个包含 SSH 版本信息的报文，格式为 `SSH-<SSH协议大版本号>.<SSH协议小版本号>-<软件版本号>`，软件版本号主要用于调试。
    - 客户端收到版本号信息后，如果服务器使用的协议版本号低于自己的，但是客户端能够兼容这个低版本的 SSH 协议，则就使用这个版本进行通信。否则，客户端会使用自己的版本号。
    - 客户端将自己决定使用的版本号发给服务器，服务器判断客户端使用的版本号自己是否支持，从而决定是否能够继续完成 SSH 连接。
    - 如果协商成功，则进入密钥和算法协商阶段。
@@ -245,14 +245,14 @@ SSH 建立连接的过程主要分为下面几个阶段：
     - zlib-1.2.3.tar.gz          http://www.zlib.net
     - openssl-1.0.1h.tar.gz      http://www.openssl.org/source/
     - openssh-5.5p1.tar.gz       http://mirror.aarnet.edu.au/pub/OpenBSD/OpenSSH/portable/
-  
+
 2. 解压 && mkdir install-dir;
 
 3. 编译 zlib;
 
     ``` sh
     # 生成 Makefile, zlib 的 configure 参数较少, 自己手动修改吧
-    ./configure 
+    ./configure
 
     # 修改 Makefile
     CC=gcc
@@ -271,7 +271,7 @@ SSH 建立连接的过程主要分为下面几个阶段：
     # no-asm 是在交叉编译过程中不使用汇编代码代码加速编译过程.原因是它的汇编代码是对arm格式不支持的
     ./Configure --prefix=/home/think3r/github/openSSH/openssl-install --cross-compile-prefix=arm-linux- no-asm shared linux-generic32
 
-    make -j && make install 
+    make -j && make install
     ```
 
 5. 编译 openSSH
