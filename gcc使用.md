@@ -2,10 +2,10 @@
 
 >> `@think3r` 2017-09-03 20:40:39 <br/>
 > 参考链接：
->1. [GCC 基本使用](http://www.cnblogs.com/ggjucheng/archive/2011/12/14/2287738.html)
->2. [GCC命令](http://man.linuxde.net/gcc)
->3. [GCC中-O1 -O2 -O3 优化的原理是什么？](https://www.zhihu.com/question/27090458)
->4. [gcc编译选项--转](https://www.cnblogs.com/fengbeihong/p/3641384.html)
+> 1. [GCC 基本使用](http://www.cnblogs.com/ggjucheng/archive/2011/12/14/2287738.html)
+> 2. [GCC命令](http://man.linuxde.net/gcc)
+> 3. [GCC中-O1 -O2 -O3 优化的原理是什么？](https://www.zhihu.com/question/27090458)
+> 4. [gcc编译选项--转](https://www.cnblogs.com/fengbeihong/p/3641384.html)
 > 5. [Using the GNU Compiler Collection (GCC)](https://gcc.gnu.org/onlinedocs/gcc-10.2.0/gcc/)
 
 ## <font color=#009A000> 0x00 测试代码: </font>
@@ -55,6 +55,43 @@ int main(void)
 --help    查看帮助文档
 --help=?  可为 common|optimizers|params|target|warnings|[^]{joined|separate|undocumented} 等等, 查看具体的支持选项
 ```
+
+---
+
+```text
+-O0, -O1, -O2, -O3, -Ofast, -Os, -Oz, -Og, -O, -O4
+    Specify which optimization level to use:
+        -O0 Means "no optimization": this level compiles the fastest and generates the most debuggable code.
+
+        -O1 Somewhere between -O0 and -O2.
+
+        -O2 Moderate level of optimization which enables most optimizations.
+
+        -O3 Like -O2, except that it enables optimizations that take longer to perform or that may generate larger code (in an attempt to make the program run faster).
+
+        -Ofast Enables all the optimizations from -O3 along with other aggressive optimizations that may violate strict compliance with language standards.
+
+        -Os Like -O2 with extra optimizations to reduce code size.
+
+        -Oz Like -Os (and thus -O2), but reduces code size further.
+
+        -Og Like -O1. In future versions, this option might disable different optimizations in order to improve debuggability.
+
+        -O Equivalent to -O1.
+
+        -O4 and higher
+        Currently equivalent to -O3
+```
+
+- `-O0` : None
+- `-O1` : Fast
+- `-O2` : Faster
+- `-O3` : Fastest
+- `-Os` : Fastest, Smallest
+- `-OFast` : Fastest, Aggressive Optimization
+- `-Oz` : Smallest, Aggressive Size Optimization
+
+---
 
 - `gcc test.c`
   - 将test.c预处理、汇编、编译并链接形成可执行文件。这里未指定输出文件，默认输出为a.out。
