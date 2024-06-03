@@ -58,6 +58,7 @@ nmap <c-v> "+p
 " 自定义命令
 command TrimEndSpace :%s/\s\+$//g
 command Tabs2Space :%s/\t/    /g
+command JsonFormat :%! python3 -m json.tool
 
 "source /Users/think3r/.vim/autoload/hexman.vim
 "map <F6>  <Plug>HexManager
