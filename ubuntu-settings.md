@@ -4,23 +4,25 @@
 
 ## <font color=#009A000> **0x-1 待读** </font>
 
-- [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)
-- `cp ./.rc_add ~/ && echo "\nsource ~/.rc_add" >> ~/.zshrc`
-- vim 进阶;
-
-## <font color=#009A000> 0x-2 杂项软件 </font>
 
 - 换源 : [https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
 - `sudo apt-get install git  screenfetch neofetch sl cmake cloc ffmpeg tree busybox shellcheck clang figlet unzip unrar`
-- `sudo apt-get install zsh`
 - `sudo apt-get install repo`
 
-## <font color=#009A000> 0x-3 </font>
-
-1. ssh 配置(手动 U 盘拷贝);
-2. git clone 仓库(Linux 和 git)
-3. `.bashrc` 和 `.zshrc` 配置;
-4. autojump 和 incr 配置;
+- oh-my-zsh
+  1. `sudo apt-get install zsh` && `chsh -s /bin/zsh` --> 重启
+  2. [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)
+  3. `cp ./.rc_add ~/ && echo "\nsource ~/.rc_add" >> ~/.zshrc`
+  4. `cd ~/.oh-my-zsh/custom/plugins`
+     - `git clone https://github.com/zsh-users/zsh-autosuggestions.git`
+     - `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git`
+- vim :
+  1. `cp .vimrc ~/`
+  2. `curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
+  3. vim --> `PlugUpdate`
+- git clone 仓库(Linux 和 git)
+- autojump 和 incr 配置;
+- ssh 配置(手动 U 盘拷贝);
 
 ---
 
