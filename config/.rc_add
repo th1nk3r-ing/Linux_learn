@@ -45,15 +45,6 @@ myOsInfo="*nix"
 if (uname -a | grep "icrosoft" >/dev/null); then      # WSL
     if (uname -a | grep "WSL2" > /dev/null); then
         myOsInfo="WSL-2"
-
-        # WSL2 在 windows 挂载路径使用 git.exe 加快速度
-        function git() {
-            if $(pwd -P | grep -q "^\/mnt\/.\/*"); then
-                git.exe "$@"
-            else
-                command git "$@"
-            fi
-        }
     else
         myOsInfo="WSL-1"
     fi
@@ -70,9 +61,6 @@ if (uname -a | grep "icrosoft" >/dev/null); then      # WSL
 
     #取消windows路径中的文件夹背景色
     if [[ -f "$HOME/.dir_colors" ]]; then
-        if [[ ! $SHELL ]]; then
-            export SHELL=/bin/zsh
-        fi
         eval $(dircolors "$HOME/.dir_colors")
     fi
 
@@ -132,6 +120,15 @@ function parse_git_branch_and_add_brackets {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\ \[\1\]/'
 }
 
+function addLetVpnDns {
+    # 在 wsl dns 配置文件中, 首个匹配的 nameserver 前插入 dns 配置
+    # 172.30.128.1 为 letsVpn 本地私有 dns 地址
+	sudo sed -i '0,/^nameserver/{/^nameserver/i\
+nameserver 172.30.128.1\
+nameserver 223.5.5.5
+	}' /etc/resolv.conf
+}
+
 # PS1 相关
 if (echo "$SHELL" | grep "bash" >/dev/null); then
     echo -e "current shell is $prt_Yellow bash $prt_End"
@@ -157,7 +154,7 @@ fi
 #fi
 
 echo -e "$prt_Bold$prt_Yellow$(date '+%Y-%m-%d')    $prt_Green$(date '+%H:%M:%S')    $prt_Cyan $(date '+Week:%W-Day:%w') $prt_End"
-echo -e "  Env is  $prt_Bold$prt_Yellow $SHELL $prt_End  on  $prt_Bold$prt_Green${myOsInfo}$prt_End"
+echo -e "Current shell is  $prt_Bold$prt_Yellow $SHELL $prt_End  on  $prt_Bold$prt_Green${myOsInfo}$prt_End"
 
 # colourful man page
 if [ "$VAR_OHMYZSH" = 0  ]; then

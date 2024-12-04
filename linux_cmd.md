@@ -322,6 +322,7 @@ find ./ -name "*.md" -printf "\"%p\"\n"| xargs sed -i "s/<\/font>\ /<\/font>/"
   - `yt-dlp` 比 `youtube-dl` 下载块一些;
 - `yt-dlp -f 'bv[ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 --download-archive videos.txt  https://www.youtube.com/playlist......`
   - 下载整个 playlist 的视频
+- `~/bin/yt-dlp -f "bestvideo+bestaudio" -o "%(upload_date>%Y-%m-%d)s_%(id)s_%(title)s_%(resolution)s.%(ext)s"  --merge-output-format mp4  URL`
 
 ## <font color=#009A000> 正则表达式 </font>
 

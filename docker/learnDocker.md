@@ -176,3 +176,9 @@ docker rm -f xxx # 删除指定容器
 
 docker run
 ```
+
+## <font color=#009A000> docker & else </font>
+
+- docker & wsl 1&2
+- docker - windows
+- docker - github build ?
