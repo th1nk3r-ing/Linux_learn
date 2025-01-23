@@ -98,8 +98,13 @@ docker 基于 Linux 内核提供这样几项功能实现的：
 3. `docker run` 相关 :
    1. `-d` : detach, Run container in background and print container ID (后台运行容器，并返回容器ID)
       - 其后可接 image 名称
+      - 容器会独立于你的终端运行，不会占用当前的命令行界面，你可以继续在该终端执行其他命令或关闭终端窗口，而容器仍然会在后台持续运行
    2. `-i` : 以交互模式运行容器，通常与 -t 同时使用
-   3. `-t` : 为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+      - 可以让你与容器保持交互，只保持了 `STDIN` 的打开状态，但是没有分配 TTY, 也不会模拟一个终端 (没有高亮等)
+   3. `-t` : 为容器重新分配一个伪输入终端，通常与 -i 同时使用 `-it`
+      - `-dit`
+        - 是在后台创建一个 tty, 当前终端可继续执行其它命令并可关闭窗口
+        - 这使得如果你稍后想要连接到这个容器并与其交互，可以使用 `docker exec -it <container_id_or_name> /bin/sh` 或者 `docker attach <container_id_or_name>` 命令来附加到容器上，并获得一个交互式的 shell 环境
    4. `-p` : 指定端口映射，格式为：主机(宿主)端口:容器端口
    5. `--name="nginx-lb"` : 为容器指定一个名称
    6.
@@ -137,9 +142,13 @@ docker 基于 Linux 内核提供这样几项功能实现的：
       1. `–change` : Apply Dockerfile instruction to the created image (可以写入 dockerfile 的语法语句)
       2. `-c` : Apply Dockerfile instruction to the created image(可以写入启动命令)
       3. `-m` : --message string, Commit message
-9. 导入和导出容器 :
-   1. 导出 : `docker export 1e560fca3906 > ubuntu.tar`
-   2. 导入 : `cat docker/ubuntu.tar | docker import - test/ubuntu:v1`
+9. 导入和导出
+   1. 容器 :
+      1. 导出 : `docker export 1e560fca3906 > ubuntu.tar`
+      2. 导入 : `cat docker/ubuntu.tar | docker import - test/ubuntu:v1`
+   2. 镜像 :
+      1. 导出 `docker save 0fdf2b4c26d3 > hangge_server.tar`
+      2. 导入 `docker load < hangge_server.tar`
 10. 清理掉所有处于终止状态的容器 : `docker container prune`
 
 ### <font color=#FF4500> docker 操作命令 </font>
@@ -173,12 +182,23 @@ docker search hello  # 搜索 hello 相关的镜像
 # 容器相关
 docker ps -a   # 查看当前所有容器的状态
 docker rm -f xxx # 删除指定容器
+docker container prune  #清理系统中处于停止状态的容器, 释放磁盘空间
 
 docker run
 ```
 
-## <font color=#009A000> docker & else </font>
+## <font color=#009A000> TODO: </font>
 
 - docker & wsl 1&2
 - docker - windows
 - docker - github build ?
+- docker 导入导出命令行缺失的问题
+- docker rtmp/hls 推流测试
+- docker temux 守护进程 ?
+
+```sh
+docker run --gpus all -v /mnt/i/aiModels/qwen2.5:/models ghcr.io/ggerganov/llama.cpp:light-cuda-b4524 \
+  -m /models/qwen2.5-coder-7b-instruct-q4_k_m.gguf \
+  -p "You are a helpful coding assistant." \
+  -n 512 --n-gpu-layers 9999
+```
