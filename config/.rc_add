@@ -129,6 +129,41 @@ nameserver 223.5.5.5
 	}' /etc/resolv.conf
 }
 
+function curProxyDisp {
+    echo -e "${prt_Bold}${prt_Green}Current${prt_White} proxy settings:${prt_End}"
+    # 如果 all_proxy 变量已经被定义，并且它的值不为空字符串，那么 ${all_proxy:-<not set>} 会直接返回 all_proxy 变量的实际值。
+    echo -e "  ${prt_Yellow}http_proxy${prt_End}: ${http_proxy:-<not set>}"
+    echo -e "  ${prt_Yellow}https_proxy${prt_End}: ${https_proxy:-<not set>}"
+    echo -e "  ${prt_Yellow}all_proxy${prt_End}: ${all_proxy:-<not set>}"
+}
+
+function clashProxy {
+    case "$1" in
+        "add")
+            clashProxyPort=7897
+            export all_proxy=socks5://127.0.0.1:${clashProxyPort}
+            export http_proxy=http://127.0.0.1:${clashProxyPort}
+            export https_proxy=http://127.0.0.1:${clashProxyPort}
+            echo -e "${prt_Bold}${prt_Green}Clash${prt_White} proxy settings ${prt_Yellow}added${prt_End} -> ${clashProxyPort}."
+            curProxyDisp
+            ;;
+        "remove")
+            unset all_proxy
+            unset http_proxy
+            unset https_proxy
+            echo -e "${prt_Bold}${prt_Green}Clash${prt_White} proxy settings ${prt_Yellow}removed${prt_End} -> ${clashProxyPort}."
+            curProxyDisp
+            ;;
+        "disp")
+            curProxyDisp
+            ;;
+        *)
+            echo -e "${prt_Bold}${prt_Red}Invalid argument. Please use ${prt_Yellow}'add'${prt_White} or ${prt_Yellow}'remove'${prt_End}."
+            return 1
+            ;;
+    esac
+}
+
 # PS1 相关
 if (echo "$SHELL" | grep "bash" >/dev/null); then
     echo -e "current shell is $prt_Yellow bash $prt_End"
@@ -143,6 +178,15 @@ elif (echo "$SHELL" | grep "zsh" >/dev/null); then
     if [[ -d "$HOME/.oh-my-zsh" ]] && [[ "$ZSH_THEME" == "robbyrussell" ]]; then
         PROMPT='%{$fg_bold[red]%}-> %{$fg_bold[green]%}%p%{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}% %{$fg[magenta]%}%(?..%?%2v)%{$reset_color%}#: '
     fi
+
+    # 定义 clashProxy 函数的补全函数
+    _complete_clashProxy() {
+        local -a subcommands
+        subcommands=("add" "remove" "disp")
+        _describe 'subcommands' subcommands
+    }
+    # 将补全函数与 clashProxy 函数关联
+    compdef _complete_clashProxy clashProxy
 fi
 
 #if (echo "$SHELL" | grep "zsh" >/dev/null); then
