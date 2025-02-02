@@ -1,0 +1,11 @@
+# --- 基础配置 ---
+title: "*nix 的学习笔记"
+url: "https://th1nk3r-ing.github.io/Linux_learn" # 替换为你的 GitHub Pages 地址
+
+# --- 作者信息 ---
+author:
+  name: "think3r"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/th1nk3r-ing"

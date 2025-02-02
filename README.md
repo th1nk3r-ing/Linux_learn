@@ -8,29 +8,43 @@
 关于工具的学习, 用多少学多少才是较好的方式, 即:
 > **We learn by making mistakes and doing projects.** <br>
 
-## <font color=#009A000> 0x00 专业技能 </font>
+NOTE:
 
-### 1. [Linux 基础知识 shell-cmd](./Linux基础知识.md)
+1. 使用 `sh code/updateRepoToc.sh` 来手动更新下方的文件目录
+2. github-io 地址 : **<https://th1nk3r-ing.github.io/Linux_learn/>**
 
-### 2. [ubuntu 设置](./ubuntu-settings.md)
+## <font color=#009A000> Docs </font>
 
-### 3. [gcc 使用](./gcc使用.md)
+<!-- TOC start -->
 
-### 4. [makefile 学习](./dsl/MakeFile_learn.md)
+- [Linux基础知识](Linux基础知识.md)
+- [Linux系统中软件四种安装原理](Linux系统中软件四种安装原理.md)
+- [TFTP命令详解](TFTP命令详解.md)
+- [clang-format_git](clang-format_git.md)
+- **doc**
+  - [readme](doc/readme.md)
+- **docker**
+  - [learnDocker](docker/learnDocker.md)
+- **dsl**
+  - [Android-makefile](dsl/Android-makefile.md)
+  - [MakeFile_learn](dsl/MakeFile_learn.md)
+  - [cmake_learn](dsl/cmake_learn.md)
+  - [gradle_learn](dsl/gradle_learn.md)
+  - [premake](dsl/premake.md)
+- [gcc使用](gcc使用.md)
+- [gdb](gdb.md)
+- [linux_cmd](linux_cmd.md)
+- [linux_输入输出](linux_输入输出.md)
+- **net**
+  - [socket](net/socket.md)
+  - [todo](net/todo.md)
+- [readme](readme.md)
+- [shell](shell.md)
+- [ssh原理](ssh原理.md)
+- [tmux手动编译及使用](tmux手动编译及使用.md)
+- [ubuntu-settings](ubuntu-settings.md)
+- [ubuntu安装sqlite](ubuntu安装sqlite.md)
+- [加解密算法](加解密算法.md)
+- [正则表达式](正则表达式.md)
 
-### 5. [gdb 使用](./gdb.md)
-
-### 6. [ssh 原理](./ssh原理.md)
-
-### 7. [cmake 学习](./dsl/cmake_learn.md)
-
-### 8. [gradle 学习](./dsl/gradle_learn.md)
-
-## <font color=#009A000> 0x01 零散知识 </font>
-
-1. [tmux 使用及手动编译 tmux](./tmux手动编译及使用.md)
-2. [tftp 命令详解](./TFTP命令详解.md)
-3. [ubuntu安装sqlite](./ubuntu安装sqlite.md)
-4. [linux tty 与 打印重定向](./linux_输入输出.md)
-5. [linux 系统中的软件安装方式](./Linux系统中软件四种安装原理.md)
-6. [ffmpeg 相关](https://gitee.com/think3r/ShiPinJiChuZhiShi/tree/master/ffmpeg)
+<!-- TOC end -->
