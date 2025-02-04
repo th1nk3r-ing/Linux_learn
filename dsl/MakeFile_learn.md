@@ -10,11 +10,11 @@
 > 4. [万能 makefile 写法详解，一步一步写一个实用的 makefile](https://blog.csdn.net/huyansoft/article/details/8924624)
 > 5. [显示 （gcc）make时实际执行命令](https://blog.csdn.net/kinghuangjin/article/details/79696907)
 
-## <font color=#009A000> 0x00 基础</font>
+## <font color=#009A000> 0x00 基础 </font>
 
 - 编译和链接:
   - 一般来说，无论是 C 还是 C++，首先要把源文件编译成中间代码文件，在 Windows 下也就是 .obj 文件，UNIX 下是 .o 文件，即 Object File，这个动作叫做 **编译（compile）**。
-    - 编译时，编译器需要的是语法的正确，函数与变量的声明的正确。 
+    - 编译时，编译器需要的是语法的正确，函数与变量的声明的正确。
     - 如果函数未被声明，编译器会给出一个警告，但可以生成 Object File。
   - 然后再把大量的 Object File 合成执行文件，这个动作叫作 **链接（link）**。
     - 链接时，主要是链接函数和全局变量。链接器并不管函数所在的源文件，只管函数的中间目标文件（Object File）.
@@ -73,7 +73,7 @@
 - 通常， make 会把其要执行的命令行在命令执行前输出到屏幕上。当我们用 `@` 字符在命令行前，那么，这个命令将不被 make 显示出来，
   - `echo` 使用 `-e` 可以打印出带颜色的输出;
 - 而在 `rm` 命令前面加了一个小减号 `-` 的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。但 make 仍会报错:
-  - `-mkdir test` 的第二次输出: 
+  - `-mkdir test` 的第二次输出:
     > mkdir: 无法创建目录 "test": 文件已存在; make: [clean] 错误 1 (忽略)
   - make 的参数的是 `-k` 或是 `--keep-going` ，这个参数的意思是，如果某规则中的命令出错了，那么就终止该规则的执行，但继续执行其它规则。
 - 调试 :
@@ -134,9 +134,11 @@
   - `$+` : 这个变量很像 `$^` ，也是所有依赖目标的集合。只是它不去除重复的依赖目标。
 
 ### <font color=#FF4500> 判断 </font>
-- `ifeq/ifneq/ifdef、 else 和 endif`, 
-    - 在 <conditional-directive> 这一行上，多余的空格是被允许的，但是不能以 Tab 键作为开始（不然就被认为是命令）。
-```makefile 
+
+- `ifeq/ifneq/ifdef、 else 和 endif`,
+  - 在 <conditional-directive> 这一行上，多余的空格是被允许的，但是不能以 Tab 键作为开始（不然就被认为是命令）。
+
+```makefile
 <conditional-directive>
 <text-if-true>
 else
@@ -148,17 +150,18 @@ endif
   - 所以, <u>你最好不要把自动化变量（如 $@ 等）放入条件表达式中，因为自动化变量是在运行时才有的</u>。
 
 ### <font color=#FF4500> 函数 </font>
-- 函数调用后，函数的返回值可以当做变量来使用. 
+
+- 函数调用后，函数的返回值可以当做变量来使用.
 - 函数的使用方法: `$(<function> <arguments>)`
   - `<function>` 就是函数名，
   - `<arguments>` 为函数的参数，参数间以逗号 , 分隔，而函数名和参数之间以“空格”分隔。
-  - 函数调用以 `$ `开头，以圆括号或花括号把函数名和参数括起。
+  - 函数调用以 `$` 开头，以圆括号或花括号把函数名和参数括起。
 - 字符串处理函数
   - `$(subst <from>,<to>,<text>)`
     - 名称：字符串替换函数
     - 功能：把字串 `<text>` 中的 `<from>` 字符串替换成 `<to>` 。
     - 返回：函数返回被替换过后的字符串。
-    - demo: `$(subst ee,EE,feet on the street)` 
+    - demo: `$(subst ee,EE,feet on the street)`
       - 结果: `fEEt on the strEEt`
   - `$(patsubst <pattern>,<replacement>,<text>)`
   - `$(strip <string>)`
@@ -175,7 +178,7 @@ endif
 - `$(foreach <var>,<list>,<text>)`
   - 这个函数的意思是，把参数 `<list>` 中的单词逐一取出放到参数 `<var>` 所指定的变量中，然后再执行 `<text>` 所包含的表达式。每一次 `<text>` 会返回一个字符串，循环过程中， `<text>` 的所返回的每个字符串会以空格分隔，最后当整个循环结束时， `<text>` 所返回的每个字符串所组成的整个字符串（以空格分隔）将会是 foreach 函数的返回值。
 - shell 函数:
-  - `cur-dir := $(shell pwd)` 
+  - `cur-dir := $(shell pwd)`
   - 这个函数会新生成一个 Shell 程序来执行命令，
   - 所以你要注意其运行性能，如果你的 Makefle 中有一些比较复杂的规则，并大量使用了这个函数，那么对于你的系统性能是有害的。
 - `-$(subst output,,$@)` 中的 `$` 表示执行一个 Makefle 的函数，函数名为 subst，后面的为参数。
@@ -196,8 +199,8 @@ endif
   - 指明了我们的目标从 $object 中获取， %.o 表明要所有以 .o 结尾的目标，也就是 foo.o bar.o ，也就是变量 $object 集合的模式，
   - 而依赖模式 %.c 则取模式 %.o 的 % ，也就是 foo bar，并为其加下 .c 的后缀，于是，我们的依赖目标就是 foo.c bar.c 。
   - 而命令中的 $< 和 $@ 则是自动化变量， `$<` 表示第一个依赖文件， `$@` 表示目标集（也就是“foo.o bar.o”）。
--  
-    ```makefile 
+
+    ```makefile
     files = foo.elc bar.o lose.o
     $(filter %.o,$(files)): %.o: %.c
     $(CC) -c $(CFLAGS) $< -o $@
@@ -225,18 +228,18 @@ endif
 ``` makefile
 include $(sources:.c=.d)
 
-#所有的 .d 文件依赖于 .c 文件， 
+#所有的 .d 文件依赖于 .c 文件，
 %.d: %.c
     # @关键字告诉 make 不输出该行命令；set -e 的作用是，当后面的命令的返回值非0时，立即退出。
-    @set -e; \  
+    @set -e; \
 
     # 删除所有的目标，也就是 .d  文件
-    rm -f $@; \ 
+    rm -f $@; \
 
     # 为每个依赖文件 $< ，也就是 .c 文件生成依赖文件，$@ 表示模式 %.d 文件,  \
     # $$$$ 为字符串 "$$", 而 $$ 是 shell 的特殊变量，它的值为当前进程号 \
     # (使用进程号为后缀的名称创建临时文件，是shell编程常用做法，这样可保证文件唯一性。)
-    $(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \ 
+    $(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
 
     # 使用 sed 命令做了一个替换，
     sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
@@ -263,7 +266,7 @@ include $(sources:.c=.d)
 
 - 而在 rm 命令前面加了一个小减号 `-` 的意思就是，也许某些文件出现问题，但不要管，继续做后面的事。但 make 仍会报错:
 
-    ```sh 
+    ```sh
     -mkdir test
     mkdir: 无法创建目录 "test": 文件已存在; make: [clean] 错误 1 (忽略)
     ```

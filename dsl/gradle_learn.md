@@ -55,7 +55,7 @@
     > During this phase the project objects are configured. The build scripts of all projects which are part of the build are executed.
     - 如 : 将 doLast 中的函数添加至 task 列表的最后;
   - Execution :
-    > Gradle determines the subset of the tasks, created and configured during the configuration phase, to be executed. The subset is determined by the task name arguments passed to the Gradle command and the current directory. Gradle then executes each of the selected tasks. 
+    > Gradle determines the subset of the tasks, created and configured during the configuration phase, to be executed. The subset is determined by the task name arguments passed to the Gradle command and the current directory. Gradle then executes each of the selected tasks.
 - project :
   - 项目, jvm 中的一个实例;
   - 多项目树状列表, 可用 `projet.parent` or `childProjects`;
@@ -160,7 +160,7 @@ groovy 语言 :
     - 打包和上传 : 手动打包, 手动上传;
 2. 工业时期 :
     - 依赖管理 : 可以做一些简单的依赖管理, 但没有拷贝至项目中去;
-    - 自动化 : 可以自动化测试, 打包, 发布;  
+    - 自动化 : 可以自动化测试, 打包, 发布;
 3. 主流的构建工具 :
     - Ant (Apache Ant)
     - Maven (Apache)

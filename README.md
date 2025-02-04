@@ -20,7 +20,6 @@ NOTE:
 - [Linux基础知识](Linux基础知识.md)
 - [Linux系统中软件四种安装原理](Linux系统中软件四种安装原理.md)
 - [TFTP命令详解](TFTP命令详解.md)
-- [clang-format_git](clang-format_git.md)
 - **doc**
   - [readme](doc/readme.md)
 - **docker**
@@ -28,6 +27,7 @@ NOTE:
 - **dsl**
   - [Android-makefile](dsl/Android-makefile.md)
   - [MakeFile_learn](dsl/MakeFile_learn.md)
+  - [clang-format_git](dsl/clang-format_git.md)
   - [cmake_learn](dsl/cmake_learn.md)
   - [gradle_learn](dsl/gradle_learn.md)
   - [premake](dsl/premake.md)

@@ -26,7 +26,8 @@ find . -type f -name "*.md" | sort | while read -r file; do
         depth=0
     else
         # 目录深度 = 斜杠数量 + 1
-        depth=$(grep -o '/' <<< "$dir" | wc -l)
+        # depth=$(grep -o '/' <<< "$dir" | wc -l)
+        depth=$(echo "$dir" | grep -o '/' | wc -l)
         depth=$((depth + 1))
     fi
 
