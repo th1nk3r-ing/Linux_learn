@@ -10,6 +10,8 @@
 > 6. [DockerHub 里面有哪些好用的镜像?](https://www.zhihu.com/question/426345980)
 > 7. [Docker 命令大全 - runoob](https://www.runoob.com/docker/docker-command-manual.html)
 > 8. [macos 中 docker 的存储路径问题](https://www.cnblogs.com/robinunix/p/12795456.html)
+> 9. [如何通俗解释Docker是什么？](https://www.zhihu.com/question/28300645/answer/585166942)
+> 10. [docker-osx](https://github.com/sickcodes/Docker-OSX?tab=readme-ov-file)
 
 Docker 是一个开源的应用容器引擎，基于 Golang 语言开发，可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 服务器。容器是一个沙箱机制，相互之间不会有影响（类似于我们手机上运行的 app），并且容器开销是很低的。
 
@@ -82,6 +84,63 @@ docker 基于 Linux 内核提供这样几项功能实现的：
    1. 虽然有了 NameSpace 技术可以实现资源隔离，但进程还是可以不受控的访问系统资源，比如 CPU、内存、磁盘、网络等，
    2. 为了控制容器中进程对资源的访问 Docker 采用 control groups 技术(也就是 `cgroup`)有了 cgroup 就可以控制容器中进程对系统资源的消耗了，比如你可以限制某个容器使用内存的上限、可以在哪些 CPU 上运行等等。
 
+### <font color=#FF4500> [docker windows](https://learn.microsoft.com/zh-cn/virtualization/windowscontainers/) </font>
+
+1. Windows 容器一直都是分进程级别隔离和利用虚拟化的 Hyper-V 级别隔离的两种方案
+   - 前者对应 linux 的 cgroups 和 NameSpace
+2. [为什么windows没有类似docker运行机制？](https://www.zhihu.com/question/603007335/answer/3185778879) :
+   1. Linux 上的容器镜像包含了除 Linux 内核以外的整个 rootfs，理论上 Windows 容器镜像也应该是这样的，不然没法确保容器内系统环境的完整性。
+   2. 但正好 Windows 的 syscall 是不稳定的，每一个系统更新都可能会导致 syscall 改变，从而让容器镜像跟宿主的内核不兼容。所以 Windows 容器起不到“抚平操作系统差异，为应用提供稳定环境”的作用。
+      - 只不过 Windows 能保持提供给开发者的 ABI 的兼容性
+   3. 那容器就剩下“环境隔离”的作用了，这个需求用虚拟机也能满足，而且隔离效果更好。
+      - Windows 容器目前更多是用在开发环境，比如 CI/CD 的场合。这类场合对隔离性要求不高（不搞乱宿主系统的文件系统和注册表就足够了），但刚需容器轻量能快速启动的特性。
+3. Windows containers and Windows Server
+   > 1. [Troubleshoot topics for Docker Desktop](https://docs.docker.com/desktop/troubleshoot-and-support/troubleshoot/topics/#windows-containers-and-windows-server) : Windows containers and Windows Server
+   > 2. [windows 容器基础映像](https://learn.microsoft.com/zh-cn/virtualization/windowscontainers/manage-containers/container-base-images)
+   > 3. [docker labs --> Getting Started with Windows Containers](https://github.com/docker/labs/blob/master/windows/windows-containers/README.md)
+   - You can install a native Windows binary which allows you to develop and run Windows containers without Docker Desktop. However, if you install Docker this way, you cannot develop or run Linux containers. If you try to run a Linux container on the native Docker daemon, an error occurs. 您可以安装本地Windows二进制文件，这样您就可以在没有Docker桌面的情况下开发和运行Windows容器。但是，如果您以这种方式安装Docker，则无法开发或运行Linux容器。如果尝试在本地Docker守护进程上运行Linux容器，将出现错误.
+
+### <font color=#FF4500> wls 和 hyper-V </font>
+
+> [wsl 2 是否需要启用 Hyper-V？](https://www.zhihu.com/question/439585675)
+> [GPU support in Docker Desktop](https://docs.docker.com/desktop/features/gpu/#using-nvidia-gpus-with-wsl2)
+
+1. Hyper-V 其实分两个部分：底层的虚拟机平台，以及上层的虚拟机管理软件。
+   - 以前的 Windows 版本，这两个是同一个选项，现在的新版本则是分成 Hyper-V 和虚拟机平台两个选项。
+2. wsl2、沙盒本质上是基于 Hyper-V 的虚拟机，所以虚拟机平台要打开才能用。
+   - 但作为 Windows 的两项特殊功能，无需额外使用管理软件对虚拟机进行管理。
+   - 但也因此 wsl2 缺失了一些虚拟机常见功能，例如网络只能配置为 NAT，不能指定 IP/网段，虚拟磁盘管理等。
+   - 本质上 wsl2 就是一个安装了不带桌面的 linux 发行版，它和你自己手动维护一个虚拟机的差别在于他自动映射了 localhost 这个域名，打通了 wsl2 和 宿主 win 环境的网络名称，以及自动映射了一个叫做 wsl 的 samba 共享文件夹，打通了文件系统. 但是实际情况来看 wsl2 的 io 性能很差，
+3. 另一个问题是 Hyper-V 是 Type-I 型的虚拟机，Host 运行在虚拟机平台上，一方面性能有所下降，另一方面则是其它虚拟机软件可能会有所冲突。新版本的 vmware workstation、virtualbox 是没问题的，但旧版的，以及众多安卓模拟器就不好用了。
+4. `nestedVirtualization=true` 是 WSL2 中的一个配置项，用于启用 WSL2 子系统的嵌套虚拟化功能
+   - 允许在 WSL2 内部再运行虚拟机或其他需要虚拟化支持的技术，如 KVM 等，从而实现多层嵌套的虚拟化架构
+   - 方便用户在 WSL2 环境中进行更多与虚拟化相关的操作和实验，例如在 WSL2 里搭建虚拟机集群、进行虚拟化相关的开发测试等
+5. GPU :
+   1. > Currently GPU support in Docker Desktop is only available on Windows with the WSL2 backend.
+   2. `docker run --rm -it --gpus=all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark`
+
+### <font color=#FF4500> macos </font>
+
+> 10. [docker-osx](https://github.com/sickcodes/Docker-OSX?tab=readme-ov-file)
+
+- Mac 虽然不能跑 windows 容器，但是可以运行 Linux 容器, 如下未其底层技术栈 :
+  1. HyperKit：这是 Docker Desktop for Mac 使用的一个关键组件，它是一个用于 macOS 的虚拟化库，基于 xhyve，而 xhyve 又是基于 FreeBSD 的 bhyve 虚拟机。HyperKit 提供了必要的硬件抽象层，使得在 macOS 上可以运行 Linux 虚拟机。
+  2. LinuxKit：这是一个由 Docker 开发的工具集，用于构建自定义的、轻量化的 Linux 发行版，专门设计用来作为容器的宿主机。Docker Desktop for Mac 使用 LinuxKit 来生成一个最小化的 Linux 系统，该系统包含了运行容器所需的所有依赖项。
+  3. 文件系统共享：为了使 macOS 和 Linux 容器之间能够方便地共享文件，Docker Desktop for Mac 利用了 osxfs 技术。osxfs 实现了一个 FUSE（用户空间文件系统）驱动程序，允许 Linux 容器访问 macOS 的文件系统。
+  4. 网络配置：为了确保容器与外部网络以及主机之间的通信正常，Docker Desktop for Mac 配置了虚拟网络接口，并使用 NAT（网络地址转换）规则来管理这些连接。
+- 当你在 macOS 上启动一个 Linux 容器时，实际上是在上述提到的轻量级 Linux 虚拟机中运行的。这个过程包括以下几个步骤：
+  1. 启动虚拟机：首先，Docker Desktop for Mac 会启动一个基于 LinuxKit 的虚拟机。
+  2. 加载镜像：然后，你指定的 Linux 容器镜像被加载到这个虚拟机中。
+  3. 运行容器：最后，在虚拟机内部，容器按照常规的方式启动并运行。
+- Docker-OSX : 使用 QEMU 基于 KVM(Kernel-based Virtual Machine) 虚拟化了 macOS. Docker-OSX 在 Windows 上的运行依赖 :
+  > Running Docker-OSX on Windows is possible using WSL2 (Windows 11 + Windows Subsystem for Linux).
+  > You must have Windows 11 installed with build 22000+ (21H2 or higher).
+  1. WSL2
+  2. KVM : KVM 是 Linux 内核的虚拟化模块，直接利用宿主机的硬件虚拟化扩展（如 Intel VT-x 或 AMD SVM），为 macOS 提供接近原生的性能
+     - QEMU：用于模拟硬件设备（如 CPU、磁盘、网络），并与 KVM 协同加速虚拟化性能37。
+     - Libvirt：管理虚拟化平台，支持容器与宿主机资源的动态分配3。
+  3. X11 转发：通过 X11 协议将 macOS 的 GUI 界面转发到 Windows 主机显示。需安装 x11-apps 并配置 DISPLAY 环境变量，依赖 WSLg（Windows Subsystem for Linux GUI）或第三方 X Server 工具（如 VcXsrv）
+
 ## <font color=#009A000> 0x02 docker 的镜像制作 </font>
 
 制作 Docker 镜像一般有2种方法：
@@ -107,7 +166,6 @@ docker 基于 Linux 内核提供这样几项功能实现的：
         - 这使得如果你稍后想要连接到这个容器并与其交互，可以使用 `docker exec -it <container_id_or_name> /bin/sh` 或者 `docker attach <container_id_or_name>` 命令来附加到容器上，并获得一个交互式的 shell 环境
    4. `-p` : 指定端口映射，格式为：主机(宿主)端口:容器端口
    5. `--name="nginx-lb"` : 为容器指定一个名称
-   6.
 4. `docker ps` : 查看正在运行的容器
    - `-a` 查看所有(终止)状态的容器
    - `-q` 查看对应的 container ID
@@ -132,11 +190,11 @@ docker 基于 Linux 内核提供这样几项功能实现的：
 8. docker 生成自定义镜像(修改启动命令)的方式 :
    1. Dockerfile 的方式修改命令 :
 
-        ```Dockerfile
-        FROM image:demo  #要改动命令的镜像
-        WORKDIR /root/  #执行命令的工作目录路径
-        CMD ["python","main.py"] # 要更改的命令
-        ```
+      ```Dockerfile
+      FROM image:demo  #要改动命令的镜像
+      WORKDIR /root/  #执行命令的工作目录路径
+      CMD ["python","main.py"] # 要更改的命令
+      ```
 
    2. 直接通过 commit 修改 : `docker commit --change="WORKDIR /" -c 'CMD [ "bash" ]'  -m "基础ubuntu镜像" -a 'think3r' 639b37671e5c  outImage:v1`
       1. `–change` : Apply Dockerfile instruction to the created image (可以写入 dockerfile 的语法语句)

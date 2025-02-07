@@ -28,15 +28,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: test shell
+      - name: shell script processing
         run : |
           cd ${GITHUB_WORKSPACE}
+          echo "$(pwd)"
           # 更新 readme 的目录
           /bin/bash code/updateRepoToc.sh
           # 删除标签 </font>
           find . -name "*.md" -exec sed -i 's/<\/font>//g' {} +
           # 删除标签 <font color=#009A000>
           find . -name "*.md" -exec sed -i 's/<font color=#\([a-fA-F0-9]*\)>//g' {} +
+          echo "已完成 font 标签删除"
+          git status
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
