@@ -32,13 +32,9 @@ jobs:
         run : |
           cd ${GITHUB_WORKSPACE}
           echo "$(pwd)"
-          # 更新 readme 的目录
-          /bin/bash code/updateRepoToc.sh
-          # 删除标签 </font>
-          find . -name "*.md" -exec sed -i 's/<\/font>//g' {} +
-          # 删除标签 <font color=#009A000>
-          find . -name "*.md" -exec sed -i 's/<font color=#\([a-fA-F0-9]*\)>//g' {} +
-          echo "已完成 font 标签删除"
+          # 执行 md 文档处理脚本(更新目录 + 部分语法转换)
+          curl -L -o updateRepoMdFileList.sh https://raw.githubusercontent.com/th1nk3r-ing/Linux_learn/refs/heads/main/code/updateRepoMdFileList.sh
+          /bin/bash updateRepoMdFileList.sh handleGithubMdSyntax
           git status
       - name: Setup Pages
         uses: actions/configure-pages@v5

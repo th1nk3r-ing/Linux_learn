@@ -2,7 +2,24 @@
 
 scriptAbsPath=$(dirname $(readlink -f "$0")) && cd ${scriptAbsPath}   # 获取脚本的真实路径并>    进入其根路径 (支持软连接 & 外部文件夹调用)
 
-cd ../
+echo "pwd : $(pwd)"
+
+
+function handle_github_md_syntax() {
+    # 删除标签 </font>
+    find . -name "*.md" -exec sed -i 's/<\/font>//g' {} +
+    # 删除标签 <font color=#009A000>
+    find . -name "*.md" -exec sed -i 's/<font color=#\([a-fA-F0-9]*\)>//g' {} +
+    echo "已完成 font 标签删除"
+    # <u>**XXX**</u>  -->  **<u>XXX</u>**
+    find . -name "*.md" -exec sed -E -i 's/<u>\*\*(.+?)\*\*<\/u>/**<u>\1<\/u>**/g'  {} +
+    echo "已完成 下划线和高亮 标签替换"
+}
+
+#!/bin/bash
+if [[ $# -gt 0 && "$1" == "handleGithubMdSyntax" ]]; then
+    handle_github_md_syntax
+fi
 
 # 清空或创建 toc 文件
 > toc.txt
