@@ -20,9 +20,6 @@ NOTE:
 - [Linux基础知识.md](./Linux基础知识.md)
 - [Linux系统中软件四种安装原理.md](./Linux系统中软件四种安装原理.md)
 - [TFTP命令详解.md](./TFTP命令详解.md)
-- **code** :
-  - **tty_redirect** :
-- **config** :
 - **doc** :
   - **dsl** :
     - [CMake_Practice.pdf](./doc/dsl/CMake_Practice.pdf)
@@ -44,7 +41,6 @@ NOTE:
   - [premake.md](./dsl/premake.md)
 - [gcc使用.md](./gcc使用.md)
 - [gdb.md](./gdb.md)
-- **image** :
 - [linux_cmd.md](./linux_cmd.md)
 - [linux_输入输出.md](./linux_输入输出.md)
 - **net** :
@@ -52,7 +48,6 @@ NOTE:
   - [todo.md](./net/todo.md)
 - [readme.md](./readme.md)
 - [shell.md](./shell.md)
-- **shellCollect** :
 - [ssh原理.md](./ssh原理.md)
 - [tmux手动编译及使用.md](./tmux手动编译及使用.md)
 - [ubuntu-settings.md](./ubuntu-settings.md)

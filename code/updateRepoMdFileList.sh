@@ -14,6 +14,14 @@ function handle_github_md_syntax() {
     # <u>**XXX**</u>  -->  **<u>XXX</u>**
     find . -name "*.md" -exec sed -E -i 's/<u>\*\*(.+?)\*\*<\/u>/**<u>\1<\/u>**/g'  {} +
     echo "已完成 下划线和高亮 标签替换"
+
+    echo "-------> will delete :"
+    find .  \(  -name "*.sh" -o \
+                -name "*.py" -o \
+                -name "*.c" -o \
+                -name "*.cpp" -o \
+                -name "*.so" -o \
+                -name "*.o" \) -print -exec rm -f {} \;
 }
 
 #!/bin/bash
@@ -32,9 +40,13 @@ function handle_repo_doc_toc() {
 
     for file in "${files[@]}"; do
         if [ -d "$file" ]; then
-            # 如果是目录，则递归调用自身，并增加缩进层级
-            echo "${prefix}- **${file##*/}** :"  >> toc.txt
-            handle_repo_doc_toc "${prefix}  " "$file"
+            if find "$file" \( -name "*.md" -o -name "*.pdf" -o -name "*.html" \) -print -quit | grep -q .; then
+                # 如果是目录，则递归调用自身，并增加缩进层级
+                echo "${prefix}- **${file##*/}** :"  >> toc.txt
+                handle_repo_doc_toc "${prefix}  " "$file"
+            else
+                true                            # do-nothing
+            fi
         elif [[ "$file" =~ \.md$ || "$file" =~ \.pdf$ || "$file" =~ \.html$ ]]; then
             # 如果是 .md 文件，则按要求格式化输出
             echo "${prefix}- [${file##*/}](${file})" >> toc.txt
