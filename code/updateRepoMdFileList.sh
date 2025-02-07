@@ -24,53 +24,74 @@ fi
 # 清空或创建 toc 文件
 > toc.txt
 
-old_dirname=0
+# 定义递归函数来遍历目录并处理 .md 文件
+function handle_repo_doc_toc() {
+    local prefix="$1"        # 前缀用于树结构的缩进
+    local dir="$2"           # 当前处理的目录
+    local files=("$dir"/*)   # 获取目录下的所有文件和子目录
 
-# 使用 find 命令递归查找所有 .md 文件，并按目录结构排序
-find . -type f -name "*.md" | sort | while read -r file; do
-    # 获取相对路径并去除开头的 './'
-    relative_path=${file:2}
-
-    # 获取文件所在的目录路径（不包括文件名）
-    dir=$(dirname "$relative_path")
-
-    # 获取文件名并去除扩展名作为标题
-    title=${file##*/}
-    title=${title%.md}
-
-    # 计算当前文件所在目录的深度
-    if [ "$dir" = "." ]; then
-        depth=0
-    else
-        # 目录深度 = 斜杠数量 + 1
-        # depth=$(grep -o '/' <<< "$dir" | wc -l)
-        depth=$(echo "$dir" | grep -o '/' | wc -l)
-        depth=$((depth + 1))
-    fi
-
-    # 构建缩进（每层两个空格）
-    indent=""
-    for (( i=0; i<depth; i++ )); do
-        indent+="  "
-    done
-
-    if [ "$dir" == "$old_dirname" ]; then
-        true                            # do-nothing
-    else
-        old_dirname=$dir
-        if [ "$dir" == "." ]; then      # 不显示根文件夹
-            true
-        else
-            echo "${indent:2}- **$dir**" >> toc.txt
+    for file in "${files[@]}"; do
+        if [ -d "$file" ]; then
+            # 如果是目录，则递归调用自身，并增加缩进层级
+            echo "${prefix}- **${file##*/}** :"  >> toc.txt
+            handle_repo_doc_toc "${prefix}  " "$file"
+        elif [[ "$file" =~ \.md$ || "$file" =~ \.pdf$ || "$file" =~ \.html$ ]]; then
+            # 如果是 .md 文件，则按要求格式化输出
+            echo "${prefix}- [${file##*/}](${file})" >> toc.txt
         fi
-    fi
+    done
+}
 
-  # 输出格式化的链接到 toc.txt 文件中
-  echo "$indent- [$title]($relative_path)" >> toc.txt
-done
+function handle_repo_doc_toc_old() {
+    old_dirname=0
+    # 使用 find 命令递归查找所有 .md 文件，并按目录结构排序
+    find . -type f -name "*.md" | sort | while read -r file; do
+        # 获取相对路径并去除开头的 './'
+        relative_path=${file:2}
 
+        # 获取文件所在的目录路径（不包括文件名）
+        dir=$(dirname "$relative_path")
+
+        # 获取文件名并去除扩展名作为标题
+        title=${file##*/}
+        title=${title%.md}
+
+        # 计算当前文件所在目录的深度
+        if [ "$dir" = "." ]; then
+            depth=0
+        else
+            # 目录深度 = 斜杠数量 + 1
+            # depth=$(grep -o '/' <<< "$dir" | wc -l)
+            depth=$(echo "$dir" | grep -o '/' | wc -l)
+            depth=$((depth + 1))
+        fi
+
+        # 构建缩进（每层两个空格）
+        indent=""
+        for (( i=0; i<depth; i++ )); do
+            indent+="  "
+        done
+
+        if [ "$dir" == "$old_dirname" ]; then
+            true                            # do-nothing
+        else
+            old_dirname=$dir
+            if [ "$dir" == "." ]; then      # 不显示根文件夹
+                true
+            else
+                echo "${indent:2}- **$dir**" >> toc.txt
+            fi
+        fi
+
+    # 输出格式化的链接到 toc.txt 文件中
+    echo "$indent- [$title]($relative_path)" >> toc.txt
+    done
+}
+
+# NOTE: 处理 文件 toc
+# handle_repo_doc_toc_old
+handle_repo_doc_toc  ""  "."
 echo "TOC 已生成到 toc.txt"
-
 
 # 定义一个临时文件
 temp_file="readme_temp.md"
