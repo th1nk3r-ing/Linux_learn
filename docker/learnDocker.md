@@ -25,10 +25,10 @@ Docker 的优势 :
 - 轻量级：容器利用并共享主机内核，使它们在系统资源方面比虚拟机更有效率。
 - 可移植：您可以在本地构建，部署到云上，并在任何地方运行。
 - 松耦合：容器是高度自给自足和封装的，允许您在不影响其他容器的情况下替换或升级其中一个。
-- 扩展：您可以跨数据中心增加和自动分发容器副本。
+- 扩展 ：您可以跨数据中心增加和自动分发容器副本。
 - 安全性：容器对进程应用主动约束和隔离，而不需要用户进行任何配置。
 
-**<u>Docker的出现主要就是为了解决：在我的机器上运行时是正常的，但为什么到你的机器上就运行不正常了。</u>**
+**<u>Docker 的出现主要就是为了解决：在我的机器上运行时是正常的，但为什么到你的机器上就运行不正常了。</u>**
 
 ## <font color=#009A000> 0x00 基本概念 </font>
 
@@ -45,7 +45,7 @@ docker 中有这样几个概念 ：
   - 前面讲过镜像使用的是分层存储，容器也是如此。容器存储层的生存周期和容器一样，容器消亡时，容器存储层也随之消亡。
     - 因此，任何保存于容器存储层的信息都会随容器删除而丢失。
 - Repository :（仓储）集中存放镜像文件的地方
-  - 镜像构建完成后，可以很容易的在当前宿主上运行，但是， 如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务（就像Git仓库一样），Docker Registry 就是这样的服务。
+  - 镜像构建完成后，可以很容易的在当前宿主上运行，但是， 如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务（就像 Git 仓库一样），Docker Registry 就是这样的服务。
   - 一个 Docker Registry 中可以包含多个仓库（Repository），每个仓库可以包含多个标签（Tag），每个标签对应一个镜像。
   - 所以说：镜像仓库是 Docker 用来集中存放镜像文件的地方类似于我们之前常用的代码仓库。通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本 。我们可以通过 `<仓库名>:<标签>` 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 `latest` 作为默认标签。
 
@@ -71,16 +71,16 @@ NOTE: 一些需要注意的问题 :
 2. decker 的一些管理工具
    - [Portainer - github](https://github.com/portainer/portainer)
    - DockStation
-   - Docker Desktop
+   - **Docker Desktop**
 
 ## <font color=#009A000> 0x01 docker 的底层实现原理 </font>
 
 docker 基于 Linux 内核提供这样几项功能实现的：
 
-1. NameSpace :
-   1. 我们知道 Linux 中的 PID、IPC、网络等资源是全局的，而 NameSpace 机制是一种资源隔离方案，在该机制下这些资源就不再是全局的了，而是属于某个特定的N ameSpace，各个 NameSpace 下的资源互不干扰，
+1. `NameSpace` :
+   1. 我们知道 Linux 中的 PID、IPC、网络等资源是全局的，而 NameSpace 机制是一种资源隔离方案，在该机制下这些资源就不再是全局的了，而是属于某个特定的 NameSpace，各个 NameSpace 下的资源互不干扰，
    2. 这就使得每个 NameSpace 看上去就像一个独立的操作系统一样，但是只有 NameSpace 是不够。
-2. Control groups :
+2. `Control groups` :
    1. 虽然有了 NameSpace 技术可以实现资源隔离，但进程还是可以不受控的访问系统资源，比如 CPU、内存、磁盘、网络等，
    2. 为了控制容器中进程对资源的访问 Docker 采用 control groups 技术(也就是 `cgroup`)有了 cgroup 就可以控制容器中进程对系统资源的消耗了，比如你可以限制某个容器使用内存的上限、可以在哪些 CPU 上运行等等。
 
@@ -110,18 +110,18 @@ docker 基于 Linux 内核提供这样几项功能实现的：
 2. wsl2、沙盒本质上是基于 Hyper-V 的虚拟机，所以虚拟机平台要打开才能用。
    - 但作为 Windows 的两项特殊功能，无需额外使用管理软件对虚拟机进行管理。
    - 但也因此 wsl2 缺失了一些虚拟机常见功能，例如网络只能配置为 NAT，不能指定 IP/网段，虚拟磁盘管理等。
-   - 本质上 wsl2 就是一个安装了不带桌面的 linux 发行版，它和你自己手动维护一个虚拟机的差别在于他自动映射了 localhost 这个域名，打通了 wsl2 和 宿主 win 环境的网络名称，以及自动映射了一个叫做 wsl 的 samba 共享文件夹，打通了文件系统. 但是实际情况来看 wsl2 的 io 性能很差，
+   - 本质上 wsl2 就是一个安装了不带桌面的 linux 发行版，它和你自己手动维护一个虚拟机的差别在于, 他自动映射了 localhost 这个域名，打通了 wsl2 和 宿主 win 环境的网络名称，以及自动映射了一个叫做 wsl 的 samba 共享文件夹，打通了文件系统. 但是实际情况来看 wsl2 的 io 性能很差，
 3. 另一个问题是 Hyper-V 是 Type-I 型的虚拟机，Host 运行在虚拟机平台上，一方面性能有所下降，另一方面则是其它虚拟机软件可能会有所冲突。新版本的 vmware workstation、virtualbox 是没问题的，但旧版的，以及众多安卓模拟器就不好用了。
 4. `nestedVirtualization=true` 是 WSL2 中的一个配置项，用于启用 WSL2 子系统的嵌套虚拟化功能
    - 允许在 WSL2 内部再运行虚拟机或其他需要虚拟化支持的技术，如 KVM 等，从而实现多层嵌套的虚拟化架构
    - 方便用户在 WSL2 环境中进行更多与虚拟化相关的操作和实验，例如在 WSL2 里搭建虚拟机集群、进行虚拟化相关的开发测试等
 5. GPU :
-   1. > Currently GPU support in Docker Desktop is only available on Windows with the WSL2 backend.
-   2. `docker run --rm -it --gpus=all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark`
+   - > Currently GPU support in Docker Desktop is only available on Windows with the WSL2 backend.
+   - `docker run --rm -it --gpus=all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark`
 
 ### <font color=#FF4500> macos </font>
 
-> 10. [docker-osx](https://github.com/sickcodes/Docker-OSX?tab=readme-ov-file)
+> [docker-osx](https://github.com/sickcodes/Docker-OSX?tab=readme-ov-file)
 
 - Mac 虽然不能跑 windows 容器，但是可以运行 Linux 容器, 如下未其底层技术栈 :
   1. HyperKit：这是 Docker Desktop for Mac 使用的一个关键组件，它是一个用于 macOS 的虚拟化库，基于 xhyve，而 xhyve 又是基于 FreeBSD 的 bhyve 虚拟机。HyperKit 提供了必要的硬件抽象层，使得在 macOS 上可以运行 Linux 虚拟机。
@@ -132,18 +132,18 @@ docker 基于 Linux 内核提供这样几项功能实现的：
   1. 启动虚拟机：首先，Docker Desktop for Mac 会启动一个基于 LinuxKit 的虚拟机。
   2. 加载镜像：然后，你指定的 Linux 容器镜像被加载到这个虚拟机中。
   3. 运行容器：最后，在虚拟机内部，容器按照常规的方式启动并运行。
-- Docker-OSX : 使用 QEMU 基于 KVM(Kernel-based Virtual Machine) 虚拟化了 macOS. Docker-OSX 在 Windows 上的运行依赖 :
+- **Docker-OSX** : 使用 QEMU 基于 KVM(Kernel-based Virtual Machine) 虚拟化了 macOS. 如下为 Docker-OSX 在 Windows 上的运行依赖 :
   > Running Docker-OSX on Windows is possible using WSL2 (Windows 11 + Windows Subsystem for Linux).
   > You must have Windows 11 installed with build 22000+ (21H2 or higher).
   1. WSL2
   2. KVM : KVM 是 Linux 内核的虚拟化模块，直接利用宿主机的硬件虚拟化扩展（如 Intel VT-x 或 AMD SVM），为 macOS 提供接近原生的性能
-     - QEMU：用于模拟硬件设备（如 CPU、磁盘、网络），并与 KVM 协同加速虚拟化性能37。
-     - Libvirt：管理虚拟化平台，支持容器与宿主机资源的动态分配3。
+     - QEMU：用于模拟硬件设备（如 CPU、磁盘、网络），并与 KVM 协同加速虚拟化性能。
+     - Libvirt：管理虚拟化平台，支持容器与宿主机资源的动态分配。
   3. X11 转发：通过 X11 协议将 macOS 的 GUI 界面转发到 Windows 主机显示。需安装 x11-apps 并配置 DISPLAY 环境变量，依赖 WSLg（Windows Subsystem for Linux GUI）或第三方 X Server 工具（如 VcXsrv）
 
 ## <font color=#009A000> 0x02 docker 的镜像制作 </font>
 
-制作 Docker 镜像一般有2种方法：
+制作 Docker 镜像一般有 2 种方法：
 
 1. 使用 hub 仓库中已有的环境，安装自己使用的软件环境后完成 image 创建
 2. 通过 Dockerfile，完成镜像 image 的创建
@@ -158,9 +158,9 @@ docker 基于 Linux 内核提供这样几项功能实现的：
    1. `-d` : detach, Run container in background and print container ID (后台运行容器，并返回容器ID)
       - 其后可接 image 名称
       - 容器会独立于你的终端运行，不会占用当前的命令行界面，你可以继续在该终端执行其他命令或关闭终端窗口，而容器仍然会在后台持续运行
-   2. `-i` : 以交互模式运行容器，通常与 -t 同时使用
+   2. `-i` : 以交互模式运行容器，通常与 `-t` 同时使用
       - 可以让你与容器保持交互，只保持了 `STDIN` 的打开状态，但是没有分配 TTY, 也不会模拟一个终端 (没有高亮等)
-   3. `-t` : 为容器重新分配一个伪输入终端，通常与 -i 同时使用 `-it`
+   3. `-t` : 为容器重新分配一个伪输入终端，通常与 `-i` 同时使用 `-it`
       - `-dit`
         - 是在后台创建一个 tty, 当前终端可继续执行其它命令并可关闭窗口
         - 这使得如果你稍后想要连接到这个容器并与其交互，可以使用 `docker exec -it <container_id_or_name> /bin/sh` 或者 `docker attach <container_id_or_name>` 命令来附加到容器上，并获得一个交互式的 shell 环境
@@ -247,9 +247,7 @@ docker run
 
 ## <font color=#009A000> TODO: </font>
 
-- docker & wsl 1&2
-- docker - windows
-- docker - github build ?
+- ~~docker - github build~~
 - docker 导入导出命令行缺失的问题
 - docker rtmp/hls 推流测试
 - docker temux 守护进程 ?
