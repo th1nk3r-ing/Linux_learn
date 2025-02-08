@@ -49,77 +49,37 @@ function handle_repo_doc_toc() {
             fi
         elif [[ "$file" =~ \.md$ || "$file" =~ \.pdf$ || "$file" =~ \.html$ ]]; then
             # 如果是 .md 文件，则按要求格式化输出
-            echo "${prefix}- [${file##*/}](${file})" >> toc.txt
+            escaped_url=$(echo "$file" | sed 's/ /%20/g')
+            echo "${prefix}- [${file##*/}](${escaped_url})" >> toc.txt
         fi
-    done
-}
-
-function handle_repo_doc_toc_old() {
-    old_dirname=0
-    # 使用 find 命令递归查找所有 .md 文件，并按目录结构排序
-    find . -type f -name "*.md" | sort | while read -r file; do
-        # 获取相对路径并去除开头的 './'
-        relative_path=${file:2}
-
-        # 获取文件所在的目录路径（不包括文件名）
-        dir=$(dirname "$relative_path")
-
-        # 获取文件名并去除扩展名作为标题
-        title=${file##*/}
-        title=${title%.md}
-
-        # 计算当前文件所在目录的深度
-        if [ "$dir" = "." ]; then
-            depth=0
-        else
-            # 目录深度 = 斜杠数量 + 1
-            # depth=$(grep -o '/' <<< "$dir" | wc -l)
-            depth=$(echo "$dir" | grep -o '/' | wc -l)
-            depth=$((depth + 1))
-        fi
-
-        # 构建缩进（每层两个空格）
-        indent=""
-        for (( i=0; i<depth; i++ )); do
-            indent+="  "
-        done
-
-        if [ "$dir" == "$old_dirname" ]; then
-            true                            # do-nothing
-        else
-            old_dirname=$dir
-            if [ "$dir" == "." ]; then      # 不显示根文件夹
-                true
-            else
-                echo "${indent:2}- **$dir**" >> toc.txt
-            fi
-        fi
-
-    # 输出格式化的链接到 toc.txt 文件中
-    echo "$indent- [$title]($relative_path)" >> toc.txt
     done
 }
 
 # NOTE: 处理 文件 toc
-# handle_repo_doc_toc_old
 handle_repo_doc_toc  ""  "."
 echo "TOC 已生成到 toc.txt"
 
 # 定义一个临时文件
-temp_file="readme_temp.md"
+temp_head="temp_head.md"
+temp_tail="temp_tail.md"
+output_file="updated_readme.md"
 
 # 将 readme.md 的内容复制到临时文件，直到遇到旧的 TOC 部分
-sed '/<!-- TOC start -->/,/<!-- TOC end -->/d' readme.md > "$temp_file"
+# 提取 <!-- TOC start --> 之前的部分
+sed '/<!-- TOC start -->/q' readme.md > "$temp_head"
+# 提取 <!-- TOC end --> 之后的部分
+sed -n '/<!-- TOC end -->/,$p' readme.md | sed '1d' > "$temp_tail"
 
-# 在临时文件中插入新的 TOC
-echo -e "<!-- TOC start -->\n" >> "$temp_file"
-cat toc.txt >> "$temp_file"
-echo -e "\n<!-- TOC end -->" >> "$temp_file"
+# 合并头部、新内容和尾部
+cat "$temp_head" > "$output_file"
+echo "" >> "$output_file" # 确保换行
+cat toc.txt >> "$output_file"
+echo "" >> "$output_file" # 确保换行
+echo "<!-- TOC end -->" >> "$output_file"
+cat "$temp_tail" >> "$output_file"
 
-# 替换原来的 readme.md 文件
-mv "$temp_file" readme.md
-
-# 删除 toc.txt 文件
-rm toc.txt
+# 清除中间文件
+rm "$temp_head" "$temp_tail" toc.txt
+mv $output_file readme.md
 
 echo "TOC 已更新到 readme.md"
