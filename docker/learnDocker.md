@@ -12,6 +12,7 @@
 > 8. [macos 中 docker 的存储路径问题](https://www.cnblogs.com/robinunix/p/12795456.html)
 > 9. [如何通俗解释Docker是什么？](https://www.zhihu.com/question/28300645/answer/585166942)
 > 10. [docker-osx](https://github.com/sickcodes/Docker-OSX?tab=readme-ov-file)
+> 11. [docker真的好难用啊，为什么说它移植性好啊？](https://www.zhihu.com/question/400400231/answer/2784810649?utm_psn=1872242542193561600)
 
 Docker 是一个开源的应用容器引擎，基于 Golang 语言开发，可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 服务器。容器是一个沙箱机制，相互之间不会有影响（类似于我们手机上运行的 app），并且容器开销是很低的。
 
@@ -90,6 +91,14 @@ docker 基于 Linux 内核提供这样几项功能实现的：
    - 前者对应 linux 的 cgroups 和 NameSpace
 2. [为什么windows没有类似docker运行机制？](https://www.zhihu.com/question/603007335/answer/3185778879) :
    1. Linux 上的容器镜像包含了除 Linux 内核以外的整个 rootfs，理论上 Windows 容器镜像也应该是这样的，不然没法确保容器内系统环境的完整性。
+      - 一个最常见的 rootfs （容器镜像） 包含如下的目录和文件
+
+      ```sh
+      $ ls /
+      bin dev etc home lib lib64 mnt opt proc root run sbin sys tmp usr var
+      ```
+
+      - Docker 的联合文件系统（Union File System）
    2. 但正好 Windows 的 syscall 是不稳定的，每一个系统更新都可能会导致 syscall 改变，从而让容器镜像跟宿主的内核不兼容。所以 Windows 容器起不到“抚平操作系统差异，为应用提供稳定环境”的作用。
       - 只不过 Windows 能保持提供给开发者的 ABI 的兼容性
    3. 那容器就剩下“环境隔离”的作用了，这个需求用虚拟机也能满足，而且隔离效果更好。
@@ -244,6 +253,50 @@ docker container prune  #清理系统中处于停止状态的容器, 释放磁�
 
 docker run
 ```
+
+### <font color=#FF4500> docker 网络 </font>
+
+![docker 网络模式](../image/docker_netMode.webp)
+
+- bridge 模式
+
+   ```log
+   # 当 Docker 进程启动时，会在主机上创建一个名为 docker0 的虚拟网桥
+   # 这个 docker0 也作为容器的默认网关，主机也可以 ping 通容器，但是容器之间是隔离的
+   # 不写 –net 参数，默认就是 bridge 模式。使用 docker run -p 时，docker 实际是在 iptables 做了 DNAT 规则，实现端口转发功能。可以使用 iptables -t nat -vnL 查看
+
+   # 新建一个网络
+   $ docker network create -d bridge my-net
+
+   # 运行一个容器并连接到新建的 my-net 网络
+   $ docker run -it --rm --name busybox1 --network my-net busybox sh
+
+   # 加入系统网络的应用，可以互相 ping 通，如我可以在其他加入了 my-net 的容器里：
+   $ ping busybox
+   > PING busybox (172.19.0.2): 56 data bytes
+   > 64 bytes from 172.19.0.2: seq=0 ttl=64 time=0.064 ms
+   > 64 bytes from 172.19.0.2: seq=1 ttl=64 time=0.143 ms
+
+   # 如果你有多个容器之间需要互相连接，推荐使用 Docker Compose。
+   ```
+
+- Host 模式
+
+   ```log
+   # 如果启动容器的时候使用 host 模式，那么这个容器将不会获得一个独立的 Network Namespace，而是和宿主机共用一个 Network Namespace
+
+   示例：
+   $ docker run -tid --net=host --name docker_host1 ubuntu-base:v3
+   ```
+
+- Container 模式 :
+
+   ```log
+   # 这个模式指定新创建的容器和已经存在的一个容器共享一个 Network Namespace，而不是和宿主机共享
+   # 示例，独立的 docker_bri1 网络：
+   $ docker run -tid --net=container:docker_bri1 \
+         --name docker_con1 ubuntu-base:v3
+   ```
 
 ## <font color=#009A000> TODO: </font>
 

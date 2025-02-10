@@ -4,11 +4,12 @@
 >
 > 1. <<深入理解计算机系统>>
 > 2. [Socket编程入门 - Socket通信技术简明教程](https://www.dotcpp.com/course/socket/)
-> 3. [集线器、网桥、交换机、路由器](https://zhuanlan.zhihu.com/p/649762444)
-> 4. [硬核图解！30张图带你搞懂！路由器，集线器，交换机，网桥，光猫有啥区别？](https://golangguide.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%A1%AC%E6%A0%B8%E5%9B%BE%E8%A7%A3%EF%BC%8130%E5%BC%A0%E5%9B%BE%E5%B8%A6%E4%BD%A0%E6%90%9E%E6%87%82%EF%BC%81%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%8C%E9%9B%86%E7%BA%BF%E5%99%A8%EF%BC%8C%E4%BA%A4%E6%8D%A2%E6%9C%BA%EF%BC%8C%E7%BD%91%E6%A1%A5%EF%BC%8C%E5%85%89%E7%8C%AB%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB%EF%BC%9F.html)
+> 3. [如果让你来设计网络](https://mp.weixin.qq.com/s?__biz=MzkxMDc1MDg1Nw==&mid=2247508504&idx=1&sn=b21196cfd1c3cbde80119240c9d2cd81&source=41#wechat_redirect) TODO:
+>    - [集线器、网桥、交换机、路由器](https://zhuanlan.zhihu.com/p/649762444)
+>    - [硬核图解！30张图带你搞懂！路由器，集线器，交换机，网桥，光猫有啥区别？](https://golangguide.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%A1%AC%E6%A0%B8%E5%9B%BE%E8%A7%A3%EF%BC%8130%E5%BC%A0%E5%9B%BE%E5%B8%A6%E4%BD%A0%E6%90%9E%E6%87%82%EF%BC%81%E8%B7%AF%E7%94%B1%E5%99%A8%EF%BC%8C%E9%9B%86%E7%BA%BF%E5%99%A8%EF%BC%8C%E4%BA%A4%E6%8D%A2%E6%9C%BA%EF%BC%8C%E7%BD%91%E6%A1%A5%EF%BC%8C%E5%85%89%E7%8C%AB%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB%EF%BC%9F.html)
 >    - <https://github.com/xiaobaiTech/golangFamily>
-> 5. [SSH比SSL更高层，更安全？请看两者4大区别—基于原理和协议](https://www.51cto.com/article/594591.html)
-> 6. [最大连接数65535，服务器是如何应对百万千万的并发的？](https://zhuanlan.zhihu.com/p/646383328)
+> 4. [SSH比SSL更高层，更安全？请看两者4大区别—基于原理和协议](https://www.51cto.com/article/594591.html)
+> 5. [最大连接数65535，服务器是如何应对百万千万的并发的？](https://zhuanlan.zhihu.com/p/646383328)
 >    - [linux的TCP连接数量最大不能超过65535个，那服务器是如何应对百万千万的并发的？](https://www.zhihu.com/question/384470425)
 
 ## <font color=#009A000> 0x00 网络基础知识 base </font>
