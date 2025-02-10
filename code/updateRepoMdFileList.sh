@@ -4,7 +4,7 @@ scriptAbsPath=$(dirname $(readlink -f "$0")) && cd ${scriptAbsPath}   # 获取�
 
 echo "pwd : $(pwd)"
 
-
+# 处理 github markdown 相关语法问题(actions 发布时使用)
 function handle_github_md_syntax() {
     # 删除标签 </font>
     find . -name "*.md" -exec sed -i 's/<\/font>//g' {} +
@@ -58,6 +58,18 @@ function handle_repo_doc_toc() {
 # NOTE: 处理 文件 toc
 handle_repo_doc_toc  ""  "."
 echo "TOC 已生成到 toc.txt"
+
+# 使用 grep 检查两个标记是否存在，并统计行数
+start_tag=$(grep -c '<!-- TOC start -->' readme.md)
+end_tag=$(grep -c '<!-- TOC end -->' readme.md)
+
+# 判断是否两个标记都存在
+if [ $start_tag -gt 0 ] && [ $end_tag -gt 0 ]; then
+    true
+else
+    echo "One or both of the 'TOC' tags are missing. Exiting..."
+    exit 1 # 返回非零值表示异常退出
+fi
 
 # 定义一个临时文件
 temp_head="temp_head.md"

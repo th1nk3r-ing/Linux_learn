@@ -164,6 +164,29 @@ function clashProxy {
     esac
 }
 
+# 更新 readme
+function readmeUpdate() {
+    # 定义优先链接和备份链接
+    local primary_url="https://gitee.com/think3r/Linux_learn/raw/master/code/updateRepoMdFileList.sh"
+    local backup_url="https://raw.githubusercontent.com/th1nk3r-ing/Linux_learn/refs/heads/main/code/updateRepoMdFileList.sh"
+
+    # 尝试从优先链接下载
+    if curl --connect-timeout 15 -m 30 -fsSL -o updateRepoMdFileList.sh "$primary_url"; then
+        echo -e "成功从 gitee 下载文件。"
+    else
+        # 如果优先链接下载失败，则尝试从备份链接下载
+        if curl --connect-timeout 15 -m 30 -fsSL -o updateRepoMdFileList.sh "$backup_url"; then
+            echo -e "成功从 github 下载文件。"
+        else
+            echo-e "${prt_Red}无法从链接下载文件。请检查链接是否有效。${prt_End}"
+            return 1
+        fi
+    fi
+
+    /bin/bash updateRepoMdFileList.sh
+    rm -rf updateRepoMdFileList.sh
+}
+
 # PS1 相关
 if (echo "$SHELL" | grep "bash" >/dev/null); then
     echo -e "current shell is $prt_Yellow bash $prt_End"
