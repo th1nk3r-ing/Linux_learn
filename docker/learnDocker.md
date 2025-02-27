@@ -217,7 +217,6 @@ docker 基于 Linux 内核提供这样几项功能实现的：
    2. 镜像 :
       1. 导出 `docker save 0fdf2b4c26d3 > hangge_server.tar`
       2. 导入 `docker load < hangge_server.tar`
-10. 清理掉所有处于终止状态的容器 : `docker container prune`
 
 ### <font color=#FF4500> docker 操作命令 </font>
 
@@ -246,6 +245,7 @@ docker tag <image-name:tag> <username>/<repository>:<tag>  # 将本地构建的�
 docker push <username>/<repository>:<tag>   # 将标记的镜像推送到 Docker 镜像仓库中
 docker pull registry.cn-hangzhou.aliyuncs.com/think3r/ubuntu_base:v2 # 拉取远端镜像
 docker search hello  # 搜索 hello 相关的镜像
+docker-squash --tag my-github-pages:latest my-github-pages # 优化生成镜像的大小
 
 # 容器相关
 docker ps -a   # 查看当前所有容器的状态

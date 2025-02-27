@@ -72,6 +72,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
+    # z
     colored-man-pages
     zsh-autosuggestions
 	zsh-syntax-highlighting

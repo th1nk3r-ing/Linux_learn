@@ -4,11 +4,9 @@
 
 ## <font color=#009A000> **0x-1 待读** </font>
 
-
 - 换源 : [https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/)
 - `sudo apt-get install git  screenfetch neofetch sl cmake cloc ffmpeg tree busybox shellcheck clang figlet unzip unrar`
 - `sudo apt-get install repo`
-
 - oh-my-zsh
   1. `sudo apt-get install zsh` && `chsh -s /bin/zsh` --> 重启
   2. [Ubuntu 18.04 LTS下安装zsh和oh-my-zsh](https://www.jianshu.com/p/a36e1ac468ce)

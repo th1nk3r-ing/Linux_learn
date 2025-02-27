@@ -1,0 +1,86 @@
+FROM ubuntu:24.04 AS build
+
+# 设置工作目录为 /srv/jekyll
+WORKDIR /root/
+
+ARG UbuntuInstall="apt-get install --no-install-recommends -y"
+
+# 换清华源
+RUN apt-get update && ${UbuntuInstall} ca-certificates \
+    && mv /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.bak \
+    && install -D -m 0644 /dev/stdin /etc/apt/sources.list.d/ubuntu.sources <<EOF
+Types: deb
+URIs: https://mirrors.tuna.tsinghua.edu.cn/ubuntu
+Suites: noble noble-updates noble-backports
+Components: main restricted universe multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+EOF
+
+# git
+RUN apt-get update \
+    && ${UbuntuInstall} wget git tree \
+    && install -D -m 0644 /dev/stdin ~/.gitconfig <<EOF
+[user]
+    name = think3r-docker
+    email = think3r@foxmail.com
+[alias]
+    st = status
+    ls='ls --show-control-chars --color=auto'
+    lgc = log --color --graph --date=format:'%a %y/%m/%d %H:%M' --pretty=format:'%C(yellow)%h%Creset %Cgreen(%cd) -%C(auto)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg2 = log --all --color --graph --date=format:'%a %y/%m/%d %H:%M' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg = log --all --color --graph --date=format:'%a %y/%m/%d %H:%M' --pretty=format:'%C(yellow)%h%Creset %Cgreen(%cd) -%C(auto)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit
+    # 列出 git 远程 branch, 并按照时间排序
+    lrb = branch -r --sort=-committerdate --format='%(HEAD) %(color:red)%(objectname:short)%(color:reset) - (%(color:green)%(committerdate:short)%(color:reset)) - %(color:yellow)%(refname:short)%(color:reset) -  %(contents:subject)  %(color:cyan)<%(authorname)>%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset))'
+[core]
+    autocrlf = input
+    editor = vim
+    safecrlf = warn
+[color]
+    ui = true   #git diff/status 等显示颜色.
+[https]
+    sslverify = false
+[http]
+    sslverify = false
+[oh-my-zsh]
+    hide-dirty = 1 #  oh-my-zsh 不读取文件变化信息
+EOF
+
+# ohmyzsh
+RUN ${UbuntuInstall} zsh  \
+    && chsh -s /bin/zsh \
+    && yes y | sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" \
+    && cd ~/.oh-my-zsh/custom/plugins \
+        && git clone https://github.com/zsh-users/zsh-autosuggestions.git --depth=1 --branch=master \
+        && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git --depth=1 --branch=master
+
+        # 复制当前目录内容到容器的工作目录
+COPY .dir_colors .rc_add .vimrc .zshrc ./
+
+# vim
+ENV TZ=Asia/Shanghai \
+    SHELL=/bin/zsh \
+    LANG=C.UTF-8
+RUN ${UbuntuInstall} vim \
+    && mkdir -p ~/.vim/autoload \
+    && wget -p -O ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN vim -es -u .vimrc -i NONE -c "PlugInstall" -c "qa" \
+    || echo "vim-plug has installed"
+
+# python3 && autojump
+RUN ${UbuntuInstall} python3 python3-pip \
+    && pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple \
+    && git clone https://github.com/wting/autojump.git --depth=1 \
+    && cd autojump && ./install.py \
+    && cd ../ && rm -rf autojump
+
+# clean
+RUN apt-get clean && apt-get autoclean && apt-get autoremove \
+    && rm -rf .wget-hsts .zcompdump* .viminfo
+
+# 启动 shell
+CMD ["/bin/zsh"]
+
+#docker run -it test
+#docker-squash --tag test:latest test
+
+# 小体积的 Alpine 基础镜像
