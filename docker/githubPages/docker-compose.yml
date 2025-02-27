@@ -1,0 +1,29 @@
+version: "3.9.2"
+
+services:
+  jekyll:
+    image: my-github-pages  # 这里是你构建的镜像名称
+    environment:
+      - PAGES_REPO_NWO=th1nk3r-ing/Linux_learn
+      - JEKYLL_THEME=my-hacker # 假设的通过环境变量设置主题的方式
+      - JEKYLL_ENV=development  # 默认为 development 环境，使用本地主题
+    ports:
+      - "4000:4000"  # 映射本地端口 4000 到容器端口 4000
+    volumes:
+      - ../../:/srv/jekyll  # 将当前目录挂载到容器的 /srv/jekyll 目录
+    command:
+      jekyll serve --watch --force_polling --host 0.0.0.0 --config _config.yml   # 设置容器启动时的命令, || /bin/sh
+    # restart: unless-stopped  # 可选：在容器停止时自动重启
+    tty: true
+
+# docker run \
+#   --rm \
+#   --name jekyll \
+#   -e PAGES_REPO_NWO=th1nk3r-ing/Linux_learn \
+#   -e JEKYLL_THEME=my-hacker \
+#   -e JEKYLL_ENV=development \
+#   -p 4000:4000 \
+#   -v "./:/srv/jekyll" \
+#   --tty \
+#   my-github-pages \
+#   jekyll serve --watch --force_polling --host 0.0.0.0 --config _config.yml

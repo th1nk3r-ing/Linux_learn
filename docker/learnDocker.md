@@ -173,8 +173,9 @@ docker 基于 Linux 内核提供这样几项功能实现的：
       - `-dit`
         - 是在后台创建一个 tty, 当前终端可继续执行其它命令并可关闭窗口
         - 这使得如果你稍后想要连接到这个容器并与其交互，可以使用 `docker exec -it <container_id_or_name> /bin/sh` 或者 `docker attach <container_id_or_name>` 命令来附加到容器上，并获得一个交互式的 shell 环境
-   4. `-p` : 指定端口映射，格式为：主机(宿主)端口:容器端口
+   4. `-p` : 指定端口映射，格式为：`主机(宿主)端口:容器端口`
    5. `--name="nginx-lb"` : 为容器指定一个名称
+   6. `-rm` : 运行结束后删除
 4. `docker ps` : 查看正在运行的容器
    - `-a` 查看所有(终止)状态的容器
    - `-q` 查看对应的 container ID
@@ -297,6 +298,11 @@ docker run
    $ docker run -tid --net=container:docker_bri1 \
          --name docker_con1 ubuntu-base:v3
    ```
+
+## <font color=#009A000> docker Compose </font>
+
+Docker Compose 是一个用于定义和运行多容器 Docker 应用的工具。通过 Docker Compose，用户可以使用 YAML 文件来定义应用服务、网络和卷等配置，然后用单一的命令启动所有服务。它让管理多个容器变得更加简单和高效，特别是对于复杂的应用，像是有数据库、前端和后端等多个组件的场景。
+
 
 ## <font color=#009A000> TODO: </font>
 
