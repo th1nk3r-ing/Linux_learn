@@ -35,17 +35,17 @@ Docker 的优势 :
 
 docker 中有这样几个概念 ：
 
-- DockerFile : image 的源代码 (docker 可看做编译器)
-- Image : 镜像(docker 的可执行程序), 一个'虚拟机'的快照.
+- `DockerFile` : image 的源代码 (docker 可看做编译器)
+- `Image` : 镜像(docker 的可执行程序), 一个'虚拟机'的快照.
   - 操作系统分为内核和用户空间。对于 Linux 而言，内核启动后，会挂载 root 文件系统为其提供用户空间支持。
   - 而 Docker 镜像（Image），就相当于是一个 root 文件系统。
   - Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。
   - 镜像不包含任何动态数据，其内容在构建之后也不会被改变。
-- Container : image 运行之后的进程 (镜像运行时的实体)
+- `Container` : image 运行之后的进程 (镜像运行时的实体)
   - 容器的实质是进程，但与直接在宿主执行的进程不同，容器进程运行于属于自己的独立的命名空间。
   - 前面讲过镜像使用的是分层存储，容器也是如此。容器存储层的生存周期和容器一样，容器消亡时，容器存储层也随之消亡。
     - 因此，任何保存于容器存储层的信息都会随容器删除而丢失。
-- Repository :（仓储）集中存放镜像文件的地方
+- `Repository` :（仓储）集中存放镜像文件的地方
   - 镜像构建完成后，可以很容易的在当前宿主上运行，但是， 如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务（就像 Git 仓库一样），Docker Registry 就是这样的服务。
   - 一个 Docker Registry 中可以包含多个仓库（Repository），每个仓库可以包含多个标签（Tag），每个标签对应一个镜像。
   - 所以说：镜像仓库是 Docker 用来集中存放镜像文件的地方类似于我们之前常用的代码仓库。通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本 。我们可以通过 `<仓库名>:<标签>` 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 `latest` 作为默认标签。
@@ -108,6 +108,9 @@ docker 基于 Linux 内核提供这样几项功能实现的：
    > 2. [windows 容器基础映像](https://learn.microsoft.com/zh-cn/virtualization/windowscontainers/manage-containers/container-base-images)
    > 3. [docker labs --> Getting Started with Windows Containers](https://github.com/docker/labs/blob/master/windows/windows-containers/README.md)
    - You can install a native Windows binary which allows you to develop and run Windows containers without Docker Desktop. However, if you install Docker this way, you cannot develop or run Linux containers. If you try to run a Linux container on the native Docker daemon, an error occurs. 您可以安装本地Windows二进制文件，这样您就可以在没有Docker桌面的情况下开发和运行Windows容器。但是，如果您以这种方式安装Docker，则无法开发或运行Linux容器。如果尝试在本地Docker守护进程上运行Linux容器，将出现错误.
+4. NOTE:
+   1. windows 容器不支持图形用户界面 (GUI), 如果应用程序只需要安装 GUI，则将其更改为无提示安装可能会解决此问题
+      > <https://learn.microsoft.com/zh-cn/virtualization/windowscontainers/quick-start/lift-shift-to-containers>
 
 ### <font color=#FF4500> wls 和 hyper-V </font>
 
@@ -156,164 +159,3 @@ docker 基于 Linux 内核提供这样几项功能实现的：
 
 1. 使用 hub 仓库中已有的环境，安装自己使用的软件环境后完成 image 创建
 2. 通过 Dockerfile，完成镜像 image 的创建
-
-## <font color=#009A000> 0x03 实战 </font>
-
-1. `docker info` : 查看 docker 的基本信息
-2. 配置 docker 阿里云镜像 :
-   1. `~/.docker/daemon.json` 中加入 `"registry-mirrors": ["https://xxxx.mirror.aliyuncs.com"]`
-   2. docker for Desktop 中修改配置
-3. `docker run` 相关 :
-   1. `-d` : detach, Run container in background and print container ID (后台运行容器，并返回容器ID)
-      - 其后可接 image 名称
-      - 容器会独立于你的终端运行，不会占用当前的命令行界面，你可以继续在该终端执行其他命令或关闭终端窗口，而容器仍然会在后台持续运行
-   2. `-i` : 以交互模式运行容器，通常与 `-t` 同时使用
-      - 可以让你与容器保持交互，只保持了 `STDIN` 的打开状态，但是没有分配 TTY, 也不会模拟一个终端 (没有高亮等)
-   3. `-t` : 为容器重新分配一个伪输入终端，通常与 `-i` 同时使用 `-it`
-      - `-dit`
-        - 是在后台创建一个 tty, 当前终端可继续执行其它命令并可关闭窗口
-        - 这使得如果你稍后想要连接到这个容器并与其交互，可以使用 `docker exec -it <container_id_or_name> /bin/sh` 或者 `docker attach <container_id_or_name>` 命令来附加到容器上，并获得一个交互式的 shell 环境
-   4. `-p` : 指定端口映射，格式为：`主机(宿主)端口:容器端口`
-   5. `--name="nginx-lb"` : 为容器指定一个名称
-   6. `-rm` : 运行结束后删除
-4. `docker ps` : 查看正在运行的容器
-   - `-a` 查看所有(终止)状态的容器
-   - `-q` 查看对应的 container ID
-5. docker 的生命周期 :
-   ![docker 生命周期](../image/docker%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png)
-   1. `docker create` : `created`, 初建状态
-   2. `docker run` : `running` / `Up`, 运行状态
-      - `docker start` ： 容器转为运行状态；
-   3. `docker stop` : `stopped` / `exited`, 停止状态
-   4. `docker pause ：` paused, 停状态
-   5. `docker unpause` ： 取消暂停状态，容器进入运行状态；
-   6. `docker kill` : 容器在故障（死机）时，执行 kill（断电），容器转入停止状态，这种操作容易丢失数据，除非必要，否则不建议使用；
-   7. `docker rm -f xxx` : deleted：删除状态
-   8. `dead` : 死亡
-6. 进入正在运行的 container 的两种方法 :
-   1. `docker exec -it containerId /bin/bash` : 进入正在运行的容器并开启一个新的终端
-   2. `docker attach containerId` : 进入容器正在执行的终端，不会启动新的进程
-      - 如果使用 `exit` 退出，容器会停止运行！
-      - 如果想退出容器但不想容器停止，则按住 `Ctrl+P+Q` 退出
-7. docker 文件/存储相关 :
-   1. `docker cp 本地路径 容器id或者容器名字:容器内路径` : 本地到服务器
-8. docker 生成自定义镜像(修改启动命令)的方式 :
-   1. Dockerfile 的方式修改命令 :
-
-      ```Dockerfile
-      FROM image:demo  #要改动命令的镜像
-      WORKDIR /root/  #执行命令的工作目录路径
-      CMD ["python","main.py"] # 要更改的命令
-      ```
-
-   2. 直接通过 commit 修改 : `docker commit --change="WORKDIR /" -c 'CMD [ "bash" ]'  -m "基础ubuntu镜像" -a 'think3r' 639b37671e5c  outImage:v1`
-      1. `–change` : Apply Dockerfile instruction to the created image (可以写入 dockerfile 的语法语句)
-      2. `-c` : Apply Dockerfile instruction to the created image(可以写入启动命令)
-      3. `-m` : --message string, Commit message
-9. 导入和导出
-   1. 容器 :
-      1. 导出 : `docker export 1e560fca3906 > ubuntu.tar`
-      2. 导入 : `cat docker/ubuntu.tar | docker import - test/ubuntu:v1`
-   2. 镜像 :
-      1. 导出 `docker save 0fdf2b4c26d3 > hangge_server.tar`
-      2. 导入 `docker load < hangge_server.tar`
-
-### <font color=#FF4500> docker 操作命令 </font>
-
-```sh
-apt-get update && apt-get upgrade
-apt-get install ca-certificates # 更新 ca 证书
-# 更改为清华源
-apt-get install vim-tiny tree file zsh inetutils-ping
-# git clone 拷贝 oh-my-zsh 及其插件
-```
-
-## <font color=#009A000> 0x04 常用 docker 命令 </font>
-
-FIXME: && TODO: 补充常用命令....
-
-```sh
-# dockerhub 等的凭证相关
-sudo cat /root/.docker/config.json  # 凭证存储位置
-echo "xxxx" | base64 --decode       # 密钥解码
-sudo docker login --username=aliyunxxxx registry.cn-hangzhou.aliyuncs.com  # 登录
-
-# 镜像相关
-docker images -a  # 列出所有镜像
-docker rmi xxx:xxx  # 删除指定镜像
-docker tag <image-name:tag> <username>/<repository>:<tag>  # 将本地构建的镜像与仓库中的镜像进行关联
-docker push <username>/<repository>:<tag>   # 将标记的镜像推送到 Docker 镜像仓库中
-docker pull registry.cn-hangzhou.aliyuncs.com/think3r/ubuntu_base:v2 # 拉取远端镜像
-docker search hello  # 搜索 hello 相关的镜像
-docker-squash --tag my-github-pages:latest my-github-pages # 优化生成镜像的大小
-
-# 容器相关
-docker ps -a   # 查看当前所有容器的状态
-docker rm -f xxx # 删除指定容器
-docker container prune  #清理系统中处于停止状态的容器, 释放磁盘空间
-
-docker run
-```
-
-### <font color=#FF4500> docker 网络 </font>
-
-![docker 网络模式](../image/docker_netMode.webp)
-
-- bridge 模式
-
-   ```log
-   # 当 Docker 进程启动时，会在主机上创建一个名为 docker0 的虚拟网桥
-   # 这个 docker0 也作为容器的默认网关，主机也可以 ping 通容器，但是容器之间是隔离的
-   # 不写 –net 参数，默认就是 bridge 模式。使用 docker run -p 时，docker 实际是在 iptables 做了 DNAT 规则，实现端口转发功能。可以使用 iptables -t nat -vnL 查看
-
-   # 新建一个网络
-   $ docker network create -d bridge my-net
-
-   # 运行一个容器并连接到新建的 my-net 网络
-   $ docker run -it --rm --name busybox1 --network my-net busybox sh
-
-   # 加入系统网络的应用，可以互相 ping 通，如我可以在其他加入了 my-net 的容器里：
-   $ ping busybox
-   > PING busybox (172.19.0.2): 56 data bytes
-   > 64 bytes from 172.19.0.2: seq=0 ttl=64 time=0.064 ms
-   > 64 bytes from 172.19.0.2: seq=1 ttl=64 time=0.143 ms
-
-   # 如果你有多个容器之间需要互相连接，推荐使用 Docker Compose。
-   ```
-
-- Host 模式
-
-   ```log
-   # 如果启动容器的时候使用 host 模式，那么这个容器将不会获得一个独立的 Network Namespace，而是和宿主机共用一个 Network Namespace
-
-   示例：
-   $ docker run -tid --net=host --name docker_host1 ubuntu-base:v3
-   ```
-
-- Container 模式 :
-
-   ```log
-   # 这个模式指定新创建的容器和已经存在的一个容器共享一个 Network Namespace，而不是和宿主机共享
-   # 示例，独立的 docker_bri1 网络：
-   $ docker run -tid --net=container:docker_bri1 \
-         --name docker_con1 ubuntu-base:v3
-   ```
-
-## <font color=#009A000> docker Compose </font>
-
-Docker Compose 是一个用于定义和运行多容器 Docker 应用的工具。通过 Docker Compose，用户可以使用 YAML 文件来定义应用服务、网络和卷等配置，然后用单一的命令启动所有服务。它让管理多个容器变得更加简单和高效，特别是对于复杂的应用，像是有数据库、前端和后端等多个组件的场景。
-
-
-## <font color=#009A000> TODO: </font>
-
-- ~~docker - github build~~
-- docker 导入导出命令行缺失的问题
-- docker rtmp/hls 推流测试
-- docker temux 守护进程 ?
-
-```sh
-docker run --gpus all -v /mnt/i/aiModels/qwen2.5:/models ghcr.io/ggerganov/llama.cpp:light-cuda-b4524 \
-  -m /models/qwen2.5-coder-7b-instruct-q4_k_m.gguf \
-  -p "You are a helpful coding assistant." \
-  -n 512 --n-gpu-layers 9999
-```
