@@ -159,3 +159,11 @@ docker 基于 Linux 内核提供这样几项功能实现的：
 
 1. 使用 hub 仓库中已有的环境，安装自己使用的软件环境后完成 image 创建
 2. 通过 Dockerfile，完成镜像 image 的创建
+
+## <font color=#009A000> 0x03 docker 持久化 </font>
+
+![docker 持久化](../image/docker持久化.jpg)
+
+1. volumes：Docker管理宿主机文件系统的一部分，默认位于 /var/lib/docker/volumes 目录中；（最常用的方式）
+2. bind mounts：意为着可以存储在宿主机系统的任意位置；（比较常用的方式）
+3. tmpfs：挂载存储在宿主机系统的内存中，而不会写入宿主机的文件系统；（一般都不会用的方式）

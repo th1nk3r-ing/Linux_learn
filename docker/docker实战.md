@@ -112,6 +112,10 @@ docker exec -it 5be /bin/zsh   # 重新开一个已经停止的容器
 docker system           # 查看 docker 磁盘占用
 docker builder du       # 查看 docker 构建缓存
 docker builder prune    # 清理构建缓存
+
+# 持久化存储
+docker volume ls
+docker volume inspect xxx
 ```
 
 ### <font color=#FF4500> docker 网络 </font>
