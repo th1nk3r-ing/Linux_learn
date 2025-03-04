@@ -1,0 +1,74 @@
+# > [利用github actions和aliyun私有镜像库，使用docker部署Nodejs项目](https://blog.sundaysto.club/archives/li-yong-github-actions-he-aliyun-si-you-jing-xiang-ku-shi-yong-dockerbu-shu-nodejs-xiang-mu)
+# > <https://github.com/docker/build-push-action>
+# > [发布 Docker 映像](https://docs.github.com/zh/actions/use-cases-and-examples/publishing-packages/publishing-docker-images)
+
+name: build_docker_images_2_aliyun
+
+on:
+  workflow_dispatch:
+     inputs:
+       push_aliyun:
+         description: 'Whether push 2 aliyun'
+         required: false
+         default: 'false'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@main
+
+      - name: Log in to aliyun private docker Registry
+        if: ${{ github.event.inputs.push_aliyun == 'true' }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_ALIYUN_NAME_SPACE }} #第2步骤图中的 登录阿里云的地址
+          username: ${{ secrets.DOCKER_ALIYUN_REGISTRY_USER }} #你的阿里云账号
+          password: ${{ secrets.DOCKER_ALIYUN_REGISTRY_PASSWORD }} #你的镜像仓库密码，好像可以是阿里云账号密码，也可以设置独立的密码
+
+      - name: Build and push Docker image of Ubuntu
+        uses: docker/build-push-action@v6
+        with:
+          context: ./config
+          file: ./docker/dockerfiles/DockerfileUbuntu
+          push: ${{ github.event.inputs.push_aliyun == 'true' }}
+          tags: ${{ secrets.DOCKER_ALIYUN_REGISTRY_UBUNTU_TAG }} #第2步骤图中的 第3小点的地址
+
+      - name: Build and push Docker image of Alpine
+        uses: docker/build-push-action@v6
+        with:
+          context: ./config
+          file: ./docker/dockerfiles/DockerfileAlpine
+          push: ${{ github.event.inputs.push_aliyun == 'true' }}
+          tags: ${{ secrets.DOCKER_ALIYUN_REGISTRY_ALPINE_TAG }} #第2步骤图中的 第3小点的地址
+
+      # - name: Copy docker-compose.yml to Server
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.ALIYUN_HOST }} #需要部署的主机ip地址
+      #     username: ${{ secrets.ALIYUN_USERNAME }} #需要部署的主机 ssh 账号
+      #     key: ${{ secrets.ALIYUN_KEY }} #需要部署的主机 ssh key
+      #     port: 22
+      #     source: './docker-compose.yml'
+      #     target: '~/your-target/'
+      #     overwrite: true
+      #     strip_components: 1
+
+      # - name: Deploy to Aliyun
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.ALIYUN_HOST }}
+      #     username: ${{ secrets.ALIYUN_USERNAME }}
+      #     key: ${{ secrets.ALIYUN_KEY }}
+      #     script: |
+      #       docker login --username=${{ secrets.ALIYUN_ACCESS_KEY_ID }} --password=${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}       ${{ secrets.ALIYUN_REGISTRY_URL }}
+      #       mkdir -p ~/your-path
+      #       cd ~/your-path
+      #       docker compose pull
+      #       docker compose up -d --force-recreate
+          # docker login --username=${{ secrets.ALIYUN_ACCESS_KEY_ID }} --password=${{ secrets.ALIYUN_ACCESS_KEY_SECRET }} ${{ secrets.ALIYUN_REGISTRY_URL }}
+          # docker pull ${{ secrets.ALIYUN_REGISTRY_TAG }}
+          # docker stop yourContainerName || true
+          # docker rm yourContainerName || true
+          # docker run -it -d --name yourContainerName -p 3000:3000 ${{ secrets.ALIYUN_REGISTRY_TAG }}
