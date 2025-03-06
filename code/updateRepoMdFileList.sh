@@ -59,9 +59,13 @@ function handle_repo_doc_toc() {
 handle_repo_doc_toc  ""  "."
 echo "TOC 已生成到 toc.txt"
 
+# 找当前目录下的 readme 文件(不区分大小写)
+readme_path=$(find . -maxdepth 1 -iname "readme.md" -print -quit | sed 's|^\./||')
+echo "readmeFIle: ${readme_path}"
+
 # 使用 grep 检查两个标记是否存在，并统计行数
-start_tag=$(grep -c '<!-- TOC start -->' readme.md)
-end_tag=$(grep -c '<!-- TOC end -->' readme.md)
+start_tag=$(grep -c '<!-- TOC start -->' ${readme_path})
+end_tag=$(grep -c '<!-- TOC end -->' ${readme_path})
 
 # 判断是否两个标记都存在
 if [ $start_tag -gt 0 ] && [ $end_tag -gt 0 ]; then
@@ -74,13 +78,13 @@ fi
 # 定义一个临时文件
 temp_head="temp_head.md"
 temp_tail="temp_tail.md"
-output_file="updated_readme.md"
+output_file="updated_${readme_path}"
 
-# 将 readme.md 的内容复制到临时文件，直到遇到旧的 TOC 部分
+# 将 ${readme_path} 的内容复制到临时文件，直到遇到旧的 TOC 部分
 # 提取 <!-- TOC start --> 之前的部分
-sed '/<!-- TOC start -->/q' readme.md > "$temp_head"
+sed '/<!-- TOC start -->/q' ${readme_path} > "$temp_head"
 # 提取 <!-- TOC end --> 之后的部分
-sed -n '/<!-- TOC end -->/,$p' readme.md | sed '1d' > "$temp_tail"
+sed -n '/<!-- TOC end -->/,$p' ${readme_path} | sed '1d' > "$temp_tail"
 
 # 合并头部、新内容和尾部
 cat "$temp_head" > "$output_file"
@@ -92,6 +96,6 @@ cat "$temp_tail" >> "$output_file"
 
 # 清除中间文件
 rm "$temp_head" "$temp_tail" toc.txt
-mv $output_file readme.md
+mv $output_file ${readme_path}
 
-echo "TOC 已更新到 readme.md"
+echo "TOC 已更新到 ${readme_path}"
