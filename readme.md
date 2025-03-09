@@ -50,6 +50,7 @@ NOTE:
   - [learn_V_p_n.md](./net/learn_V_p_n.md)
   - [socket.md](./net/socket.md)
   - [todo.md](./net/todo.md)
+  - [小米路由器.md](./net/小米路由器.md)
   - [网络基础.md](./net/网络基础.md)
 - [readme.md](./readme.md)
 - [shell.md](./shell.md)
