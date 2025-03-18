@@ -68,6 +68,7 @@ myOsInfo="*nix"
 if (uname -a | grep "icrosoft" >/dev/null); then      # WSL
     if (uname -a | grep "WSL2" > /dev/null); then
         myOsInfo="WSL-2"
+        alias adb="adb.exe"     # wsl2 需使用 win 的 adb.exe 才可连接至 adb
     else
         myOsInfo="WSL-1"
     fi
@@ -109,6 +110,7 @@ fi
 if command -v exa > /dev/null; then
 	alias el="exa -aHlFg --time-style=long-iso"
 fi
+
 
 # https://github.com/macmade/trash
 if command -v trash > /dev/null; then
@@ -264,6 +266,14 @@ if [[ -d "$HOME/bin" ]]; then
 	if [[ -d "$my_go_path" ]]; then
 	    PATH="$PATH:$my_go_path"
 	fi
+
+    my_tldr_path="$HOME/bin/tldr"
+	if [[ -d "$my_tldr_path" ]]; then
+	    PATH="$PATH:$my_tldr_path"
+	fi
+    if command -v tldr > /dev/null; then
+        alias tldr="tldr -o"     # tldr no need to update
+    fi
 fi
 
 # git repo 使用清华源
