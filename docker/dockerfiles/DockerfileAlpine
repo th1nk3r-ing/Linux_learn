@@ -67,6 +67,14 @@ RUN ${AlpineInstall} python3 \
     && cd autojump && ./install.py \
     && cd ../ && rm -rf autojump
 
+# 安装 tldr
+RUN mkdir -p ~/bin/tldr \
+    && cd ~/bin/tldr \
+    && wget https://github.com/tldr-pages/tlrc/releases/download/v1.11.0/tlrc-v1.11.0-x86_64-unknown-linux-musl.tar.gz -O ./file.tar.gz \
+    && tar -xzvf ./file.tar.gz \
+    && rm -rf ./file.tar.gz \
+    && ./tldr -u
+
 # clean
 RUN  rm -rf .wget-hsts .zcompdump* .viminfo
 
