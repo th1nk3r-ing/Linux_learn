@@ -75,6 +75,7 @@ Host mi6
 ```
 
 - 使用: `ssh alias` 即可;
+- NOTE: 使用 git 等时, 需注意 `Host = HostName` 才能生效
 
 ### <font color=#FF4500> ssh 的 known_host 文件 </font>
 
